@@ -19,5 +19,9 @@ class Main {
 
         System.out.printf("%b\n", a1.dentroDosLimites(r1.getX(), r1.getY()));
 
+        r1.mover(-70, -80);
+        r1.exibirPosicao();
+
+        System.out.printf("%b\n", a1.dentroDosLimites(r1.getX(), r1.getY()));
     }
 }

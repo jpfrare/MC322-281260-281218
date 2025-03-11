@@ -8,7 +8,7 @@ public class Ambiente {
     }
 
     public boolean dentroDosLimites(int x, int y) {
-        return (this.X >= x && this.Y >= y);
+        return (x >= 0 && this.X >= x && this.Y >= y && y >= 0);
     }
 
 }
