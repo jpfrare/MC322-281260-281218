@@ -14,6 +14,14 @@ public class Robo {
         this.y += deltay;
     }
 
+    public int getX(){
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
     public void exibirPosicao() {
         System.out.printf("Robo: %s, PosicaoX: %d, PosicaoY: %d\n", this.nome, this.x, this.y);
     }
