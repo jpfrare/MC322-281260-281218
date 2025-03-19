@@ -11,8 +11,10 @@ public class Main {
 
         teste1.exibirPosicao();
 
-        teste1.mover(4,1);
+        teste1.mover(-3,1);
 
         teste1.exibirPosicao();
+
+        teste1.mover(1, -4);
     }
 }
