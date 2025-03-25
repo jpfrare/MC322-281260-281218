@@ -41,14 +41,39 @@ public abstract class Robo {
         return this.direcao;
     }
 
-    void mover(int deltaX, int deltaY){
-        if ((this.getPosicaoX() + deltaX < 0) || (this.getPosicaoY() + deltaY < 0)) {
-            System.out.printf("Movimento Inválido!\n");
-            return;
+    void mover(int deltaX, int deltaY, Ambiente a){
+        
+        if (a.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) 
+        && !a.eh_obstaculo(this.posicaoX + deltaX, this.posicaoY + deltaY)) {
+            //verificação se o robô ficará nos limites e não ocupará o mesmo lugar que o obstáculo
+            //supõe-se que, caso haja um obstaculo no caminho, há uma combinação de direções que ele usará para evitá-lo
+
+            this.posicaoX += deltaX;
+            this.posicaoY += deltaY;
+
+            //define a nova direção baseado em qual direção o módulo do deslocamento foi maior, e qual o sentido
+            if (deltaX*deltaX > deltaY*deltaY) {
+                if (deltaX > 0) {
+                    this.direcao = "leste";
+
+                } else {
+                    this.direcao = "oeste";
+                }
+
+            } else {
+                if (deltaY > 0) {
+                    this.direcao = "norte";
+
+                } else {
+
+                    this.direcao = "sul";
+                }
+            }
         }
 
-        this.posicaoX += deltaX;
-        this.posicaoY += deltaY;
+        else {
+            System.out.printf("Movimento Inválido!\n");
+        }
     }
 
     void exibirPosicao() {
@@ -56,7 +81,8 @@ public abstract class Robo {
     }
 
 
-    void identificarObstaculo(Ambiente a) {
+    void identificarObstaculo(Ambiente a, int largura, int altura) {
+        if (Math.abs(a.get))
         
     }
 }
