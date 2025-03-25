@@ -5,7 +5,7 @@ public class Ambiente {
     private final int Y;
     private final int X_obstaculo;
     private final int Y_obstaculo;
-    private final ArrayList<Robo> robos;
+    public final ArrayList<Robo> robos;
 
     public Ambiente(int x, int y, int x_obstaculo, int y_obstaulo) {
         //inicializa o Ambiente atribuindo valores as dimensoes x e y e cria um array vazio de robos
@@ -21,14 +21,24 @@ public class Ambiente {
         return (x == X_obstaculo && y == Y_obstaculo);
     }
 
-    public boolean dentroDosLimites(int x, int y) {
+    public boolean dentroDosLimites(int x, int y, int z) {
         //retorna true se o robo esta dentro do ambiente e false caso contrario
         return (x >= 0 && this.X >= x && this.Y >= y && y >= 0);
+
     }
 
     public void adicionaRobo(Robo robo){
         //adiciona um objeto da classe robo ao array de robos
         this.robos.add(robo);
+
+    }
+
+    public int getArrayTamanho() {
+        return this.robos.size();
+    }
+
+    public Robo getRobo(int pos){
+        return this.robos.get(pos);
     }
 
 }

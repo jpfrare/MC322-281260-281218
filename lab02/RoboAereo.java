@@ -18,12 +18,7 @@ public class RoboAereo extends Robo {
     }
 
     void descer(int delta_h){
-        if(this.altitude - delta_h >= 0){
-            this.altitude -= delta_h;
-        }
-        else{
-            this.altitude = 0;
-        }
+        this.alitude -= delta_h;
     }
 
 }
