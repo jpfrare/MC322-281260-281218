@@ -11,6 +11,9 @@ public class RoboAereo extends Robo {
     void subir(int delta_h){
         if(this.altitude + delta_h <= this.altitudeMax){
             this.altitude += delta_h;
+            if(dentroDosLimites(getPosicaoX(), getPosicaoY(), this.altitude)){
+                this.altitude += delta_h;
+            }
         }
         else{
             this.altitude = this.altitudeMax;
