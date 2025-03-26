@@ -8,20 +8,22 @@ public class RoboAereo extends Robo {
         this.altitudeMax = alt_max;
     }
 
-    void subir(int delta_h){
-        if(this.altitude + delta_h <= this.altitudeMax){
-            this.altitude += delta_h;
-            if(dentroDosLimites(getPosicaoX(), getPosicaoY(), this.altitude)){
-                this.altitude += delta_h;
-            }
-        }
-        else{
-            this.altitude = this.altitudeMax;
+    void subir(int delta_h, Ambiente espaco){
+        this.altitude += delta_h;
+        if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.altitude) || !(this.altitude <= this.altitudeMax)){
+            //a altura apos a subida viola o criterio do ambiente ou do proprio robo
+            if(this.altitudeMax <= espaco.getAltura())
+                this.altitude = espaco.getAltura();
+            else
+                this.altitude = this.altitudeMax;
         }
     }
 
     void descer(int delta_h){
-        this.alitude -= delta_h;
+        this.altitude -= delta_h;
+        if(this.altitude < 0){
+            this.altitude = 0;
+        }
     }
 
 }

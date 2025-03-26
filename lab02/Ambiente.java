@@ -52,6 +52,10 @@ public class Ambiente {
         return this.robos.size();
     }
 
+    public int getAltura() {
+        return this.Z;
+    }
+
     public Robo getRobo(int pos){
         return this.robos.get(pos);
     }
