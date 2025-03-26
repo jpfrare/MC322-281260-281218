@@ -11,7 +11,7 @@ public class RoboAereo extends Robo {
     void subir(int delta_h, Ambiente espaco){
         this.altitude += delta_h;
         if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.altitude) || !(this.altitude <= this.altitudeMax)){
-            //a altura apos a subida viola o criterio do ambiente ou do proprio robo
+            //a altura apos a subida viola o criterio do ambiente ou do proprio robo: robo sobe para a menor altura possivel (satisfaz ambos os casos)
             if(this.altitudeMax <= espaco.getAltura())
                 this.altitude = espaco.getAltura();
             else
@@ -19,10 +19,14 @@ public class RoboAereo extends Robo {
         }
     }
 
-    void descer(int delta_h){
+    void descer(int delta_h, Ambiente espaco){
         this.altitude -= delta_h;
-        if(this.altitude < 0){
+        if(this.altitude <= 0){
+            //desce ate o zero(maior descida possivel)
             this.altitude = 0;
+            if(espaco.eh_obstaculo(this.getPosicaoX(), this.getPosicaoY(), this.altitude)){
+                this.altitude++; //tem um obstaculo na posicao do chao
+            }
         }
     }
 
