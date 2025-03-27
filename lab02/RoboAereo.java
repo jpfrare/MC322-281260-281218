@@ -19,7 +19,20 @@ public class RoboAereo extends Robo {
         }
     }
 
-    void descer(int delta_h, Ambiente espaco){
+    int getAltitudeMax(){
+        return this.altitudeMax;
+    }
+
+    int getAltitude(){
+        return this.altitude;
+    }
+
+    void setAltitude(int alt){
+        this.altitude = alt;
+    }
+
+
+    void descer(int delta_h){
         this.altitude -= delta_h;
         if(this.altitude <= 0){
             //desce ate o zero(maior descida possivel)

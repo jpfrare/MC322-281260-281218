@@ -9,7 +9,6 @@ public class Ambiente {
     public final ArrayList<Robo> robos;
 
     public Ambiente(int x, int y, int z, int x_obstaculo, int y_obstaculo) {
-    public Ambiente(int x, int y, int z, int x_obstaculo, int y_obstaculo) {
         //inicializa o Ambiente atribuindo valores as dimensoes x e y e cria um array vazio de robos
         this.X = x;
         this.Y = y;
@@ -19,7 +18,6 @@ public class Ambiente {
         this.robos = new ArrayList<>();
     }
 
-    public boolean eh_obstaculo(int x, int y){
     public boolean eh_obstaculo(int x, int y){
         //retorna true se as coordenadas x e y no parametro correspondem a localizacao x e y do obstaculo no ambiente
         return (x == this.X_obstaculo && y == this.Y_obstaculo);
