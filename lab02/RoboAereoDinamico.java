@@ -16,9 +16,9 @@ public class RoboAereoDinamico extends RoboAereo {
     void reduzir_autonomia(){
         //reduz a autonomia e altura maxima padrao
         this.nivel_energetico--;
-        if(this.nivel_energetico > 0){
+        if(this.nivel_energetico > 0 && (this.capacidade - this.nivel_energetico > 1)){
             //caso o robo nao tenha sido totalmente descarregado
-            this.altitudemax_atual--; //reduz a capacidade de voar mais alto
+            this.altitudemax_atual = this.getAltitudeMax() * ((this.nivel_energetico + 1) / this.capacidade); //reduz a capacidade de voar mais alto
             if(this.getAltitude() > this.altitudemax_atual){ //corrige a altura atual com a altura maxima menor
                 this.setAltitude(this.altitudemax_atual);
             }
@@ -35,7 +35,31 @@ public class RoboAereoDinamico extends RoboAereo {
         this.altitudemax_atual = this.getAltitudeMax();
     }
 
-    //void mover
+    @Override
+    void subir(int delta_h, Ambiente espaco){
+        //similar ao subir da classe robo, agora a altura maxima é condicionada ao nivel energetico atual do robo
+        int pos_final = this.getAltitude() + delta_h;
+        if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) || !(this.getAltitude() <= this.altitudemax_atual)){
+            if(this.altitudemax_atual <= espaco.getAltura()){
+                this.setAltitude(this.altitudemax_atual);
+            }
+            else{
+                this.setAltitude(espaco.getAltura());
+            }
+        }
+    }
+
+    void mover(int delta_x, int delta_y, int delta_z, Ambiente espaco){
+        //o movimento horizontal aparentemente sera herdado da classe robo
+        super.mover(delta_x, delta_y); //
+        this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente altura maxima possivel para o robo
+        if(delta_z > 0){
+            this.subir(delta_z, espaco);
+        }
+        else{ //verificar se nao sera necessario override
+            super.descer(delta_z);
+        }
+    }
 
 
 }

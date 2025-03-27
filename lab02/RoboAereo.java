@@ -13,9 +13,9 @@ public class RoboAereo extends Robo {
         if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.altitude) || !(this.altitude <= this.altitudeMax)){
             //a altura apos a subida viola o criterio do ambiente ou do proprio robo: robo sobe para a menor altura possivel (satisfaz ambos os casos)
             if(this.altitudeMax <= espaco.getAltura())
-                this.altitude = espaco.getAltura();
-            else
                 this.altitude = this.altitudeMax;
+            else
+                this.altitude = espaco.getAltura();
         }
     }
 
