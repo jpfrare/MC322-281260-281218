@@ -1,14 +1,22 @@
 public abstract class Robo {
-    private String nome;
+    private final String nome;
     private String direcao;
     private int posicaoX;
     private int posicaoY;
+    private final Ambiente habitat;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
         this.nome = nome;
+        this.habitat = habitat;
+        
+        this.habitat.adicionaRobo(this);
+    }
+
+    String getNome() {
+        return this.nome;
     }
 
     void setPosicaoX(int posicaoX) {
@@ -41,10 +49,15 @@ public abstract class Robo {
         return this.direcao;
     }
 
-    void mover(int deltaX, int deltaY, Ambiente a){
+    Ambiente getAmbiente() {
+        //retorna o ambiente do qual o robô pertence
+        return this.habitat;
+    }
+
+    void mover(int deltaX, int deltaY){
         
-        if (a.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) 
-        && !a.eh_obstaculo(this.posicaoX + deltaX, this.posicaoY + deltaY)) {
+        if (this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) 
+        && !this.habitat.eh_obstaculo(this.posicaoX + deltaX, this.posicaoY + deltaY)) {
             //verificação se o robô ficará nos limites e não ocupará o mesmo lugar que o obstáculo
             //supõe-se que, caso haja um obstaculo no caminho, há uma combinação de direções que ele usará para evitá-lo
 
@@ -81,8 +94,34 @@ public abstract class Robo {
     }
 
 
-    void identificarObstaculo(Ambiente a, int largura, int altura) {
-        if (Math.abs(a.get))
-        
+    void identificarObstaculo() {
+        int dx = habitat.getXobstaculo() - this.posicaoX;
+        int dy = habitat.getYobstaculo() - this.posicaoY;
+
+        double distancia = Math.sqrt(dx*dx + dy*dy);
+
+        System.out.printf("a distância entre %s e o obstáculo é de %.2f\n", this.nome, distancia);
+
+        String direcaoObstaculo; //mesma lógica usada para decidir a direção do robô
+    
+        if (dx*dx > dy*dy) {
+            if (dx > 0) {
+                direcaoObstaculo = "leste";
+            } else {
+                direcaoObstaculo = "oeste";
+            }
+
+        } else {
+            if (dy > 0) {
+                direcaoObstaculo = "norte";
+
+            } else {
+                direcaoObstaculo = "sul";
+            }
+        }
+
+        if (this.nome.equals(direcaoObstaculo)) {
+            System.out.printf("e %s está virado para mesma direção do objeto!", this.nome);;
+        }
     }
 }

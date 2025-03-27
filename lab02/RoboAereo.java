@@ -2,8 +2,8 @@ public class RoboAereo extends Robo {
     private int altitude;
     private final int altitudeMax;
 
-    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome){
-        super(posXo, posYo, nome);
+    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a){
+        super(posXo, posYo, nome, a);
         this.altitude = alt_o;
         this.altitudeMax = alt_max;
     }
