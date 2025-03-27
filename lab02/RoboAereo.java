@@ -24,9 +24,6 @@ public class RoboAereo extends Robo {
         if(this.altitude <= 0){
             //desce ate o zero(maior descida possivel)
             this.altitude = 0;
-            if(espaco.eh_obstaculo(this.getPosicaoX(), this.getPosicaoY(), this.altitude)){
-                this.altitude++; //tem um obstaculo na posicao do chao
-            }
         }
     }
 
