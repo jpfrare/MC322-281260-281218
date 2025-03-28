@@ -1,21 +1,21 @@
 public class RoboAereo extends Robo {
-    private int altitude;
+    private int posicaoZ;
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a){
         super(posXo, posYo, nome, a);
-        this.altitude = alt_o;
+        this.posicaoZ= alt_o;
         this.altitudeMax = alt_max;
     }
 
     void subir(int delta_h, Ambiente espaco){
-        this.altitude += delta_h;
-        if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.altitude) || !(this.altitude <= this.altitudeMax)){
+        this.posicaoZ += delta_h;
+        if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.posicaoZ) || !(this.posicaoZ <= this.altitudeMax)){
             //a altura apos a subida viola o criterio do ambiente ou do proprio robo: robo sobe para a menor altura possivel (satisfaz ambos os casos)
             if(this.altitudeMax <= espaco.getAltura())
-                this.altitude = this.altitudeMax;
+                this.posicaoZ = this.altitudeMax;
             else
-                this.altitude = espaco.getAltura();
+                this.posicaoZ = espaco.getAltura();
         }
     }
 
@@ -23,20 +23,20 @@ public class RoboAereo extends Robo {
         return this.altitudeMax;
     }
 
-    int getAltitude(){
-        return this.altitude;
+    int getPosicaoZ(){
+        return this.posicaoZ;
     }
 
-    void setAltitude(int alt){
-        this.altitude = alt;
+    void setPosicaoZ(int pos_z){
+        this.posicaoZ = pos_z;
     }
 
 
     void descer(int delta_h){
-        this.altitude -= delta_h;
-        if(this.altitude <= 0){
+        this.posicaoZ -= delta_h;
+        if(this.posicaoZ <= 0){
             //desce ate o zero(maior descida possivel)
-            this.altitude = 0;
+            this.posicaoZ = 0;
         }
     }
 
