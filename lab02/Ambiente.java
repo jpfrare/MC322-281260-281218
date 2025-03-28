@@ -47,6 +47,14 @@ public class Ambiente {
         return this.robos.size();
     }
 
+    public int getAmbienteX(){
+        return this.X;
+    }
+
+    public int getAmbienteY(){
+        return this.Y;
+    }
+
     public int getAltura() {
         return this.Z;
     }

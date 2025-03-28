@@ -22,7 +22,7 @@ public class RoboAereo extends Robo {
     int getAltitudeMax(){
         return this.altitudeMax;
     }
-    
+
     @Override
     int getPosicaoZ(){
         return this.posicaoZ;
@@ -32,6 +32,10 @@ public class RoboAereo extends Robo {
         this.posicaoZ = pos_z;
     }
 
+    @Override
+    void exibirPosicao() {
+        System.out.printf("Posição X: %d, PosiçãoY: %d, PosicaoZ: %d\n", this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
+    }
 
     void descer(int delta_h){
         this.posicaoZ -= delta_h;

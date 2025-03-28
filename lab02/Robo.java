@@ -125,7 +125,7 @@ public abstract class Robo {
         }
 
         if (this.nome.equals(direcaoObstaculo)) {
-            System.out.printf("e %s está virado para mesma direção do objeto!", this.nome);;
+            System.out.printf("e %s está virado para mesma direção do objeto!", this.nome);
         }
     }
 }

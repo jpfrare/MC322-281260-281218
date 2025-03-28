@@ -14,7 +14,8 @@ public class RoboAereoRelator extends RoboAereo {
         System.out.println("Relatorio numero " + this.n_relatorios + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
         for(Robo r: robos){
             if(r.getPosicaoZ() < altura_corte){
-                System.out.println("Robo " + r.getNome() + " na posicao(" + r.getPosicaoX() +"," + r.getPosicaoY() + "," + r.getPosicaoZ() + ")");
+                System.out.println("Robo " + r.getNome() + ":");
+                r.exibirPosicao();
             }
         }
     }
