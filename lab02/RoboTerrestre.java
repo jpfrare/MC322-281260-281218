@@ -19,4 +19,8 @@ public class RoboTerrestre extends Robo {
         this.setPosicaoX(this.getPosicaoX() + deltaX);
         this.setPosicaoY(this.getPosicaoY() + deltaY);
     }
+
+    int getPosicaoZ() {
+        return 0;
+    }
 }
