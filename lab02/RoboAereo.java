@@ -22,7 +22,8 @@ public class RoboAereo extends Robo {
     int getAltitudeMax(){
         return this.altitudeMax;
     }
-
+    
+    @Override
     int getPosicaoZ(){
         return this.posicaoZ;
     }

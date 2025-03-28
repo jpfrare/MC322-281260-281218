@@ -39,6 +39,10 @@ public abstract class Robo {
         return this.posicaoY;
     }
 
+    int getPosicaoZ() {
+        return 0;
+    }
+
     void setDirecao(String direcao){
         //muda a direção do robô
         this.direcao = direcao;

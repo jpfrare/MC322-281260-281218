@@ -8,9 +8,9 @@ public class RoboAereoRelator extends RoboAereo {
     }
 
     void gerar_relatorio(ArrayList<Robo> robos){
-        int altura_corte = this.getAltitude();
+        int altura_corte = this.getPosicaoZ();
         for(Robo r: robos){
-            if(r.getA)
+            if(r.getPO)
         }
     }
 
