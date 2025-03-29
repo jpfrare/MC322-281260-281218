@@ -12,7 +12,7 @@ public class RoboAereoRelator extends RoboAereo {
         int altura_corte = this.getPosicaoZ(); //altura do proprio robo
         this.n_relatorios++; //atualizacao de relatorios ja feitos
         //impressao do relatorios de robos a uma altura menor:
-        System.out.println("\nRelatorio numero " + this.n_relatorios + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
+        System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
         for(Robo r: this.getAmbiente().robos){
             if(r.getPosicaoZ() < altura_corte){
                 r.exibirPosicao();
