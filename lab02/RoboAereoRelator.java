@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 public class RoboAereoRelator extends RoboAereo {
     //robo aereo capaz de identificar todos os robos que estao a uma altura abaixo dele e emitir um relatorio de sua posicao
     int n_relatorios;
@@ -8,17 +7,18 @@ public class RoboAereoRelator extends RoboAereo {
         n_relatorios = 0; //numero de relatorios emitidos pelo robo
     }
 
-    void gerar_relatorio(ArrayList<Robo> robos){
+    void gerar_relatorio(){
         //gera um relatorio do conjunto de robos (aereos ou terrestres) que estao a uma altura abaixo do RoboAereoRelator
         int altura_corte = this.getPosicaoZ(); //altura do proprio robo
         this.n_relatorios++;
-        System.out.println("Relatorio numero " + this.n_relatorios + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
-        for(Robo r: robos){
+        System.out.println("\nRelatorio numero " + this.n_relatorios + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
+        for(Robo r: this.getAmbiente().robos){
             if(r.getPosicaoZ() < altura_corte){
-                System.out.println("Robo " + r.getNome() + ":");
                 r.exibirPosicao();
             }
         }
+
+        System.out.println("fim do relaório!\n");
     }
 
     int getNrelatorios(){ //retorna a quantidade de relatorios feitos pelo robo

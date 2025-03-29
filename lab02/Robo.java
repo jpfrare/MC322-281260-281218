@@ -91,12 +91,12 @@ public abstract class Robo {
         }
 
         else {
-            System.out.printf("Movimento Inválido!\n");
+            System.out.printf("Movimento inválido!\n");
         }
     }
 
     void exibirPosicao() {
-        System.out.printf("Posição X: %d, PosiçãoY: %d\n", this.getPosicaoX(), this.getPosicaoY());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getDirecao());
     }
 
 
@@ -126,8 +126,8 @@ public abstract class Robo {
             }
         }
 
-        if (this.nome.equals(direcaoObstaculo)) {
-            System.out.printf("e %s está virado para mesma direção do objeto!", this.nome);
+        if (this.direcao.equals(direcaoObstaculo)) {
+            System.out.printf("e %s está virado para mesma direção do objeto!\n", this.nome);
         }
     }
 }
