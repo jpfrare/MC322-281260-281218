@@ -23,10 +23,5 @@ public class Main {
         dinamico_3.exibirPosicao();
         relator_1.exibirPosicao();
         relator_1.gerar_relatorio(simulador_1.robos);
-
-
-
-
-        
     }
 }
