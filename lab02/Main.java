@@ -7,7 +7,7 @@ public class Main {
         RoboAereoDinamico dinamico_2 = new RoboAereoDinamico(12, 15, 7, 10, "Dinamico2", simulador_1, 5, "norte");
         RoboAereoDinamico dinamico_3 = new RoboAereoDinamico(12, 15, 16, 25, "Dinamico3", simulador_1, 3, "norte");
         RoboTerrestre terrestre_1 = new RoboTerrestre(1, 6, "Robo01", 3, simulador_1, "norte");
-        RoboAereoRelator relator_1 = new RoboAereoRelator(35, 20, 12, 25, "Terrestre01", simulador_1, "norte");
+        RoboAereoRelator relator_1 = new RoboAereoRelator(35, 20, 12, 25, "Relator01", simulador_1, "norte");
         
         terrestre_1.exibirPosicao();
         System.out.println("");
@@ -25,6 +25,40 @@ public class Main {
         dinamico_2.exibirPosicao();
         dinamico_3.exibirPosicao();
         relator_1.exibirPosicao();
-        relator_1.gerar_relatorio(simulador_1.robos);
+        relator_1.gerar_relatorio();
+
+        RoboTerrestreTopeira topeira = new RoboTerrestreTopeira(0, 0, "topeira", 50, simulador_1, -20, "sul");
+        topeira.exibirPosicao();
+        topeira.mover(30, 20, -10);
+        topeira.exibirPosicao();
+        topeira.mover(10, 10,  -10);
+        topeira.exibirPosicao();
+        topeira.mover(0,0, 21);
+        topeira.identificarObstaculo();
+
+
+        System.out.println("");
+
+        RoboTerrestreAOleo oleo = new RoboTerrestreAOleo(0, 0, "oleo", 10, simulador_1, "sul");
+        oleo.exibirLubrificacao();
+
+        oleo.mover(10, 10);
+        oleo.identificarObstaculo();
+        oleo.exibirPosicao();
+        oleo.exibirLubrificacao();
+
+        oleo.mover(0, 5); //vai bater no obstaculo
+        oleo.exibirPosicao();
+        oleo.exibirLubrificacao();
+
+        oleo.mover(0,2); //vai ficar na direção do obstaculo
+        oleo.identificarObstaculo();
+        oleo.exibirPosicao();
+        oleo.mover(-10, -10);
+        oleo.exibirPosicao();
+        oleo.exibirLubrificacao();
+
+        oleo.AlterarLubrificacao(0.2f);
+        oleo.exibirLubrificacao();
     }
 }
