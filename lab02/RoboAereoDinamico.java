@@ -21,7 +21,7 @@ public class RoboAereoDinamico extends RoboAereo {
             //caso o robo nao tenha sido totalmente descarregado
             this.nivel_energetico--;
             //reduz a capacidade de voar mais alto proporcionalente ao nivel energetico atual
-            this.altitudemax_atual = this.getAltitudeMax() * ((this.nivel_energetico + 1) / this.capacidade);
+            this.altitudemax_atual = (this.getAltitudeMax() * (this.nivel_energetico + 1)) / this.capacidade;
             if(this.getPosicaoZ() > this.altitudemax_atual) //corrige a altura atual com a altura maxima menor
                 this.setPosicaoZ(this.altitudemax_atual);
             
@@ -51,14 +51,30 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     void mover(int delta_x, int delta_y, int delta_z, Ambiente espaco){
-        //o movimento horizontal aparentemente sera herdado da classe robo
+        //salvando as posicoes iniciais
+        int x_inicial = this.getPosicaoX();
+        int y_inicial = this.getPosicaoY();
+        int z_inicial = this.getPosicaoZ();
         super.mover(delta_x, delta_y); //
-        this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente altura maxima possivel para o robo
-        if(delta_z > 0){
-            this.subir(delta_z, espaco);
-        }
-        else{ //verificar se nao sera necessario override
-            super.descer(delta_z);
+        if(this.getPosicaoX() - x_inicial == delta_x && this.getPosicaoY() - y_inicial == delta_y){
+            if(delta_z > 0){
+                this.subir(delta_z, espaco);
+                if(z_inicial == this.getPosicaoZ()){
+                    this.setPosicaoX(x_inicial);
+                    this.setPosicaoY(y_inicial);
+                }
+                else
+                    this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente altura maxima possivel para o robo   
+            }
+            else{ //verificar se nao sera necessario override
+                super.descer(delta_z);
+                if(delta_z != 0 && z_inicial == this.getPosicaoZ()){
+                    this.setPosicaoX(x_inicial);
+                    this.setPosicaoY(y_inicial);
+                }
+                else
+                    this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente altura maxima possivel para o robo
+            }
         }
     }
 
