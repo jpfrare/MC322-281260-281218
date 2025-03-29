@@ -31,6 +31,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         super.mover(deltaX, deltaY);
 
         if (deltaX == this.getPosicaoX() - xo && deltaY == this.getPosicaoY() - yo) {
+            //se realmente se moveu em xy, move-se em z
             this.profundidade += deltaZ;
         }
     }
