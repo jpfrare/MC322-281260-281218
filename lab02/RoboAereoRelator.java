@@ -3,8 +3,8 @@ public class RoboAereoRelator extends RoboAereo {
     //robo aereo capaz de identificar todos os robos que estao a uma altura abaixo dele e emitir um relatorio de sua posicao
     int n_relatorios;
 
-    public RoboAereoRelator(int posicaoXo, int posicaoYo, int alt_o, int alt_max, String nome, Ambiente a){
-        super(posicaoXo, posicaoYo, alt_o, alt_max, nome, a);
+    public RoboAereoRelator(int posicaoXo, int posicaoYo, int alt_o, int alt_max, String nome, Ambiente a, String direcao){
+        super(posicaoXo, posicaoYo, alt_o, alt_max, nome, a, direcao);
         n_relatorios = 0; //numero de relatorios emitidos pelo robo
     }
 

@@ -5,12 +5,13 @@ public abstract class Robo {
     private int posicaoY;
     private final Ambiente habitat;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, String direcao) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
         this.nome = nome;
         this.habitat = habitat;
+        this.direcao = direcao;
         
         this.habitat.adicionaRobo(this);
     }
@@ -40,6 +41,7 @@ public abstract class Robo {
     }
 
     int getPosicaoZ() {
+        //esse método torna possível a implementação de uma análise de arraylist do ambiente baseada na dimensão Z
         return 0;
     }
 
