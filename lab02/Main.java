@@ -18,7 +18,7 @@ public class Main {
         dinamico_1.exibirPosicao();
         dinamico_1.mover(5,-2,1);
         dinamico_1.exibirPosicao();
-        dinamico_1.mover(5,-2,1, simulador_1);
+        dinamico_1.mover(5,-2,1);
         dinamico_1.exibirPosicao();
 
         System.out.println("");
