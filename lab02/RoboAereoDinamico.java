@@ -8,8 +8,8 @@ public class RoboAereoDinamico extends RoboAereo {
     private int altitudemax_atual;
     private int nivel_energetico;
 
-    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int capacidade){
-        super(posXo, posYo, alt_o, alt_max, nome, a);
+    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int capacidade, String direcao){
+        super(posXo, posYo, alt_o, alt_max, nome, a, direcao);
         this.capacidade = capacidade; //capacidade energetica do robo
         this.nivel_energetico = capacidade; //inicializa o robo com capacidade energetica maxima ("bateria cheia")
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima
@@ -39,10 +39,10 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     @Override
-    void subir(int delta_h, Ambiente espaco){
+    void subir(int delta_h){
         //similar ao subir da classe robo, agora a altura maxima é condicionada ao nivel energetico atual do robo
         int pos_final = this.getPosicaoZ() + delta_h;
-        if(espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudemax_atual)){
+        if(this.getAmbiente().dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudemax_atual)){
             this.setPosicaoZ(pos_final);
         }
         else{
@@ -50,7 +50,7 @@ public class RoboAereoDinamico extends RoboAereo {
         }
     }
 
-    void mover(int delta_x, int delta_y, int delta_z, Ambiente espaco){
+    void mover(int delta_x, int delta_y, int delta_z){
         //salvando as posicoes iniciais
         int x_inicial = this.getPosicaoX();
         int y_inicial = this.getPosicaoY();
@@ -58,7 +58,7 @@ public class RoboAereoDinamico extends RoboAereo {
         super.mover(delta_x, delta_y); //
         if(this.getPosicaoX() - x_inicial == delta_x && this.getPosicaoY() - y_inicial == delta_y){
             if(delta_z > 0){
-                this.subir(delta_z, espaco);
+                this.subir(delta_z);
                 if(z_inicial == this.getPosicaoZ()){
                     //movimento foi invalido na subida, objeto nao muda de posicao 
                     this.setPosicaoX(x_inicial);
