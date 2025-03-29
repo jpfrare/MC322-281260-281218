@@ -10,13 +10,20 @@ public class Main {
         RoboAereoRelator relator_1 = new RoboAereoRelator(35, 20, 12, 25, "Terrestre01", simulador_1);
         
         terrestre_1.exibirPosicao();
+        System.out.println("");
         dinamico_1.exibirPosicao();
+        dinamico_1.mover(10, 5, 8, simulador_1);
+        dinamico_1.exibirPosicao();
+        dinamico_1.mover(5,-2,1, simulador_1);
+        dinamico_1.exibirPosicao();
+        System.out.println("");
         dinamico_2.exibirPosicao();
         dinamico_3.exibirPosicao();
         relator_1.exibirPosicao();
         relator_1.gerar_relatorio(simulador_1.robos);
 
-        
+
+
 
         
     }

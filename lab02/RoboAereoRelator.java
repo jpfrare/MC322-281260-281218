@@ -5,11 +5,12 @@ public class RoboAereoRelator extends RoboAereo {
 
     public RoboAereoRelator(int posicaoXo, int posicaoYo, int alt_o, int alt_max, String nome, Ambiente a){
         super(posicaoXo, posicaoYo, alt_o, alt_max, nome, a);
-        n_relatorios = 0;
+        n_relatorios = 0; //numero de relatorios emitidos pelo robo
     }
 
     void gerar_relatorio(ArrayList<Robo> robos){
-        int altura_corte = this.getPosicaoZ();
+        //gera um relatorio do conjunto de robos (aereos ou terrestres) que estao a uma altura abaixo do RoboAereoRelator
+        int altura_corte = this.getPosicaoZ(); //altura do proprio robo
         this.n_relatorios++;
         System.out.println("Relatorio numero " + this.n_relatorios + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
         for(Robo r: robos){
@@ -18,6 +19,10 @@ public class RoboAereoRelator extends RoboAereo {
                 r.exibirPosicao();
             }
         }
+    }
+
+    int getNrelatorios(){ //retorna a quantidade de relatorios feitos pelo robo
+        return this.n_relatorios;
     }
 
     

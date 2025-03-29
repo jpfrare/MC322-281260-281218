@@ -9,13 +9,12 @@ public class RoboAereo extends Robo {
     }
 
     void subir(int delta_h, Ambiente espaco){
-        this.posicaoZ += delta_h;
-        if(!espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), this.posicaoZ) || !(this.posicaoZ <= this.altitudeMax)){
-            //a altura apos a subida viola o criterio do ambiente ou do proprio robo: robo sobe para a menor altura possivel (satisfaz ambos os casos)
-            if(this.altitudeMax <= espaco.getAltura())
-                this.posicaoZ = this.altitudeMax;
-            else
-                this.posicaoZ = espaco.getAltura();
+        int pos_final = this.getPosicaoZ() + delta_h;
+        if(espaco.dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudeMax)){
+            this.setPosicaoZ(pos_final);
+        }
+        else{
+            System.out.println("Movimento Invalido de subida!");
         }
     }
 
@@ -38,10 +37,13 @@ public class RoboAereo extends Robo {
     }
 
     void descer(int delta_h){
-        this.posicaoZ -= delta_h;
-        if(this.posicaoZ <= 0){
-            //desce ate o zero(maior descida possivel)
-            this.posicaoZ = 0;
+        //apenas desce até uma posicao valida (altura > 0)
+        int pos_final = this.getPosicaoZ() - delta_h;
+        if(pos_final > 0){
+            this.setPosicaoZ(pos_final);
+        }
+        else{
+            System.out.println("Movimento invalido de descida!");
         }
     }
 
