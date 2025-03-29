@@ -9,9 +9,9 @@ public class RoboAereo extends Robo {
     }
 
     void subir(int delta_h){
-        int pos_final = this.getPosicaoZ() + delta_h;
+        int pos_final = this.getPosicaoZ() + delta_h; //posicao final prevista (caso seja um movimento valido)
         if(this.getAmbiente().dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudeMax)){
-            this.setPosicaoZ(pos_final);
+            this.setPosicaoZ(pos_final); //o movimento é valido
         }
         else{
             System.out.println("Movimento Invalido de subida!");

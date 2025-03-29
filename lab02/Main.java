@@ -8,24 +8,30 @@ public class Main {
         RoboAereoDinamico dinamico_3 = new RoboAereoDinamico(12, 15, 16, 25, "Dinamico3", simulador_1, 3, "norte");
         RoboTerrestre terrestre_1 = new RoboTerrestre(1, 6, "Robo01", 3, simulador_1, "norte");
         RoboAereoRelator relator_1 = new RoboAereoRelator(35, 20, 12, 25, "Relator01", simulador_1, "norte");
-        
+        RoboAereoRelator relator_2 = new RoboAereoRelator(5, 5, 15, 20, "Relator02", simulador_1, "norte");
+
         terrestre_1.exibirPosicao();
         System.out.println("");
         dinamico_1.exibirPosicao();
-        dinamico_1.mover(10, 5, 8);
+        dinamico_1.mover(10, 5, 8); //movimento sera invalido devido extrapolar a altura maxima: robo nao movera
         dinamico_1.exibirPosicao();
-        dinamico_1.mover(5,-2,1);
+        dinamico_1.mover(5,-2,1); // o robo executara o movimento e reduzira seu nivel energetico, consequentemente sua altura maxima
         dinamico_1.exibirPosicao();
-        dinamico_1.mover(5,-2,1);
+        dinamico_1.mover(5,-2,-1); // o robo executara o movimento e reduzira seu nivel energetico a sua altura maxima
+        dinamico_1.recarregar(); //recarrega o robo e aumenta sua altura macima
         dinamico_1.exibirPosicao();
-        dinamico_1.mover(5,-2,1);
+        dinamico_1.mover(5,5,5); //apos recarregado, o robo podera subir ate a sua altura maxima!
         dinamico_1.exibirPosicao();
 
         System.out.println("");
         dinamico_2.exibirPosicao();
         dinamico_3.exibirPosicao();
-        relator_1.exibirPosicao();
-        relator_1.gerar_relatorio();
+        relator_1.exibirPosicao(); //somente podera imprimir um relatorio dos robos que estao abaixo dele (nao exergara os robos dinamico_3 e relator_2)
+        relator_1.gerar_relatorio(); //gerará um relatorio com o nome e posicao de cada robo abaixo dele
+        relator_2.exibirPosicao();
+        relator_2.gerar_relatorio(); //relator_2 acima do relator_1 gerara um relatorio contendo mais robos
+        relator_1.subir(8); 
+        relator_1.gerar_relatorio(); //apos subir a uma altura maior do que o relator_2, o relator_1 podera visualizar o relator_2
 
         RoboTerrestreTopeira topeira = new RoboTerrestreTopeira(0, 0, "topeira", 50, simulador_1, -20, "sul");
         topeira.exibirPosicao();

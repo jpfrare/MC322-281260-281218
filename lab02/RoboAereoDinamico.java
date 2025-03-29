@@ -67,8 +67,8 @@ public class RoboAereoDinamico extends RoboAereo {
                 else
                     this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente da altura maxima possivel para o robo   
             }
-            else{ //verificar se nao sera necessario override
-                super.descer(delta_z);
+            else{ 
+                super.descer(-delta_z);
                 if(delta_z != 0 && z_inicial == this.getPosicaoZ()){
                     //movimento invalido na descida, objeto nao muda de posicao
                     this.setPosicaoX(x_inicial);
