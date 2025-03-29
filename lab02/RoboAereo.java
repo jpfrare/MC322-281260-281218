@@ -33,7 +33,7 @@ public class RoboAereo extends Robo {
 
     @Override
     void exibirPosicao() {
-        System.out.printf("Posição X: %d, PosiçãoY: %d, PosicaoZ: %d\n", this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
     }
 
     void descer(int delta_h){
