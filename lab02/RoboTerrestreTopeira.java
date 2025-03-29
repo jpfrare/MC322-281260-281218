@@ -1,24 +1,33 @@
 public class RoboTerrestreTopeira extends RoboTerrestre {
-    private int profundidade; 
-    private int profundidadeMax; //valor < 0
+    private int profundidade; //escava o ambiente
+    private final int profundidadeMax; //valor < 0
 
     public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, int velocidademax, Ambiente a, 
     int profundidadeMax, String direcao) {
+        //construtor levando em consideração os novos atributos
         super(posicaoXo, posicaoYo, nome, velocidademax, a, direcao);
         this.profundidade = 0;
         this.profundidadeMax = profundidadeMax;
     }
 
+    //sets e gets para as profundidades
     int getProfundidade() {
         return this.profundidade;
     }
- 
+    
+    void setProfundidade(int profundidade) {
+        if (profundidade < 0 && profundidade > this.profundidadeMax) {
+            this.profundidade = profundidade;
+        }
+    }
+
     int getProfundidadeMax() {
         return this.profundidadeMax;
     }
 
 
     void mover(int deltaX, int deltaY, int deltaZ) {
+        //faz o movimento, dando prioridade a possibilidade de movimento na na direção z
         int xo = this.getPosicaoX();
         int yo = this.getPosicaoY();
 
@@ -38,6 +47,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     
     @Override
     void exibirPosicao() {
+        //leva em cosideração a nova direção
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.profundidade, this.getDirecao());
     }
 }
