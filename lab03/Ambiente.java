@@ -28,7 +28,6 @@ public class Ambiente {
 
 
     public void registra_no_mapa(Obstaculo objeto){
-        //por enquanto considerando x1 < x2
         int i, j, x_ini, x_fim, y_ini, y_fim;
         x_ini = objeto.getx1();
         x_fim = objeto.getx2();
@@ -56,7 +55,7 @@ public class Ambiente {
 
     public void adicionaObstaculo(Obstaculo objeto){
         this.obstaculos.add(objeto);
-
+        this.registra_no_mapa(objeto);
     }
 
     public int getArrayTamanho() {
