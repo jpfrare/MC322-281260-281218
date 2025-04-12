@@ -1,10 +1,9 @@
 public class RoboAereo extends Robo {
-    private int posicaoZ;
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, String direcao){
         super(posXo, posYo, nome, a, direcao);
-        this.posicaoZ= alt_o;
+        this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
     }
 
@@ -20,15 +19,6 @@ public class RoboAereo extends Robo {
 
     int getAltitudeMax(){
         return this.altitudeMax;
-    }
-
-    @Override
-    int getPosicaoZ(){
-        return this.posicaoZ;
-    }
-
-    void setPosicaoZ(int pos_z){
-        this.posicaoZ = pos_z;
     }
 
     @Override
