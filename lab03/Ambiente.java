@@ -4,8 +4,8 @@ public class Ambiente {
     private final int X;
     private final int Y;
     private final int Z;
-    public final ArrayList<Robo> robos;
-    public final ArrayList<Obstaculo> obstaculos;
+    private final ArrayList<Robo> robos;
+    private final ArrayList<Obstaculo> obstaculos;
     private int[][] mapa;
 
     public Ambiente(int x, int y, int z) {
@@ -72,6 +72,11 @@ public class Ambiente {
 
     public int getAltura() {
         return this.Z;
+    }
+
+    public int getPosicaoMapa(int x, int y){
+        //retorna o valor correspondente a posicao x y no mapa(0 se nao for posicao de um obstaculo, e z diferente de zero sendo a altura do obstaculo)
+        return this.mapa[x][y];
     }
 
     public Robo getRobo(int pos){
