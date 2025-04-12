@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Robo {
     private final String nome;
     private String direcao;
@@ -5,6 +7,7 @@ public abstract class Robo {
     private int posicaoY;
     private int posicaoZ;
     private final Ambiente habitat;
+    private final ArrayList<Sensor> sensores;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, String direcao) {
         //construtor padrão
@@ -14,7 +17,7 @@ public abstract class Robo {
         this.habitat = habitat;
         this.direcao = direcao;
         this.posicaoZ = 0;
-        
+        this.sensores = new ArrayList<>();
         this.habitat.adicionaRobo(this);
     }
 
@@ -70,6 +73,10 @@ public abstract class Robo {
     void mover(int deltaX, int deltaY){
         
         
+    }
+
+    void adicionaSensor(Sensor s) {
+        this.sensores.add(s);
     }
 
     void exibirPosicao() {
