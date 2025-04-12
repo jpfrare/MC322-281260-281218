@@ -1,7 +1,7 @@
 public enum TipoObstaculo {
-    TIPO1(0), 
-    TIPO2(6), 
-    TIPO3(-5);
+    COLUNA(10), 
+    BLOCO(1), 
+    PLACA(2);
 
     private final int altura;
 

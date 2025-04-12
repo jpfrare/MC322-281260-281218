@@ -5,7 +5,7 @@ public class Ambiente {
     private final int Y;
     private final int Z;
     public final ArrayList<Robo> robos;
-    public final ArrayList<TipoObstaculo> obstaculos;
+    public final ArrayList<Obstaculo> obstaculos;
     private int[][] mapa;
 
     public Ambiente(int x, int y, int z) {
@@ -15,9 +15,33 @@ public class Ambiente {
         this.Z = z;
         this.robos = new ArrayList<>();
         this.obstaculos = new ArrayList<>();
-        this.mapa = new int[x][y];
+        this.mapa = new int[x + 1][y + 1]; //posicoes (0,0) e (x, y) serao validas
+        this.inicializa_matriz(x, y);
     }
-    
+
+    public void inicializa_matriz(int x, int y){
+        int i, j;
+        for (i = 0; i <= x; i++){
+            for(j = 0; j <= y; j++)
+                this.mapa[i][j] = 0;
+        }
+    }
+
+
+    public void registra_no_mapa(Obstaculo objeto){
+        //por enquanto considerando x1 < x2
+        int i, j, x_ini, x_fim, y_ini, y_fim;
+        x_ini = objeto.getx1();
+        x_fim = objeto.getx2();
+        y_ini = objeto.gety1();
+        y_fim = objeto.gety2();
+        for(i = x_ini; i <= x_fim && i <= this.X; i++){
+            for(j = y_ini; j <= y_fim && j <= this.Y; j++){
+                this.mapa[i][j] = objeto.getTipo().getAltura();
+            }
+        }
+    }
+  
     boolean eh_obstaculo(){ return true;}
 
     public boolean dentroDosLimites(int x, int y, int z) {
@@ -29,6 +53,11 @@ public class Ambiente {
     public void adicionaRobo(Robo robo){
         //adiciona um objeto da classe robo ao array de robos
         this.robos.add(robo);
+    }
+
+    public void adicionaObstaculo(Obstaculo objeto){
+        this.obstaculos.add(objeto);
+
     }
 
     public int getArrayTamanho() {
