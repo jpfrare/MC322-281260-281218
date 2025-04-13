@@ -16,14 +16,14 @@ public class Ambiente {
         this.robos = new ArrayList<>();
         this.obstaculos = new ArrayList<>();
         this.mapa = new int[x + 1][y + 1]; //posicoes (0,0) e (x, y) serao validas
-    }
-
-    public void inicializa_mapa(){
-        int i, j;
-        for (i = 0; i <= this.X; i++){
-            for(j = 0; j <= Y; j++)
-                this.mapa[i][j] = 0;
+        
+        //inicialização do mapa
+        for (int i = 0; i < this.X + 1; i++) {
+            for (int j = 0; j < this.Y + 1; j++) {
+                mapa[i][j] = 0;
+            }
         }
+
     }
 
     public void imprime_mapa(){
