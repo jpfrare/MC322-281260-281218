@@ -72,34 +72,61 @@ public abstract class Robo {
 
     boolean moverR(int deltaX, int deltaY) {
         if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0) return false;
+        //está em uma posição inválida
         
         if (this.sensores.get(0).getRaio() < Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
 
             if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY] != 0) return false;
 
             //nesse caso, a posição desejada esta no alance do sensor e está desocupada
-            this.habitat.getMapa()[this.posicaoX][this.posicaoY] = 0; //desocupando a posição original
             this.posicaoX += deltaX;
             this.posicaoY += deltaY;
 
-            this.habitat.getMapa()[this.posicaoX][this.posicaoY] = 1; //ocupando a posição final
-
             return true;
+
         } else {
             int xo = this.posicaoX;
-            int yo = this.posicaoY;
+            int deltaxo = deltaX;
 
             if (deltaX < 0) {
                 this.posicaoX--;
                 deltaX++;
 
-            } else {
+            } else if (deltaX > 0) {
                 this.posicaoX++;
                 deltaX--;
+
+            } else {
+                //ja se moveu tudo em x, agora só falta tentar em y
+                if (deltaY < 0) {
+                    this.posicaoY--;
+                    deltaY++;
+    
+                } else if (deltaY > 0) {
+                    deltaY--;
+                    this.posicaoY++;
+                }
+
+                return moverR(deltaxo, deltaY);
             }
-
             
+            if (!moverR(deltaX, deltaY)) {
+                //não conseguiu andar mais em X, vai voltar a posição e tentar avançar em y
+                this.posicaoX = xo;
+                deltaX = deltaxo;
+            } 
+            
+            if (deltaY < 0) {
+                this.posicaoY--;
+                deltaY++;
 
+            } else if (deltaY > 0) {
+                deltaY--;
+                this.posicaoY++;
+            }
+            
+            
+            return moverR(deltaxo, deltaY);
         }
     }
 
