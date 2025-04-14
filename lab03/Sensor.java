@@ -5,4 +5,8 @@ public class Sensor {
         this.raio = r;
     }
 
+    double getRaio(){
+        return this.raio;
+    }
+
 }

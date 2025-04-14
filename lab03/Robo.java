@@ -70,8 +70,46 @@ public abstract class Robo {
         return this.habitat;
     }
 
-    void mover(int deltaX, int deltaY){
+    boolean moverR(int deltaX, int deltaY) {
+        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0) return false;
         
+        if (this.sensores.get(0).getRaio() < Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
+
+            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY] != 0) return false;
+
+            //nesse caso, a posição desejada esta no alance do sensor e está desocupada
+            this.habitat.getMapa()[this.posicaoX][this.posicaoY] = 0; //desocupando a posição original
+            this.posicaoX += deltaX;
+            this.posicaoY += deltaY;
+
+            this.habitat.getMapa()[this.posicaoX][this.posicaoY] = 1; //ocupando a posição final
+
+            return true;
+        } else {
+            int xo = this.posicaoX;
+            int yo = this.posicaoY;
+
+            if (deltaX < 0) {
+                this.posicaoX--;
+                deltaX++;
+
+            } else {
+                this.posicaoX++;
+                deltaX--;
+            }
+
+            
+
+        }
+    }
+
+    void mover(int deltaX, int deltaY){
+        if (!this.habitat.dentroDosLimites(deltaX, deltaY, 0)) return; //confere se a região está dentro dos limites
+
+        if (this.sensores.get(0).getRaio() < Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
+    
+        }
+
         
     }
 

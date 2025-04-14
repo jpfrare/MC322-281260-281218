@@ -82,9 +82,9 @@ public class Ambiente {
         return this.Z;
     }
 
-    public int getPosicaoMapa(int x, int y){
+    public int[][] getMapa(){
         //retorna o valor correspondente a posicao x y no mapa(0 se nao for posicao de um obstaculo, e z diferente de zero sendo a altura do obstaculo)
-        return this.mapa[x][y];
+        return this.mapa;
     }
 
     public Robo getRobo(int pos){
