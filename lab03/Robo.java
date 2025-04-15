@@ -84,46 +84,53 @@ public abstract class Robo {
             return true;
 
         } else {
-            int xo = this.posicaoX;
-            int deltaxo = deltaX;
+            for (int passox = this.sensor.getRaio(); passox >= 0; passox--) {
+                int xo = this.posicaoX;
+                int deltaxo = deltaX;
 
-            if (deltaX != 0) {
-                if (deltaX > 0) {
-                    deltaX--;
-                    this.posicaoX++;
-                } else {
-                    deltaX++;
-                    this.posicaoX--;
+                if (deltaX != 0 && passox <= Math.abs(deltaX)) {
+                    if (deltaX > 0) {
+                        deltaX -= passox;
+                        this.posicaoX += passox;
+                    } else {
+                        deltaX += passox;
+                        this.posicaoX -= passox;
+                    }
+    
+                    if (!moverR(deltaX, deltaY)){
+                        this.posicaoX = xo;
+                        deltaX = deltaxo;
+    
+                    } else {
+                        return true;
+                    }
                 }
 
-                if (!moverR(deltaX, deltaY)){
-                    this.posicaoX = xo;
-                    deltaX = deltaxo;
+                for (int passoy = this.sensor.getRaio(); passoy >= 0; passoy--) {
 
-                } else {
-                    return true;
+                    int yo = this.posicaoY;
+                    int deltayo = deltaY;
+
+                    if (deltaY != 0 && passoy <= Math.abs(deltaY)) {
+                        if (deltaY > 0) {
+                            deltaY -= passoy;
+                            this.posicaoY += passoy;
+                        } else {
+                            deltaY += passoy;
+                            this.posicaoY -= passoy;
+                        }
+
+                        if (!moverR(deltaX, deltaY)){
+                            deltaY = deltayo;
+                            this.posicaoY = yo;
+                            return false;
+                        }
+
+                        return true;
+                    }
                 }
-
             }
-            int yo = this.posicaoY;
-            int deltayo = deltaY;
-
-            if (deltaY != 0) {
-                if (deltaY > 0) {
-                    deltaY--;
-                    this.posicaoY++;
-                } else {
-                    deltaY++;
-                    this.posicaoY--;
-                }
-
-                if (!moverR(deltaX, deltaY)){
-                    deltaY = deltayo;
-                    this.posicaoY = yo;
-                    return false;
-                }
-            }
-            return true;
+        return false;
         }
     }
 

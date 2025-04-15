@@ -1,11 +1,11 @@
 public class Sensor {
-    private final double raio;
+    private final int raio;
 
-    public Sensor(double r){
+    public Sensor(int r){
         this.raio = r;
     }
 
-    double getRaio(){
+    int getRaio(){
         return this.raio;
     }
 
