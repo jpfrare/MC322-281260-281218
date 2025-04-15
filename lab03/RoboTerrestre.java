@@ -2,9 +2,9 @@
 public class RoboTerrestre extends Robo {
     private final float velocidademax;
 
-    public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, int velocidademax, Ambiente a, String direcao) {
+    public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, int velocidademax, Ambiente a, String direcao, Sensor sensor) {
         //adiconar o atributo velocidade máxima
-        super(posicaoXo, posicaoYo, nome, a, direcao);
+        super(posicaoXo, posicaoYo, nome, a, direcao, sensor);
         this.velocidademax = velocidademax;
     }
 

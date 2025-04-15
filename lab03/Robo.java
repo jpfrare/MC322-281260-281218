@@ -7,9 +7,9 @@ public abstract class Robo {
     private int posicaoY;
     private int posicaoZ;
     private final Ambiente habitat;
-    private final ArrayList<Sensor> sensores;
+    private final Sensor sensor;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, String direcao) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, String direcao, Sensor sensor) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
@@ -17,8 +17,9 @@ public abstract class Robo {
         this.habitat = habitat;
         this.direcao = direcao;
         this.posicaoZ = 0;
-        this.sensores = new ArrayList<>();
         this.habitat.adicionaRobo(this);
+        this.sensor = sensor;
+        this.habitat.getMapa()[posicaoXo][posicaoYo] = 1;
     }
 
 
@@ -74,7 +75,7 @@ public abstract class Robo {
         if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0) return false;
         //está em uma posição inválida
         
-        if (this.sensores.get(0).getRaio() < Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
+        if (this.sensor.getRaio() >= Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
 
             if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY] != 0) return false;
 
@@ -96,53 +97,28 @@ public abstract class Robo {
                 this.posicaoX++;
                 deltaX--;
 
-            } else {
-                //ja se moveu tudo em x, agora só falta tentar em y
-                if (deltaY < 0) {
-                    this.posicaoY--;
-                    deltaY++;
-    
-                } else if (deltaY > 0) {
-                    deltaY--;
-                    this.posicaoY++;
-                }
-
-                return moverR(deltaxo, deltaY);
             }
-            
-            if (!moverR(deltaX, deltaY)) {
-                //não conseguiu andar mais em X, vai voltar a posição e tentar avançar em y
-                this.posicaoX = xo;
-                deltaX = deltaxo;
-            } 
-            
-            if (deltaY < 0) {
-                this.posicaoY--;
-                deltaY++;
 
-            } else if (deltaY > 0) {
-                deltaY--;
-                this.posicaoY++;
-            }
-            
-            
-            return moverR(deltaxo, deltaY);
+            return true;
         }
     }
 
     void mover(int deltaX, int deltaY){
         if (!this.habitat.dentroDosLimites(deltaX, deltaY, 0)) return; //confere se a região está dentro dos limites
+        int xo = this.posicaoX;
+        int yo = this.posicaoY;
+        this.getAmbiente().getMapa()[xo][yo] = 0;
 
-        if (this.sensores.get(0).getRaio() < Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
-    
+        if (moverR(deltaX, deltaY)) {
+            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] = 1;
+
+        } else {
+            this.getAmbiente().getMapa()[xo][yo] = 1;
+            System.out.println("movimento não realizado");
         }
 
-        
     }
 
-    void adicionaSensor(Sensor s) {
-        this.sensores.add(s);
-    }
 
     void exibirPosicao() {
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getDirecao());

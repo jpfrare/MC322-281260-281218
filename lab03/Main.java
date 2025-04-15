@@ -1,13 +1,21 @@
 public class Main {
     
     public static void main(String[] args) {
-        Ambiente teste = new Ambiente(40,50,30 );
+        Ambiente teste = new Ambiente(10,10,30 );
         TipoObstaculo muro = TipoObstaculo.MURO;
-        TipoObstaculo bloco = TipoObstaculo.BLOCO;
-        Obstaculo ob_1 = new Obstaculo(5, 10, 15, 10, muro);
-        Obstaculo ob_2 = new Obstaculo(30, 28, 45, 50, bloco);
+        Obstaculo ob_1 = new Obstaculo(3, 5, 2, 4, muro);
+        
         teste.adicionaObstaculo(ob_1);
-        teste.adicionaObstaculo(ob_2);
+        teste.imprime_mapa();
+        System.out.println("");
+
+
+        Sensor sensor = new Sensor(3);
+        RoboTerrestre r1 = new RoboTerrestre(0, 0, null, 30, teste, "norte", sensor);
+        teste.imprime_mapa();
+        r1.mover(5, 5);
+
+        System.out.println("");
         teste.imprime_mapa();
     }
 }

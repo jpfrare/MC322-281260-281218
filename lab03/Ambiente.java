@@ -27,22 +27,21 @@ public class Ambiente {
     }
 
     public void imprime_mapa(){
-        int i, j;
-        for (i = 0; i <= this.X; i++){
-            for(j = 0; j <= Y; j++)
+        for (int i = 0; i <= this.X; i++){
+            for(int j = 0; j <= this.Y; j++)
                 System.out.printf("%d ", this.mapa[i][j]);
             System.out.println("");
         }
     }
 
     public void registra_no_mapa(Obstaculo objeto){
-        int i, j, x_ini, x_fim, y_ini, y_fim;
+        int x_ini, x_fim, y_ini, y_fim;
         x_ini = objeto.getx1();
         x_fim = objeto.getx2();
         y_ini = objeto.gety1();
         y_fim = objeto.gety2();
-        for(i = x_ini; i <= x_fim && i <= this.X; i++){
-            for(j = y_ini; j <= y_fim && j <= this.Y; j++){
+        for(int i = x_ini; i <= x_fim; i++){
+            for(int j = y_ini; j <= y_fim; j++){
                 this.mapa[i][j] = objeto.getTipo().getAltura();
             }
         }
