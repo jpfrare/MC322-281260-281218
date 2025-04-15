@@ -51,9 +51,14 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     boolean moverDinamico(int delta_x, int delta_y, int delta_z){
+        int pos_zo = this.getPosicaoZ();
         if(delta_z > 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
-            this.moverDinamico(delta_x, delta_y, delta_z - 1);
+            this.setPosicaoZ(this.getPosicaoZ() + 1);
+            if(this.moverDinamico(delta_x, delta_y, delta_z - 1)){
+                return true;
+            }
+            
         }
         else if(delta_z == 0){
             if(this.moverR(delta_x, delta_y)){
@@ -64,8 +69,12 @@ public class RoboAereoDinamico extends RoboAereo {
         }
         else if(delta_z < 0 && this.getPosicaoZ() + delta_z >= 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
-            return this.moverR(delta_x, delta_y);
+            this.setPosicaoZ(this.getPosicaoZ() - 1);
+            if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
+                return true;
+            }
         }
+        this.setPosicaoZ(pos_zo);
         return false;
     }
 
