@@ -50,34 +50,23 @@ public class RoboAereoDinamico extends RoboAereo {
         }
     }
 
-    void mover(int delta_x, int delta_y, int delta_z){
-        //salvando as posicoes iniciais
-        int x_inicial = this.getPosicaoX();
-        int y_inicial = this.getPosicaoY();
-        int z_inicial = this.getPosicaoZ();
-        super.mover(delta_x, delta_y); //
-        if(this.getPosicaoX() - x_inicial == delta_x && this.getPosicaoY() - y_inicial == delta_y){
-            if(delta_z > 0){
-                this.subir(delta_z);
-                if(z_inicial == this.getPosicaoZ()){
-                    //movimento foi invalido na subida, objeto nao muda de posicao 
-                    this.setPosicaoX(x_inicial);
-                    this.setPosicaoY(y_inicial);
-                }
-                else
-                    this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente da altura maxima possivel para o robo   
-            }
-            else{ 
-                super.descer(-delta_z);
-                if(delta_z != 0 && z_inicial == this.getPosicaoZ()){
-                    //movimento invalido na descida, objeto nao muda de posicao
-                    this.setPosicaoX(x_inicial);
-                    this.setPosicaoY(y_inicial);
-                }
-                else
-                    this.reduzir_autonomia(); //reducao do nivel energetico ("bateria") e consequentemente da altura maxima possivel para o robo
-            }
+    boolean moverDinamico(int delta_x, int delta_y, int delta_z){
+        if(delta_z > 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
+            // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
+            this.moverDinamico(delta_x, delta_y, delta_z - 1);
         }
+        else if(delta_z == 0){
+            if(this.moverR(delta_x, delta_y)){
+                this.reduzir_autonomia();
+                return true;
+            }
+
+        }
+        else if(delta_z < 0 && this.getPosicaoZ() + delta_z >= 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
+            // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
+            return this.moverR(delta_x, delta_y);
+        }
+        return false;
     }
 
 

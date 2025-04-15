@@ -3,9 +3,8 @@ public class Main {
     public static void main(String[] args) {
         Ambiente teste = new Ambiente(10,10,30 );
         TipoObstaculo muro = TipoObstaculo.MURO;
-        Obstaculo ob_1 = new Obstaculo(3, 5, 2, 4, muro);
+        Obstaculo ob_1 = new Obstaculo(3, 5, 2, 4, muro, teste);
         
-        teste.adicionaObstaculo(ob_1);
         teste.imprime_mapa();
         System.out.println("");
 

@@ -4,8 +4,9 @@ public class Obstaculo {
     private final int y1;
     private final int y2;
     private final TipoObstaculo tipo;
+    private final Ambiente ambiente;
 
-    public Obstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo) {
+    public Obstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo, Ambiente local) {
         //garantir que this.x1 e this.y1 sejam menores que this.x2 e this.y2
         if(x1 < x2){
             this.x1 = x1;
@@ -24,6 +25,8 @@ public class Obstaculo {
             this.y2 = y1;
         }
         this.tipo = tipo;
+        this.ambiente = local;
+        this.ambiente.adicionaObstaculo(this);
     }
 
     TipoObstaculo getTipo() {
