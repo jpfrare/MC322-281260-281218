@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public abstract class Robo {
     private final String nome;
     private String direcao;
@@ -89,16 +87,42 @@ public abstract class Robo {
             int xo = this.posicaoX;
             int deltaxo = deltaX;
 
-            if (deltaX < 0) {
-                this.posicaoX--;
-                deltaX++;
+            if (deltaX != 0) {
+                if (deltaX > 0) {
+                    deltaX--;
+                    this.posicaoX++;
+                } else {
+                    deltaX++;
+                    this.posicaoX--;
+                }
 
-            } else if (deltaX > 0) {
-                this.posicaoX++;
-                deltaX--;
+                if (!moverR(deltaX, deltaY)){
+                    this.posicaoX = xo;
+                    deltaX = deltaxo;
+
+                } else {
+                    return true;
+                }
 
             }
+            int yo = this.posicaoY;
+            int deltayo = deltaY;
 
+            if (deltaY != 0) {
+                if (deltaY > 0) {
+                    deltaY--;
+                    this.posicaoY++;
+                } else {
+                    deltaY++;
+                    this.posicaoY--;
+                }
+
+                if (!moverR(deltaX, deltaY)){
+                    deltaY = deltayo;
+                    this.posicaoY = yo;
+                    return false;
+                }
+            }
             return true;
         }
     }
