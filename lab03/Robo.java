@@ -84,6 +84,8 @@ public abstract class Robo {
             return true;
 
         } else {
+            /*tenta se mover sempre começando pelo range máximo do sensor básico, primeiro no eixo X, depois no Y
+            se não, diminui o passo em 1*/
             for (int passox = this.sensor.getRaio(); passox >= 0; passox--) {
                 int xo = this.posicaoX;
                 int deltaxo = deltaX;
@@ -98,6 +100,7 @@ public abstract class Robo {
                     }
     
                     if (!moverR(deltaX, deltaY)){
+                        //não conseguiu fazer o movimento, retorna a posição em que estava
                         this.posicaoX = xo;
                         deltaX = deltaxo;
     
@@ -121,6 +124,7 @@ public abstract class Robo {
                         }
 
                         if (!moverR(deltaX, deltaY)){
+                            //semelhantemente ao eixo X
                             deltaY = deltayo;
                             this.posicaoY = yo;
                             return false;

@@ -12,7 +12,7 @@ public class Main {
         Sensor sensor = new Sensor(3);
         RoboTerrestre r1 = new RoboTerrestre(0, 0, null, 30, teste, "norte", sensor);
         teste.imprime_mapa();
-        r1.mover(5, 5);
+        r1.mover(9, 9);
 
         System.out.println("");
         teste.imprime_mapa();
