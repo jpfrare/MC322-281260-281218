@@ -13,11 +13,11 @@ public class RoboAereoRelator extends RoboAereo {
         this.n_relatorios++; //atualizacao de relatorios ja feitos
         //impressao do relatorios de robos a uma altura menor:
         System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
-        //for(Robo r: this.getAmbiente().robos){
-            //if(r.getPosicaoZ() < altura_corte){
-                //r.exibirPosicao();
-            //}
-        //}
+        for(Robo r: this.getAmbiente().getArrayRobos()){
+            if(r.getPosicaoZ() < altura_corte){
+                r.exibirPosicao();
+            }
+        }
 
         System.out.println("fim do relaório!\n");
     }

@@ -86,6 +86,10 @@ public class Ambiente {
         return this.mapa;
     }
 
+    public ArrayList<Robo> getArrayRobos(){
+        return this.robos;
+    }
+
     public Robo getRobo(int pos){
         return this.robos.get(pos);
     }
