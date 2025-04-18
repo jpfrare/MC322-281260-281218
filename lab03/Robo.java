@@ -69,9 +69,10 @@ public abstract class Robo {
         return this.habitat;
     }
 
-    boolean moverR(int deltaX, int deltaY) {
-        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0) return false;
+    boolean moverR(int deltaX, int deltaY, int movx, int movy, int [][] visitados) {
+        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0 || visitados[movx][movy] == 1) return false;
         //está em uma posição inválida
+        visitados[movx][movy] = 1;
         
         if (this.sensor.getRaio() >= Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
 
@@ -97,7 +98,7 @@ public abstract class Robo {
                         this.posicaoX -= passox;
                     }
     
-                    if (!moverR(deltaX, deltaY)){
+                    if (!moverR(deltaX, deltaY, movx + passox, movy, visitados)){
                         this.posicaoX = xo;
                         deltaX = deltaxo;
     
@@ -120,13 +121,14 @@ public abstract class Robo {
                             this.posicaoY -= passoy;
                         }
 
-                        if (!moverR(deltaX, deltaY)){
+                        if (!moverR(deltaX, deltaY, movx, movy + passoy, visitados)){
                             deltaY = deltayo;
                             this.posicaoY = yo;
-                            return false;
+                        }
+                        else{
+                            return true;
                         }
 
-                        return true;
                     }
                 }
             }
@@ -139,8 +141,17 @@ public abstract class Robo {
         int xo = this.posicaoX;
         int yo = this.posicaoY;
         this.getAmbiente().getMapa()[xo][yo] = 0;
+        
+        int abs_x = Math.abs(deltaX);
+        int abs_y = Math.abs(deltaY);
+        int [][] visitados = new int[abs_x + 1][abs_y + 1];
+        for(int i = 0; i <= abs_x; i++){
+            for(int j = 0; j <= abs_y; j++){
+                visitados[i][j] = 0;
+            }
+        }
 
-        if (moverR(deltaX, deltaY)) {
+        if (moverR(deltaX, deltaY, 0, 0, visitados)) {
             this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] = 1;
 
         } else {

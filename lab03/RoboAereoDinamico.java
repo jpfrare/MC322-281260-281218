@@ -50,25 +50,8 @@ public class RoboAereoDinamico extends RoboAereo {
         }
     }
 
-    void mover(int deltaX, int deltaY, int deltaZ){
-        int x0 = this.getPosicaoX();
-        int y0 = this.getPosicaoY();
-        int z0 = this.getPosicaoZ();
-        if(this.getAmbiente().dentroDosLimites(x0 + deltaX, y0 + deltaY, z0 + deltaZ) 
-        && z0 <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
-            
-            if(this.moverDinamico(deltaX, deltaY, deltaZ)){
-                this.reduzir_autonomia();
-            }
-            else{
-                this.setPosicaoX(x0);
-                this.setPosicaoY(y0);
-                this.setPosicaoZ(z0);
-            }
-        }
-    }
-
     boolean moverDinamico(int delta_x, int delta_y, int delta_z){
+        int pos_z0 = this.getPosicaoZ();
         if(delta_z > 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
             this.setPosicaoZ(this.getPosicaoZ() + 1);
@@ -87,7 +70,9 @@ public class RoboAereoDinamico extends RoboAereo {
                     visitados[i][j] = 0;
                 }
             }
-            if(this.moveR(delta_x, delta_y, visitados)){
+            if(this.moveR(delta_x, delta_y, 0, 0, visitados)){
+                this.setPosicaoX(this.getPosicaoX() + delta_x);
+                this.setPosicaoY(this.getPosicaoY() + delta_y);
                 return true;
             }
 
@@ -99,11 +84,47 @@ public class RoboAereoDinamico extends RoboAereo {
                 return true;
             }
         }
+        this.setPosicaoZ(pos_z0);
         return false;
     }
 
-    boolean moveR(int deltaX, int deltaY, int [][] visitados){
-        
+    boolean moveR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
+        visitados[passoX][passoY] = 1;
+        if(deltaX == 0 && deltaY == 0){
+            return true;
+        }
+        for(int i = 1; i <= 2; i++){
+            //iteracao: i igual a 1 move em x, i igual a 2 move em y
+            if(i == 1){ //mover em x
+                if(deltaX > 0){
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX() + 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                        if(moveR(deltaX - 1, deltaY, passoX + 1, passoY, visitados))
+                            return true;
+                    }
+                }
+                else if(deltaX < 0){
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX() - 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                        if(moveR(deltaX + 1, deltaY, passoX + 1, passoY, visitados))
+                            return true;
+                    }
+                }
+            }
+            if(i == 2){//mover em y
+                if(deltaY > 0){
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() + 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                        if(moveR(deltaX, deltaY - 1, passoX, passoY + 1, visitados))
+                            return true;
+                    }
+                }
+                else if(deltaY < 0){
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() - 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                        if(moveR(deltaX, deltaY + 1, passoX, passoY + 1, visitados))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

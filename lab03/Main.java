@@ -1,3 +1,5 @@
+
+
 public class Main {
     
     public static void main(String[] args) {
@@ -13,11 +15,13 @@ public class Main {
         RoboTerrestre r1 = new RoboTerrestre(0, 0, null, 30, teste, "norte", sensor);
         teste.imprime_mapa();
         r1.mover(5, 5);
+        r1.exibirPosicao();
+
 
         System.out.println("");
 
         RoboAereoDinamico rd1 = new RoboAereoDinamico(5,5,5,25,"dinamico010", teste, 7, "leste", sensor);
-        rd1.moverDinamico(5,5,5);
+        rd1.moverDinamico(-2,-4,5);
         rd1.exibirPosicao();
 
         System.out.println("");
