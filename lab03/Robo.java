@@ -137,7 +137,7 @@ public abstract class Robo {
     }
 
     void mover(int deltaX, int deltaY){
-        if (!this.habitat.dentroDosLimites(deltaX, deltaY, 0)) return; //confere se a região está dentro dos limites
+        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) return; //confere se a região está dentro dos limites
         int xo = this.posicaoX;
         int yo = this.posicaoY;
         this.getAmbiente().getMapa()[xo][yo] = 0;

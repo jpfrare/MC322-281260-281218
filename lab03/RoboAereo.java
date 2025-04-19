@@ -5,6 +5,7 @@ public class RoboAereo extends Robo {
         super(posXo, posYo, nome, a, direcao, sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
+        this.getAmbiente().getMapa()[posXo][posYo] = alt_o + 1;
     }
 
     void subir(int delta_h){
@@ -41,6 +42,10 @@ public class RoboAereo extends Robo {
                 if(!moverR(deltaX, deltaY, 0, 0, visitados)){
                     this.setPosicaoX(x_ini);
                     this.setPosicaoY(y_ini);
+                }
+                else{
+                    this.getAmbiente().getMapa()[x_ini][y_ini] = 0;
+                    this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()] = this.getPosicaoZ() + 1;
                 }
             }
         }
