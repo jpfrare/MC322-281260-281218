@@ -92,13 +92,18 @@ public class Ambiente {
         return this.robos;
     }
 
-    boolean impede_passagem(int h){
+    boolean impede_passagem(int x, int y, int h){
         for(Obstaculo obstaculo: this.obstaculos){
-            if(obstaculo.getTipo().getAltura() == h && !obstaculo.getTipo().getBloqueia()){
-                return false;
+            if(obstaculo.getTipo().getAltura() == this.getMapa()[x][y] && obstaculo.localObstaculo(x, y)){
+                if(!obstaculo.getTipo().getBloqueia()){
+                    return false; //qualquer que seja a altura o obstaculo nao é uma barreira fisica
+                }
+                else{
+                    return this.getMapa()[x][y] > h; //o obstaculo é uma barreira fisica e a passagem depende da altura do robo
+                }
             }
         }
-        return true;
+        return this.getMapa()[x][y] == h;   //caso em que o valor inteiro no mapa nao é de um obstaculo, mas a altura (posicao) de um robo
     }
 
     public Robo getRobo(int pos){

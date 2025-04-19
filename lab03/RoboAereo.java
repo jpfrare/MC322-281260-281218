@@ -57,7 +57,7 @@ public class RoboAereo extends Robo {
             if(i == 1){ //mover em x
                 if(deltaX > 0){
                     //primeiro verifica se a andar +1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX() + 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                    if(!this.getAmbiente().impede_passagem(this.getPosicaoX() + 1, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + 1][passoY] == 0){
                         this.setPosicaoX(this.getPosicaoX() + 1);
                         if(moverR(deltaX - 1, deltaY, passoX + 1, passoY, visitados))
                             return true;
@@ -65,7 +65,7 @@ public class RoboAereo extends Robo {
                 }
                 else if(deltaX < 0){
                     //primeiro verifica se a andar -1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX() - 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                    if(!this.getAmbiente().impede_passagem(this.getPosicaoX() - 1, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + 1][passoY] == 0){
                         this.setPosicaoX(this.getPosicaoX() - 1);
                         if(moverR(deltaX + 1, deltaY, passoX + 1, passoY, visitados))
                             return true;
@@ -75,7 +75,7 @@ public class RoboAereo extends Robo {
             if(i == 2){//mover em y
                 if(deltaY > 0){
                     //primeiro verifica se a andar +1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() + 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                    if(!this.getAmbiente().impede_passagem(this.getPosicaoX(), this.getPosicaoY() + 1, this.getPosicaoZ()) && visitados[passoX][passoY + 1] == 0){
                         this.setPosicaoY(this.getPosicaoY() + 1);
                         if(moverR(deltaX, deltaY - 1, passoX, passoY + 1, visitados))
                             return true;
@@ -83,7 +83,7 @@ public class RoboAereo extends Robo {
                 }
                 else if(deltaY < 0){
                     //primeiro verifica se a andar -1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() - 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                    if(!this.getAmbiente().impede_passagem(this.getPosicaoX(), this.getPosicaoY() + 1, this.getPosicaoZ()) && visitados[passoX][passoY + 1] == 0){
                         this.setPosicaoY(this.getPosicaoY() - 1);
                         if(moverR(deltaX, deltaY + 1, passoX, passoY + 1, visitados))
                             return true;

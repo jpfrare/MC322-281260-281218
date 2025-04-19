@@ -48,4 +48,8 @@ public class Obstaculo {
     int gety2(){
         return y2;
     }
+    
+    boolean localObstaculo(int x, int y){
+        return (x >= this.x1 && x <= this.x2 && y >= this.y1 && y <= this.y2);
+    }
 }
