@@ -63,7 +63,7 @@ public class RoboAereoDinamico extends RoboAereo {
         else if(delta_z == 0){
             int x_ini = this.getPosicaoX();
             int y_ini = this.getPosicaoY();
-            if(this.mover_horizontal(delta_x, delta_y)){
+            if((delta_x == 0 && delta_y == 0) || this.mover_horizontal(delta_x, delta_y)){
                 return true;
             }
             else{
@@ -75,7 +75,7 @@ public class RoboAereoDinamico extends RoboAereo {
         else if(delta_z < 0 && this.getPosicaoZ() + delta_z >= 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
             if(delta_x != 0 || delta_y != 0){ //caso o robo desca e mais provavel que primeiro mover horizontalmente e depois mover verticalmente seja um caminho valido
-                if(mover_horizontal(delta_x, delta_y)){
+                if(mover_horizontal(delta_x, delta_y)){ //mover horizontalmente em uma altura maior tem maior chance de ele passar por um obstaculo
                     this.setPosicaoZ(this.getPosicaoZ() - 1);
                     if(this.moverDinamico(0, 0, delta_z + 1)){
                         return true;

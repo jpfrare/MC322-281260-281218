@@ -20,8 +20,8 @@ public class Main {
 
         System.out.println("");
 
-        RoboAereoDinamico rd1 = new RoboAereoDinamico(5,5,5,25,"dinamico010", teste, 7, "leste", sensor);
-        rd1.moverDinamico(-2,-4,2);
+        RoboAereoDinamico rd1 = new RoboAereoDinamico(5,5,9,25,"dinamico010", teste, 7, "leste", sensor);
+        rd1.moverDinamico(-2,-4,-3);
         rd1.exibirPosicao();
         
 

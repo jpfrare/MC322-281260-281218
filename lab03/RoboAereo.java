@@ -38,11 +38,7 @@ public class RoboAereo extends Robo {
                         visitados[i][j] = 0;
                     }
                 }
-                if(moverR(deltaX, deltaY, 0, 0, visitados)){
-                    this.setPosicaoX(x_final);
-                    this.setPosicaoY(y_final);
-                }
-                else{
+                if(!moverR(deltaX, deltaY, 0, 0, visitados)){
                     this.setPosicaoX(x_ini);
                     this.setPosicaoY(y_ini);
                 }
