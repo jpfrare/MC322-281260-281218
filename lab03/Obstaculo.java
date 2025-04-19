@@ -26,7 +26,7 @@ public class Obstaculo {
         }
         this.tipo = tipo;
         this.ambiente = local;
-        this.ambiente.adicionaObstaculo(this);
+        //this.ambiente.adicionaObstaculo(this);
     }
 
     TipoObstaculo getTipo() {

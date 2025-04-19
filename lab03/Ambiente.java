@@ -60,9 +60,11 @@ public class Ambiente {
         this.robos.add(robo);
     }
 
-    public void adicionaObstaculo(Obstaculo objeto){
-        this.obstaculos.add(objeto);
-        this.registra_no_mapa(objeto);
+    public void adicionaObstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo){
+        //composicao ambiente-obstaculo
+        Obstaculo novo = new Obstaculo(x1, x2, y1, y2, tipo, this);
+        this.obstaculos.add(novo);
+        this.registra_no_mapa(novo);
     }
 
     public int getArrayTamanho() {
@@ -88,6 +90,15 @@ public class Ambiente {
 
     public ArrayList<Robo> getArrayRobos(){
         return this.robos;
+    }
+
+    boolean impede_passagem(int h){
+        for(Obstaculo obstaculo: this.obstaculos){
+            if(obstaculo.getTipo().getAltura() == h && !obstaculo.getTipo().getBloqueia()){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Robo getRobo(int pos){
