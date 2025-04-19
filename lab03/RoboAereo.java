@@ -20,6 +20,83 @@ public class RoboAereo extends Robo {
     int getAltitudeMax(){
         return this.altitudeMax;
     }
+    @Override
+    void mover(int deltaX, int deltaY){
+        int x_final = this.getPosicaoX() + deltaX;
+        int y_final = this.getPosicaoY() + deltaY;
+        int x_ini = this.getPosicaoX();
+        int y_ini = this.getPosicaoY();
+
+        if(this.getAmbiente().dentroDosLimites(x_final, y_final, this.getPosicaoZ())){
+            if(this.getAmbiente().getMapa()[x_final][y_final] <= this.getPosicaoZ()){
+                //posicao final nao é um obstaculo
+                int x_abs = Math.abs(deltaX);
+                int y_abs = Math.abs(deltaY);
+                int [][] visitados = new int[x_abs + 1][y_abs + 1];
+                for(int i = 0; i < x_abs; i++){
+                    for(int j = 0; j < y_abs; j++){
+                        visitados[i][j] = 0;
+                    }
+                }
+                if(moverR(deltaX, deltaY, 0, 0, visitados)){
+                    this.setPosicaoX(x_final);
+                    this.setPosicaoY(y_final);
+                }
+                else{
+                    this.setPosicaoX(x_ini);
+                    this.setPosicaoY(y_ini);
+                }
+            }
+        }
+    }
+
+    @Override
+    boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
+        visitados[passoX][passoY] = 1;
+        if(deltaX == 0 && deltaY == 0){ //chegou ao destino
+            return true;
+        }
+        for(int i = 1; i <= 2; i++){
+            //iteracao: i igual a 1 move em x, i igual a 2 move em y
+            if(i == 1){ //mover em x
+                if(deltaX > 0){
+                    //primeiro verifica se a andar +1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX() + 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                        this.setPosicaoX(this.getPosicaoX() + 1);
+                        if(moverR(deltaX - 1, deltaY, passoX + 1, passoY, visitados))
+                            return true;
+                    }
+                }
+                else if(deltaX < 0){
+                    //primeiro verifica se a andar -1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX() - 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
+                        this.setPosicaoX(this.getPosicaoX() - 1);
+                        if(moverR(deltaX + 1, deltaY, passoX + 1, passoY, visitados))
+                            return true;
+                    }
+                }
+            }
+            if(i == 2){//mover em y
+                if(deltaY > 0){
+                    //primeiro verifica se a andar +1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() + 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                        this.setPosicaoY(this.getPosicaoY() + 1);
+                        if(moverR(deltaX, deltaY - 1, passoX, passoY + 1, visitados))
+                            return true;
+                    }
+                }
+                else if(deltaY < 0){
+                    //primeiro verifica se a andar -1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() - 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
+                        this.setPosicaoY(this.getPosicaoY() - 1);
+                        if(moverR(deltaX, deltaY + 1, passoX, passoY + 1, visitados))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     void exibirPosicao() {

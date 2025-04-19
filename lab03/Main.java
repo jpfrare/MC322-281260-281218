@@ -21,8 +21,9 @@ public class Main {
         System.out.println("");
 
         RoboAereoDinamico rd1 = new RoboAereoDinamico(5,5,5,25,"dinamico010", teste, 7, "leste", sensor);
-        rd1.moverDinamico(-2,-4,5);
+        rd1.moverDinamico(-2,-4,2);
         rd1.exibirPosicao();
+        
 
         System.out.println("");
         teste.imprime_mapa();

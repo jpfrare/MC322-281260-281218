@@ -61,70 +61,42 @@ public class RoboAereoDinamico extends RoboAereo {
             
         }
         else if(delta_z == 0){
-            int abs_dx = Math.abs(delta_x);
-            int abs_dy = Math.abs(delta_y);
-            int [][] visitados = new int [abs_dx + 1][abs_dy + 1];
-            
-            for (int i = 0; i <= abs_dx; i++){
-                for (int j = 0; j <= abs_dy; j++){
-                    visitados[i][j] = 0;
-                }
-            }
-            if(this.moveR(delta_x, delta_y, 0, 0, visitados)){
-                this.setPosicaoX(this.getPosicaoX() + delta_x);
-                this.setPosicaoY(this.getPosicaoY() + delta_y);
+            int x_ini = this.getPosicaoX();
+            int y_ini = this.getPosicaoY();
+            if(this.mover_horizontal(delta_x, delta_y)){
                 return true;
+            }
+            else{
+                this.setPosicaoX(x_ini);
+                this.setPosicaoY(y_ini);
             }
 
         }
         else if(delta_z < 0 && this.getPosicaoZ() + delta_z >= 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
-            this.setPosicaoZ(this.getPosicaoZ() - 1);
-            if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
-                return true;
+            if(delta_x != 0 || delta_y != 0){ //caso o robo desca e mais provavel que primeiro mover horizontalmente e depois mover verticalmente seja um caminho valido
+                if(mover_horizontal(delta_x, delta_y)){
+                    this.setPosicaoZ(this.getPosicaoZ() - 1);
+                    if(this.moverDinamico(0, 0, delta_z + 1)){
+                        return true;
+                    }
+                }
+            }
+            else{
+                this.setPosicaoZ(this.getPosicaoZ() - 1);
+                if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
+                    return true;
+                }
             }
         }
         this.setPosicaoZ(pos_z0);
         return false;
     }
-
-    boolean moveR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
-        visitados[passoX][passoY] = 1;
-        if(deltaX == 0 && deltaY == 0){
-            return true;
-        }
-        for(int i = 1; i <= 2; i++){
-            //iteracao: i igual a 1 move em x, i igual a 2 move em y
-            if(i == 1){ //mover em x
-                if(deltaX > 0){
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX() + 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
-                        if(moveR(deltaX - 1, deltaY, passoX + 1, passoY, visitados))
-                            return true;
-                    }
-                }
-                else if(deltaX < 0){
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX() - 1][this.getPosicaoY()] <= this.getPosicaoZ() && visitados[passoX + 1][passoY] == 0){
-                        if(moveR(deltaX + 1, deltaY, passoX + 1, passoY, visitados))
-                            return true;
-                    }
-                }
-            }
-            if(i == 2){//mover em y
-                if(deltaY > 0){
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() + 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
-                        if(moveR(deltaX, deltaY - 1, passoX, passoY + 1, visitados))
-                            return true;
-                    }
-                }
-                else if(deltaY < 0){
-                    if(this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY() - 1] <= this.getPosicaoZ() && visitados[passoX][passoY + 1] == 0){
-                        if(moveR(deltaX, deltaY + 1, passoX, passoY + 1, visitados))
-                            return true;
-                    }
-                }
-            }
-        }
-        return false;
+    boolean mover_horizontal(int delta_x, int delta_y){
+        int x_ini = this.getPosicaoX();
+        int y_ini = this.getPosicaoY();
+        this.mover(delta_x, delta_y);
+        return (x_ini + delta_x == this.getPosicaoX() && y_ini + delta_y == this.getPosicaoY());
     }
-
 }
+
