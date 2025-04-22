@@ -5,7 +5,7 @@ public class RoboAereo extends Robo {
         super(posXo, posYo, nome, a, direcao, sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
-        this.getAmbiente().getMapa()[posXo][posYo] = alt_o + 1;
+        this.getAmbiente().getMapa()[posXo][posYo][alt_o] = 1;
     }
 
     void subir(int delta_h){
@@ -22,14 +22,14 @@ public class RoboAereo extends Robo {
         return this.altitudeMax;
     }
     @Override
-    void mover(int deltaX, int deltaY){
+    void mover(int deltaX, int deltaY){ // funcao de movimento horizontal
         int x_final = this.getPosicaoX() + deltaX;
         int y_final = this.getPosicaoY() + deltaY;
         int x_ini = this.getPosicaoX();
         int y_ini = this.getPosicaoY();
 
         if(this.getAmbiente().dentroDosLimites(x_final, y_final, this.getPosicaoZ())){
-            if(this.getAmbiente().getMapa()[x_final][y_final] <= this.getPosicaoZ()){
+            if(this.getAmbiente().getMapa()[x_final][y_final][this.getPosicaoZ()] == 0){
                 //posicao final nao é um obstaculo
                 int x_abs = Math.abs(deltaX);
                 int y_abs = Math.abs(deltaY);
@@ -44,8 +44,8 @@ public class RoboAereo extends Robo {
                     this.setPosicaoY(y_ini);
                 }
                 else{
-                    this.getAmbiente().getMapa()[x_ini][y_ini] = 0;
-                    this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()] = this.getPosicaoZ() + 1;
+                    this.getAmbiente().getMapa()[x_ini][y_ini][this.getPosicaoZ()] = 0;
+                    this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()][this.getPosicaoZ()] = 1;
                 }
             }
         }
