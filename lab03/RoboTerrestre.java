@@ -12,7 +12,7 @@ public class RoboTerrestre extends Robo {
         //get para velMax
         return velocidademax;
     }
-
+     
     @Override
     void mover(int deltaX, int deltaY) {
         /*move o robo terrestre considerando o limite de velocidade (supoe que o salto de coordenadas individuais 
@@ -24,5 +24,5 @@ public class RoboTerrestre extends Robo {
 
         super.mover(deltaX, deltaY);
     }
-
+    
 }

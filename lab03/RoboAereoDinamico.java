@@ -51,7 +51,7 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     boolean moverDinamico(int delta_x, int delta_y, int delta_z){
-        int pos_zo = this.getPosicaoZ();
+        int pos_z0 = this.getPosicaoZ();
         if(delta_z > 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
             this.setPosicaoZ(this.getPosicaoZ() + 1);
@@ -61,22 +61,42 @@ public class RoboAereoDinamico extends RoboAereo {
             
         }
         else if(delta_z == 0){
-            if(this.moverR(delta_x, delta_y)){
-                this.reduzir_autonomia();
+            int x_ini = this.getPosicaoX();
+            int y_ini = this.getPosicaoY();
+            if((delta_x == 0 && delta_y == 0) || this.mover_horizontal(delta_x, delta_y)){
                 return true;
+            }
+            else{
+                this.setPosicaoX(x_ini);
+                this.setPosicaoY(y_ini);
             }
 
         }
         else if(delta_z < 0 && this.getPosicaoZ() + delta_z >= 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * this.nivel_energetico) / this.capacidade){
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
-            this.setPosicaoZ(this.getPosicaoZ() - 1);
-            if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
-                return true;
+            if(delta_x != 0 || delta_y != 0){ //caso o robo desca e mais provavel que primeiro mover horizontalmente e depois mover verticalmente seja um caminho valido
+                if(mover_horizontal(delta_x, delta_y)){ //mover horizontalmente em uma altura maior tem maior chance de ele passar por um obstaculo
+                    this.setPosicaoZ(this.getPosicaoZ() - 1);
+                    if(this.moverDinamico(0, 0, delta_z + 1)){
+                        return true;
+                    }
+                }
+            }
+            else{
+                this.setPosicaoZ(this.getPosicaoZ() - 1);
+                if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
+                    return true;
+                }
             }
         }
-        this.setPosicaoZ(pos_zo);
+        this.setPosicaoZ(pos_z0);
         return false;
     }
-
-
+    boolean mover_horizontal(int delta_x, int delta_y){
+        int x_ini = this.getPosicaoX();
+        int y_ini = this.getPosicaoY();
+        this.mover(delta_x, delta_y);
+        return (x_ini + delta_x == this.getPosicaoX() && y_ini + delta_y == this.getPosicaoY());
+    }
 }
+

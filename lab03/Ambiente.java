@@ -60,9 +60,11 @@ public class Ambiente {
         this.robos.add(robo);
     }
 
-    public void adicionaObstaculo(Obstaculo objeto){
-        this.obstaculos.add(objeto);
-        this.registra_no_mapa(objeto);
+    public void adicionaObstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo){
+        //composicao ambiente-obstaculo
+        Obstaculo novo = new Obstaculo(x1, x2, y1, y2, tipo, this);
+        this.obstaculos.add(novo);
+        this.registra_no_mapa(novo);
     }
 
     public int getArrayTamanho() {
@@ -84,6 +86,24 @@ public class Ambiente {
     public int[][] getMapa(){
         //retorna o valor correspondente a posicao x y no mapa(0 se nao for posicao de um obstaculo, e z diferente de zero sendo a altura do obstaculo)
         return this.mapa;
+    }
+
+    public ArrayList<Robo> getArrayRobos(){
+        return this.robos;
+    }
+
+    boolean impede_passagem(int x, int y, int h){
+        for(Obstaculo obstaculo: this.obstaculos){
+            if(obstaculo.getTipo().getAltura() == this.getMapa()[x][y] && obstaculo.localObstaculo(x, y)){
+                if(!obstaculo.getTipo().getBloqueia()){
+                    return false; //qualquer que seja a altura o obstaculo nao é uma barreira fisica que impeca o movimento
+                }
+                else{
+                    return this.getMapa()[x][y] >= h; //o obstaculo é uma barreira fisica e a passagem depende da altura do robo
+                }
+            }
+        }
+        return this.getMapa()[x][y] == h + 1;   //caso em que o valor inteiro no mapa nao é de um obstaculo, mas a altura (posicao) de um robo
     }
 
     public Robo getRobo(int pos){
