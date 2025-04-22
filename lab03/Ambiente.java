@@ -28,20 +28,6 @@ public class Ambiente {
 
     }
 
-    public void imprime_mapa(){
-        int i, j, k;
-        for (k = 0; k <= this.Z; k++){
-            System.out.printf("z = %d:\n", k);
-            for(i = 0; i <= this.X; i++){     
-                for(j = 0; j <= this.Y; j++){
-                    System.out.printf("%d ", this.mapa[i][j][k]);
-                }
-                System.out.println("");
-            }
-            System.out.println("");
-        }
-    }
-
     public void registra_no_mapa(Obstaculo objeto){
         int x_ini, x_fim, y_ini, y_fim;
         x_ini = objeto.getx1();
