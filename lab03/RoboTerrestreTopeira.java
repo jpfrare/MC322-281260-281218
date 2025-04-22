@@ -48,6 +48,6 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     @Override
     void exibirPosicao() {
         //leva em cosideração a nova direção
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.profundidade, this.getDirecao());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.profundidade);
     }
 }

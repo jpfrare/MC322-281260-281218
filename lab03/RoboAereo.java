@@ -2,7 +2,7 @@ public class RoboAereo extends Robo {
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, String direcao, Sensor sensor){
-        super(posXo, posYo, nome, a, direcao, sensor);
+        super(posXo, posYo, nome, a, sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
         this.getAmbiente().getMapa()[posXo][posYo] = alt_o + 1;
@@ -100,7 +100,7 @@ public class RoboAereo extends Robo {
     }
 
     void exibirPosicao() {
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), this.getDirecao());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
     }
 
     void descer(int delta_h){
