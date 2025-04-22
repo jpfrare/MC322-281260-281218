@@ -12,11 +12,13 @@ public class Main {
         System.out.println("tamanho em y");
         int y = leitor.nextInt();
         
+
         System.out.println("tamanho em z");
         int z = leitor.nextInt();
 
         Ambiente amb = new Ambiente(x, y, z);
         System.out.println("Ambiente criado!");
+
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
@@ -98,6 +100,7 @@ public class Main {
                         System.out.println("Valor inválido! Tente Novamente");
                 }
         }
+
 
      }
 }

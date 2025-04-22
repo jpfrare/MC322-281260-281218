@@ -15,7 +15,7 @@ public abstract class Robo {
         this.posicaoZ = 0;
         this.habitat.adicionaRobo(this);
         this.sensor = sensor;
-        this.habitat.getMapa()[posicaoXo][posicaoYo] = 1;
+        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
 
 
@@ -58,13 +58,13 @@ public abstract class Robo {
     }
 
     boolean moverR(int deltaX, int deltaY, int movx, int movy, int [][] visitados) {
-        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0 || visitados[movx][movy] == 1) return false;
+        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] != 0 || visitados[movx][movy] == 1) return false;
         //está em uma posição inválida
         visitados[movx][movy] = 1;
         
         if (this.sensor.getRaio() >= Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
 
-            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY] != 0) return false;
+            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY][this.posicaoZ] != 0) return false;
 
             //nesse caso, a posição desejada esta no alance do sensor e está desocupada
             this.posicaoX += deltaX;
@@ -140,7 +140,7 @@ public abstract class Robo {
         if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) return; //confere se a região está dentro dos limites
         int xo = this.posicaoX;
         int yo = this.posicaoY;
-        this.getAmbiente().getMapa()[xo][yo] = 0;
+        this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 0;
         
         int abs_x = Math.abs(deltaX);
         int abs_y = Math.abs(deltaY);
@@ -152,10 +152,10 @@ public abstract class Robo {
         }
 
         if (moverR(deltaX, deltaY, 0, 0, visitados)) {
-            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] = 1;
+            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = 1;
 
         } else {
-            this.getAmbiente().getMapa()[xo][yo] = 1;
+            this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 1;
             System.out.println("movimento não realizado");
         }
 
