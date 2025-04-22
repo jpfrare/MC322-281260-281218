@@ -7,13 +7,13 @@ public class Main {
         TipoObstaculo muro = TipoObstaculo.MURO;
         teste.adicionaObstaculo(3, 5, 2, 4, muro);
         
-        teste.imprime_mapa();
+        //teste.imprime_mapa();
         System.out.println("");
 
 
         Sensor sensor = new Sensor(3);
         RoboTerrestre r1 = new RoboTerrestre(0, 0, null, 30, teste, "norte", sensor);
-        teste.imprime_mapa();
+        //teste.imprime_mapa();
         r1.mover(5, 5);
         r1.exibirPosicao();
         r1.mover(-2, -4);
@@ -28,6 +28,6 @@ public class Main {
         
 
         System.out.println("");
-        teste.imprime_mapa();
+        //teste.imprime_mapa();
     }
 }
