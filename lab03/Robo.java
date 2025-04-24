@@ -1,23 +1,21 @@
 public abstract class Robo {
     private final String nome;
-    private String direcao;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
     private final Ambiente habitat;
     private final Sensor sensor;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, String direcao, Sensor sensor) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, Sensor sensor) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
         this.nome = nome;
         this.habitat = habitat;
-        this.direcao = direcao;
         this.posicaoZ = 0;
         this.habitat.adicionaRobo(this);
         this.sensor = sensor;
-        this.habitat.getMapa()[posicaoXo][posicaoYo] = 1;
+        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
 
 
@@ -54,29 +52,19 @@ public abstract class Robo {
         this.posicaoZ = z;
     }
 
-    void setDirecao(String direcao){
-        //muda a direção do robô
-        this.direcao = direcao;
-    }
-
-    String getDirecao() {
-        //retorna a direção do robô
-        return this.direcao;
-    }
-
     Ambiente getAmbiente() {
         //retorna o ambiente do qual o robô pertence
         return this.habitat;
     }
 
     boolean moverR(int deltaX, int deltaY, int movx, int movy, int [][] visitados) {
-        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] != 0 || visitados[movx][movy] == 1) return false;
+        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] != 0 || visitados[movx][movy] == 1) return false;
         //está em uma posição inválida
         visitados[movx][movy] = 1;
         
         if (this.sensor.getRaio() >= Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
 
-            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY] != 0) return false;
+            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY][this.posicaoZ] != 0) return false;
 
             //nesse caso, a posição desejada esta no alance do sensor e está desocupada
             this.posicaoX += deltaX;
@@ -85,6 +73,8 @@ public abstract class Robo {
             return true;
 
         } else {
+            /*tenta se mover sempre começando pelo range máximo do sensor básico, primeiro no eixo X, depois no Y
+            se não, diminui o passo em 1*/
             for (int passox = this.sensor.getRaio(); passox >= 0; passox--) {
                 int xo = this.posicaoX;
                 int deltaxo = deltaX;
@@ -98,7 +88,12 @@ public abstract class Robo {
                         this.posicaoX -= passox;
                     }
     
+<<<<<<< HEAD
+                    if (!moverR(deltaX, deltaY)){
+                        //não conseguiu fazer o movimento, retorna a posição em que estava
+=======
                     if (!moverR(deltaX, deltaY, movx + passox, movy, visitados)){
+>>>>>>> main
                         this.posicaoX = xo;
                         deltaX = deltaxo;
     
@@ -121,7 +116,12 @@ public abstract class Robo {
                             this.posicaoY -= passoy;
                         }
 
+<<<<<<< HEAD
+                        if (!moverR(deltaX, deltaY)){
+                            //semelhantemente ao eixo X
+=======
                         if (!moverR(deltaX, deltaY, movx, movy + passoy, visitados)){
+>>>>>>> main
                             deltaY = deltayo;
                             this.posicaoY = yo;
                         }
@@ -140,7 +140,7 @@ public abstract class Robo {
         if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) return; //confere se a região está dentro dos limites
         int xo = this.posicaoX;
         int yo = this.posicaoY;
-        this.getAmbiente().getMapa()[xo][yo] = 0;
+        this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 0;
         
         int abs_x = Math.abs(deltaX);
         int abs_y = Math.abs(deltaY);
@@ -152,10 +152,10 @@ public abstract class Robo {
         }
 
         if (moverR(deltaX, deltaY, 0, 0, visitados)) {
-            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY] = 1;
+            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = 1;
 
         } else {
-            this.getAmbiente().getMapa()[xo][yo] = 1;
+            this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 1;
             System.out.println("movimento não realizado");
         }
 
@@ -168,3 +168,4 @@ public abstract class Robo {
 
 
 }
+

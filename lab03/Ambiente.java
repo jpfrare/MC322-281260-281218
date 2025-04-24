@@ -6,7 +6,7 @@ public class Ambiente {
     private final int Z;
     private final ArrayList<Robo> robos;
     private final ArrayList<Obstaculo> obstaculos;
-    private int[][] mapa;
+    private int[][][] mapa;
 
     public Ambiente(int x, int y, int z) {
         //inicializa o Ambiente atribuindo valores as dimensoes x e y e cria um array vazio de robos
@@ -15,23 +15,17 @@ public class Ambiente {
         this.Z = z;
         this.robos = new ArrayList<>();
         this.obstaculos = new ArrayList<>();
-        this.mapa = new int[x + 1][y + 1]; //posicoes (0,0) e (x, y) serao validas
+        this.mapa = new int[x + 1][y + 1][z + 1]; //posicoes (0,0) e (x, y) serao validas
         
         //inicialização do mapa
-        for (int i = 0; i < this.X + 1; i++) {
-            for (int j = 0; j < this.Y + 1; j++) {
-                mapa[i][j] = 0;
+        for (int i = 0; i < x + 1; i++) {
+            for (int j = 0; j < y + 1; j++) {
+                for(int k = 0; k < z + 1; k++){
+                    mapa[i][j][k] = 0;
+                }
             }
         }
 
-    }
-
-    public void imprime_mapa(){
-        for (int i = 0; i <= this.X; i++){
-            for(int j = 0; j <= this.Y; j++)
-                System.out.printf("%d ", this.mapa[i][j]);
-            System.out.println("");
-        }
     }
 
     public void registra_no_mapa(Obstaculo objeto){
@@ -40,11 +34,16 @@ public class Ambiente {
         x_fim = objeto.getx2();
         y_ini = objeto.gety1();
         y_fim = objeto.gety2();
-        for(int i = x_ini; i <= x_fim; i++){
-            for(int j = y_ini; j <= y_fim; j++){
-                this.mapa[i][j] = objeto.getTipo().getAltura();
+        if(objeto.getTipo().getBloqueia()){ // obstaculo é do tipo que bloqueia
+            for(int i = x_ini; i <= x_fim; i++){
+                for(int j = y_ini; j <= y_fim; j++){
+                    for(int k = 0; k <= objeto.getTipo().getAltura(); k++){
+                        this.mapa[i][j][k] = 1;
+                    }
+                }
             }
         }
+        
     }
   
     boolean eh_obstaculo(){ return true;}
@@ -83,7 +82,7 @@ public class Ambiente {
         return this.Z;
     }
 
-    public int[][] getMapa(){
+    public int[][][] getMapa(){
         //retorna o valor correspondente a posicao x y no mapa(0 se nao for posicao de um obstaculo, e z diferente de zero sendo a altura do obstaculo)
         return this.mapa;
     }
@@ -92,18 +91,8 @@ public class Ambiente {
         return this.robos;
     }
 
-    boolean impede_passagem(int x, int y, int h){
-        for(Obstaculo obstaculo: this.obstaculos){
-            if(obstaculo.getTipo().getAltura() == this.getMapa()[x][y] && obstaculo.localObstaculo(x, y)){
-                if(!obstaculo.getTipo().getBloqueia()){
-                    return false; //qualquer que seja a altura o obstaculo nao é uma barreira fisica que impeca o movimento
-                }
-                else{
-                    return this.getMapa()[x][y] >= h; //o obstaculo é uma barreira fisica e a passagem depende da altura do robo
-                }
-            }
-        }
-        return this.getMapa()[x][y] == h + 1;   //caso em que o valor inteiro no mapa nao é de um obstaculo, mas a altura (posicao) de um robo
+    boolean identifica_colisao(int x, int y, int h){
+        return this.getMapa()[x][y][h] == 1;
     }
 
     public Robo getRobo(int pos){
