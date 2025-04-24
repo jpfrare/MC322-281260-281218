@@ -16,8 +16,6 @@ public class Main {
         teste.imprime_mapa();
         r1.mover(5, 5);
         r1.exibirPosicao();
-        r1.mover(-2, -4);
-        r1.exibirPosicao();
 
 
         System.out.println("");
