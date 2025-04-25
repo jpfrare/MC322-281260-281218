@@ -8,7 +8,7 @@ public abstract class Robo {
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, Sensor sensor) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, SensorMovimento sensor) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;

@@ -35,7 +35,7 @@ public class Main {
                         System.out.println("Digite a coordenada Y do rôbo \n");
                         int posicaoYo = leitor.nextInt();
 
-                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.eh_obstaculo()) {
+                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
                                 System.out.println("Coordenadas inválidas! Tente novamente");
                                 System.out.println("Digite a coordenada X do rôbo \n");
                                 posicaoXo = leitor.nextInt();
@@ -52,7 +52,7 @@ public class Main {
                                 raio = leitor.nextInt();
                         }
                         
-                        Sensor s = new Sensor(raio);
+                        SensorMovimento s = new SensorMovimento(raio);
 
                         //tipo de robõ
                         System.out.println("Quase lá! Agora, digite qual robô: ");
