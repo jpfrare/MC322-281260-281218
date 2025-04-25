@@ -76,10 +76,11 @@ public abstract class Robo {
         }
         for(int i = 1; i <= 2; i++){
             //iteracao: i igual a 1 move em x, i igual a 2 move em y
+            //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
             if(i == 1){ //mover em x
                 if(deltaX > 0){
-                    //primeiro verifica se a andar +1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    avancar = this.getSensorMovimento().consegueAvancar(1, 1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente());
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente());
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
                             this.setPosicaoX(this.getPosicaoX() + avancar);
@@ -90,8 +91,8 @@ public abstract class Robo {
                     }
                 }
                 else if(deltaX < 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(1, 2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaX, this.getAmbiente()); 
-                    //primeiro verifica se a andar -1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaX, this.getAmbiente()); 
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() - avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
                             this.setPosicaoX(this.getPosicaoX() - avancar);
@@ -105,8 +106,8 @@ public abstract class Robo {
             }
             if(i == 2){//mover em y
                 if(deltaY > 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(2, 1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.getAmbiente()); 
-                    //primeiro verifica se a andar +1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.habitat); 
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() + avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
                             this.setPosicaoY(this.getPosicaoY() + avancar);
@@ -116,9 +117,10 @@ public abstract class Robo {
                         avancar --;
                     }
                 }
-                else if(deltaY < 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(2, 2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaY, this.getAmbiente()); 
-                    //primeiro verifica se a andar -1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
+                else if (deltaY < 0){
+                    //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaY, this.habitat);
+
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() - avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
                             this.setPosicaoY(this.getPosicaoY() - avancar);
