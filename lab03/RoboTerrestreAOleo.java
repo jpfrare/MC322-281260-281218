@@ -2,7 +2,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação
     float VelMaxInstantanea; //parametro que lida com o fato da velocidade máxima ser do tipo final
 
-    public RoboTerrestreAOleo(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a, Sensor sensor) {
+    public RoboTerrestreAOleo(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a, SensorMovimento sensor) {
         //construtor que leva em consideração os novos atributos, inicializando a lubrificação com 100%
         super(posicaoXo, posicaoYo, nome, velocidademax, a, sensor);
         this.coeficienteDeLubrificacao = 1;
