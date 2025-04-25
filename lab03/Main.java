@@ -87,6 +87,58 @@ public class Main {
 
 
                 } else if (chave == 3) {
+                        String robo;
+                        int mov_x;
+                        int mov_y;
+                        Robo mover = null;
+                        while(mover == null){
+                                System.out.println("Digite o nome do Robo a se mover:");
+                                robo = leitor.nextLine();
+                                for(Robo r: amb.getArrayRobos()){
+                                        if(robo.equals(r.getNome())){
+                                                mover = r;
+                                                break;
+                                        }
+                                }
+                                if(mover == null){
+                                        System.out.println("Não foi possivel identificar um Robo com o nome inserido");
+                                }
+                        }
+                        
+                        if (mover instanceof RoboTerrestre){
+                                System.out.println("Digite o quanto deseja mover em x:");
+                                mov_x = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em y:");
+                                mov_y = leitor.nextInt();
+                                mover.mover(mov_x, mov_y);
+                        }
+                        else if(mover instanceof RoboAereoRelator){
+                                RoboAereoRelator relator = (RoboAereoRelator)mover;
+                                int movimento; 
+                                System.out.println("Deseja se mover horizontalmente(digite 1) ou verticalmente(digite 2)?");
+                                movimento = leitor.nextInt();
+                                if(movimento == 1){
+                                        System.out.println("Digite o quanto deseja mover em x:");
+                                        mov_x = leitor.nextInt();
+                                        System.out.println("Digite o quanto deseja mover em y:");
+                                        mov_y = leitor.nextInt();
+                                        relator.mover(mov_x, mov_y);
+                                }
+                                else if(movimento == 2){
+                                        int mov_z;
+                                        System.out.println("Digite o quanto deseja mover em z:");
+                                        mov_z = leitor.nextInt();
+                                        if(mov_z > 0){
+                                                relator.subir(mov_z);
+                                        }
+                                        else{
+                                                relator.descer(-mov_z);
+                                        }
+                                }
+                                
+                        }
+                        
+
 
 
                 } else if (chave == 4) {
