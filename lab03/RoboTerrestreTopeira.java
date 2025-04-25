@@ -33,7 +33,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
 
         if (Math.abs(deltaZ) > this.getVelocidademax() || this.profundidade + deltaZ < profundidadeMax || 
         this.profundidade + deltaZ > 0) {
-            System.err.printf("Movimento inválido! \n");
+            System.out.printf("Movimento inválido! \n");
             return;
         }
 
