@@ -3,7 +3,7 @@ public class SensorMovimento extends Sensor{
         super(r);
     }
 
-    int consegueAvancar(int mov, int sent, int x, int y, int z, int falta, Ambiente espaco, int[][] visitados){
+    int consegueAvancar(int mov, int sent, int x, int y, int z, int falta, Ambiente espaco){
         //retorna a maior distancia que o robo pode avancar limitado ao raio do sensor
         //passo é a distancia (dekta) que o Robo ira se mover em uma direcao no seu percurso
         int passo;

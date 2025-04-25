@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public abstract class Robo {
     private final String nome;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
+    private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
-    private final Sensor sensor;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, Sensor sensor) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
@@ -14,7 +16,7 @@ public abstract class Robo {
         this.habitat = habitat;
         this.posicaoZ = 0;
         this.habitat.adicionaRobo(this);
-        this.sensor = sensor;
+        this.sensores = new Arraylist<>();
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
 
@@ -55,6 +57,14 @@ public abstract class Robo {
     Ambiente getAmbiente() {
         //retorna o ambiente do qual o robô pertence
         return this.habitat;
+    }
+
+    void AdicionaSensores(Sensor s){
+        this.sensores.add(s);
+    }
+
+    SensorMovimento getSensorMovimento(){
+        return (SensorMovimento)this.sensores.get(0);
     }
 
     boolean moverR(int deltaX, int deltaY, int movx, int movy, int [][] visitados) {
