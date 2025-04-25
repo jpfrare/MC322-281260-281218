@@ -1,7 +1,7 @@
 public class RoboAereo extends Robo {
     private final int altitudeMax;
 
-    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, Sensor sensor){
+    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, SensorMovimento sensor){
         super(posXo, posYo, nome, a, sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
@@ -59,55 +59,7 @@ public class RoboAereo extends Robo {
             }
         }
     }
-
-    @Override
-    boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
-        visitados[passoX][passoY] = 1;
-        if(deltaX == 0 && deltaY == 0){ //chegou ao destino
-            return true;
-        }
-        for(int i = 1; i <= 2; i++){
-            //iteracao: i igual a 1 move em x, i igual a 2 move em y
-            if(i == 1){ //mover em x
-                if(deltaX > 0){
-                    //primeiro verifica se a andar +1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + 1, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + 1][passoY] == 0){
-                        this.setPosicaoX(this.getPosicaoX() + 1);
-                        if(moverR(deltaX - 1, deltaY, passoX + 1, passoY, visitados))
-                            return true;
-                    }
-                }
-                else if(deltaX < 0){
-                    //primeiro verifica se a andar -1 em x ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() - 1, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + 1][passoY] == 0){
-                        this.setPosicaoX(this.getPosicaoX() - 1);
-                        if(moverR(deltaX + 1, deltaY, passoX + 1, passoY, visitados))
-                            return true;
-                    }
-                }
-            }
-            if(i == 2){//mover em y
-                if(deltaY > 0){
-                    //primeiro verifica se a andar +1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() + 1, this.getPosicaoZ()) && visitados[passoX][passoY + 1] == 0){
-                        this.setPosicaoY(this.getPosicaoY() + 1);
-                        if(moverR(deltaX, deltaY - 1, passoX, passoY + 1, visitados))
-                            return true;
-                    }
-                }
-                else if(deltaY < 0){
-                    //primeiro verifica se a andar -1 em y ira cair em uma posicao de obstaculo ou se essa posicao ja foi verificada
-                    if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() + 1, this.getPosicaoZ()) && visitados[passoX][passoY + 1] == 0){
-                        this.setPosicaoY(this.getPosicaoY() - 1);
-                        if(moverR(deltaX, deltaY + 1, passoX, passoY + 1, visitados))
-                            return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
+    
     void exibirPosicao() {
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
     }

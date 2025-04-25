@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public abstract class Robo {
     private final String nome;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
+    private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
-    private final Sensor sensor;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, Sensor sensor) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, SensorMovimento sensor) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
@@ -14,7 +16,8 @@ public abstract class Robo {
         this.habitat = habitat;
         this.posicaoZ = 0;
         this.habitat.adicionaRobo(this);
-        this.sensor = sensor;
+        this.sensores = new ArrayList<>();
+        sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
 
@@ -57,79 +60,82 @@ public abstract class Robo {
         return this.habitat;
     }
 
-    boolean moverR(int deltaX, int deltaY, int movx, int movy, int [][] visitados) {
-        if (this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] != 0 || visitados[movx][movy] == 1) return false;
-        //está em uma posição inválida
-        visitados[movx][movy] = 1;
-        
-        if (this.sensor.getRaio() >= Math.sqrt(deltaX*deltaX + deltaY*deltaY)) {
+    void AdicionaSensores(Sensor s){
+        this.sensores.add(s);
+    }
 
-            if (this.getAmbiente().getMapa()[this.posicaoX + deltaX][this.posicaoY + deltaY][this.posicaoZ] != 0) return false;
+    SensorMovimento getSensorMovimento(){
+        return (SensorMovimento)this.sensores.get(0);
+    }
 
-            //nesse caso, a posição desejada esta no alance do sensor e está desocupada
-            this.posicaoX += deltaX;
-            this.posicaoY += deltaY;
-
+    boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
+        visitados[passoX][passoY] = 1;
+        int avancar;
+        if(deltaX == 0 && deltaY == 0){ //chegou ao destino
             return true;
-
-        } else {
-            /*tenta se mover sempre começando pelo range máximo do sensor básico, primeiro no eixo X, depois no Y
-            se não, diminui o passo em 1*/
-            for (int passox = this.sensor.getRaio(); passox >= 0; passox--) {
-                int xo = this.posicaoX;
-                int deltaxo = deltaX;
-
-                if (deltaX != 0 && passox <= Math.abs(deltaX)) {
-                    if (deltaX > 0) {
-                        deltaX -= passox;
-                        this.posicaoX += passox;
-                    } else {
-                        deltaX += passox;
-                        this.posicaoX -= passox;
-                    }
-    
-                    if (!moverR(deltaX, deltaY, movx + passox, movy, visitados)){
-                        this.posicaoX = xo;
-                        deltaX = deltaxo;
-    
-                    } else {
-                        return true;
+        }
+        for(int i = 1; i <= 2; i++){
+            //iteracao: i igual a 1 move em x, i igual a 2 move em y
+            //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
+            if(i == 1){ //mover em x
+                if(deltaX > 0){
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente());
+                    while(avancar > 0){
+                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
+                            this.setPosicaoX(this.getPosicaoX() + avancar);
+                            if(moverR(deltaX - avancar, deltaY, passoX + avancar, passoY, visitados))
+                                return true;
+                        }
+                        avancar--;
                     }
                 }
-
-                for (int passoy = this.sensor.getRaio(); passoy >= 0; passoy--) {
-
-                    int yo = this.posicaoY;
-                    int deltayo = deltaY;
-
-                    if (deltaY != 0 && passoy <= Math.abs(deltaY)) {
-                        if (deltaY > 0) {
-                            deltaY -= passoy;
-                            this.posicaoY += passoy;
-                        } else {
-                            deltaY += passoy;
-                            this.posicaoY -= passoy;
+                else if(deltaX < 0){
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaX, this.getAmbiente()); 
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
+                    while(avancar > 0){
+                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() - avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
+                            this.setPosicaoX(this.getPosicaoX() - avancar);
+                            if(moverR(deltaX + avancar, deltaY, passoX + avancar, passoY, visitados))
+                                return true;
                         }
-
-                        if (!moverR(deltaX, deltaY, movx, movy + passoy, visitados)){
-                            deltaY = deltayo;
-                            this.posicaoY = yo;
+                        avancar --;
+                    }
+                        
+                }
+            }
+            if(i == 2){//mover em y
+                if(deltaY > 0){
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.habitat); 
+                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
+                    while(avancar > 0){
+                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() + avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
+                            this.setPosicaoY(this.getPosicaoY() + avancar);
+                            if(moverR(deltaX, deltaY - avancar, passoX, passoY + avancar, visitados))
+                                return true;
                         }
-                        else{
-                            return true;
-                        }
+                        avancar --;
+                    }
+                }
+                else if (deltaY < 0){
+                    //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaY, this.habitat);
 
+                    while(avancar > 0){
+                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() - avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
+                            this.setPosicaoY(this.getPosicaoY() - avancar);
+                            if(moverR(deltaX, deltaY + avancar, passoX, passoY + avancar, visitados))
+                                return true;
+                        }
+                        avancar--;
                     }
                 }
             }
-        return false;
         }
+        return false;
     }
-
     void mover(int deltaX, int deltaY){
-        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) {
-            System.out.println("Movimento inválido!");
-            return;} //confere se a região está dentro dos limites
+        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) return; //confere se a região está dentro dos limites
         int xo = this.posicaoX;
         int yo = this.posicaoY;
         this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 0;
@@ -155,9 +161,8 @@ public abstract class Robo {
 
 
     void exibirPosicao() {
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d), direcao %s\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY());
     }
 
 
 }
-
