@@ -82,6 +82,27 @@ public class Main {
                                 else if (opcao == 2) {}
                                 
                         }
+                        else if(opcao == 3 || opcao == 4){
+                                if(opcao == 3) {}
+
+                                else if(opcao == 4){
+                                        System.out.println("Digite a altura inicial do robo:");
+                                        int posicaoZo = leitor.nextInt();
+                                        while(z < 0){
+                                                System.out.println("Valor inválido! Digite novamente! \n");
+                                                System.out.println("Digite a altura inicial do robo: \n");
+                                                posicaoZo = leitor.nextInt();
+                                        }
+                                        System.out.println("Digite a altura maxima do robo:");
+                                        int h_max = leitor.nextInt();
+                                        while(h_max < 0){
+                                                System.out.println("Valor inválido! Digite novamente! \n");
+                                                System.out.println("Digite a altura maxima do robo: \n");
+                                                h_max = leitor.nextInt();
+                                        }
+                                        RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, h_max, nome, amb, s);
+                                }
+                        }
 
                 } else if (chave == 2) {
 
@@ -101,7 +122,7 @@ public class Main {
                                         }
                                 }
                                 if(mover == null){
-                                        System.out.println("Não foi possivel identificar um Robo com o nome inserido");
+                                        System.out.println("Não foi possivel identificar um Robo com o nome inserido.");
                                 }
                         }
                         
@@ -115,7 +136,7 @@ public class Main {
                         else if(mover instanceof RoboAereoRelator){
                                 RoboAereoRelator relator = (RoboAereoRelator)mover;
                                 int movimento; 
-                                System.out.println("Deseja se mover horizontalmente(digite 1) ou verticalmente(digite 2)?");
+                                System.out.println("Deseja se mover horizontalmente (digite 1) ou verticalmente (digite 2)?");
                                 movimento = leitor.nextInt();
                                 if(movimento == 1){
                                         System.out.println("Digite o quanto deseja mover em x:");
@@ -134,6 +155,9 @@ public class Main {
                                         else{
                                                 relator.descer(-mov_z);
                                         }
+                                }
+                                else{
+                                        System.out.println("Movimento inválido!");
                                 }
                                 
                         }

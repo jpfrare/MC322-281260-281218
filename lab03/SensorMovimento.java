@@ -12,7 +12,7 @@ public class SensorMovimento extends Sensor{
             if(sent == 1){ //mover no sentido positivo de x
                 for(passo = 1; passo <= this.getRaio() && passo <= falta; passo++){
                     if(espaco.identifica_colisao(x + passo, y, z)){//posicao invalida
-                        return passo - 1;//retorna o quanto consegue avancar naquela direcao
+                        return passo - 1;//retorna o quanto consegue avancar maximo naquela direcao
                     }
                 }
                 return passo - 1;
@@ -20,10 +20,10 @@ public class SensorMovimento extends Sensor{
             else if(sent == 2){//mover no sentido negativo de x
                 for(passo = 1; passo <= this.getRaio() && passo <= falta; passo++){ 
                     if(espaco.identifica_colisao(x - passo, y, z)){
-                        return -(passo - 1);
+                        return passo - 1;
                     }
                 }
-                return -(passo - 1);
+                return passo - 1;
             }
         }
         else if(mov == 2){ //mover em y
@@ -38,10 +38,10 @@ public class SensorMovimento extends Sensor{
             else if(sent == 2){//sentido negativo; delta y < 0
                 for(passo = 1; passo <= this.getRaio() && passo <= falta; passo++){
                     if(espaco.identifica_colisao(x, y - passo, z)){
-                        return -(passo - 1);
+                        return passo - 1;
                     }
                 }
-                return -(passo - 1);
+                return passo - 1;
             }
         }
         else if(mov == 3){ // mover em z
@@ -56,10 +56,10 @@ public class SensorMovimento extends Sensor{
             else if(sent == 1){//sentido negativo de z
                 for(passo = 1; passo <= this.getRaio() && passo <= falta; passo++){
                     if(espaco.identifica_colisao(x, y, z - passo)){
-                        return -(passo - 1);
+                        return passo - 1;
                     }
                 }
-                return -(passo - 1);
+                return passo - 1;
             }
         }
         return 0;
