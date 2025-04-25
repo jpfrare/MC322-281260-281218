@@ -88,12 +88,7 @@ public abstract class Robo {
                         this.posicaoX -= passox;
                     }
     
-<<<<<<< HEAD
-                    if (!moverR(deltaX, deltaY)){
-                        //não conseguiu fazer o movimento, retorna a posição em que estava
-=======
                     if (!moverR(deltaX, deltaY, movx + passox, movy, visitados)){
->>>>>>> main
                         this.posicaoX = xo;
                         deltaX = deltaxo;
     
@@ -116,12 +111,7 @@ public abstract class Robo {
                             this.posicaoY -= passoy;
                         }
 
-<<<<<<< HEAD
-                        if (!moverR(deltaX, deltaY)){
-                            //semelhantemente ao eixo X
-=======
                         if (!moverR(deltaX, deltaY, movx, movy + passoy, visitados)){
->>>>>>> main
                             deltaY = deltayo;
                             this.posicaoY = yo;
                         }
