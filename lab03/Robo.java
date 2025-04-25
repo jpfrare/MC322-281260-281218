@@ -161,7 +161,7 @@ public abstract class Robo {
 
 
     void exibirPosicao() {
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
     }
 
 

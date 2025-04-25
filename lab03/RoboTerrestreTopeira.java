@@ -3,7 +3,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     private final int profundidadeMax; //valor < 0
 
     public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, int velocidademax, Ambiente a, 
-    int profundidadeMax, String direcao, Sensor sensor) {
+    int profundidadeMax, String direcao, SensorMovimento sensor) {
         //construtor levando em consideração os novos atributos
         super(posicaoXo, posicaoYo, nome, velocidademax, a, direcao, sensor);
         this.profundidade = 0;
