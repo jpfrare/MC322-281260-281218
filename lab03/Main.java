@@ -26,6 +26,8 @@ public class Main {
                 int chave = leitor.nextInt();
 
                 if (chave == 1) {
+                        //Adicionar Robô
+                        Robo r;
                         System.out.println("Digite o nome do robô: \n");
                         String nome = leitor.nextLine();
                         
@@ -35,8 +37,8 @@ public class Main {
                         System.out.println("Digite a coordenada Y do rôbo \n");
                         int posicaoYo = leitor.nextInt();
 
-                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.eh_obstaculo()) {
-                                System.out.println("Coordenadas inválidas! Tente novamente");
+                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.eh_obstaculo(posicaoXo, posicaoYo, 0)) {
+                                System.out.println("Coordenadas inválidas! Tente novamente \n");
                                 System.out.println("Digite a coordenada X do rôbo \n");
                                 posicaoXo = leitor.nextInt();
                                 System.out.println("Digite a coordenada Y do rôbo \n");
@@ -61,12 +63,23 @@ public class Main {
 
                         while (opcao <= 0 || opcao >= 5) {
                                 System.out.println("Opção inválida! Tente Novamente! \n");
+                                System.out.println("1- Robô terrestre Topeira \n 2- Rôbo Terrestre a Óleo \n 3- Robô Aéreo Dinâmico \n 4- Robô Aéreo Relator \n");
                                 opcao = leitor.nextInt();
                         }
 
                         if (opcao == 1 || opcao == 2) {
+                                //Robôs Terrestres
+
+                                System.out.println("Digite a velocidade máxima do Robô");
+                                float velocidademax = leitor.nextFloat();
+
+                                while (velocidademax <= 0) {
+                                        System.out.println("velocidade máxima inválida! Tente Novamente \n");
+                                        velocidademax = leitor.nextFloat();
+                                }
 
                                 if (opcao == 1) {
+                                        //Robô terrestre topeira
                                         System.out.println("Digite a profundidade máxima do robô (valor < 0) \n");
                                         int profundidade_max = leitor.nextInt();
 
@@ -76,17 +89,116 @@ public class Main {
                                                 profundidade_max = leitor.nextInt(); 
                                         }
                                 
-                                        RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, x, amb, profundidade_max, nome, s);
+                                        r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, s);
                                 }
                                   
-                                else if (opcao == 2) {}
+                                else {
+                                        //robo terrestre a oleo
+                                        r = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, s);
+                                }
                                 
+                        } else {
+                                //Robôs Aéreos
+                                System.out.println("Digite a altura máxima do Robô \n");
+                                int alt_max = leitor.nextInt();
+
+                                while (alt_max <= 0 || alt_max > z) {
+                                        System.out.println("Altura Máxima inválida! Tente novamente \n");
+                                        alt_max = leitor.nextInt();
+                                }
+
+
+                                System.out.println("Digite a altura inicial do Robô \n");
+                                int alt_o = leitor.nextInt();
+
+                                while (alt_o < 0 || alt_o > alt_max || amb.eh_obstaculo(posicaoXo, posicaoYo, alt_o) || amb.dentroDosLimites(posicaoXo, posicaoYo, alt_o)) {
+                                        System.out.println("Altura incial inválida! Tente Novamente \n");
+                                        alt_o = leitor.nextInt();
+                                }
+
+
+                                if (opcao == 3) {
+                                        //Robô aéreo dinâmico
+                                        System.out.println("Digite a capacidade do Robô \n");
+                                        int capacidade = leitor.nextInt();
+
+                                        while (capacidade <= 0) {
+                                                System.out.println("Capacidade inválida! Tente novamente \n");
+                                                capacidade = leitor.nextInt();
+                                        }
+
+                                        r = new RoboAereoDinamico(posicaoXo, posicaoYo, alt_o, alt_max, nome, amb, capacidade, s);
+
+                                }
+
+                                else {
+                                        //Robô Aéreo Relator
+                                        r = new RoboAereoRelator(posicaoXo, posicaoYo, alt_o, alt_max, nome, amb, s);
+
+                                }
+
+                                amb.adicionaRobo(r);
+                                System.out.println("Robô " + r.getNome() + " criado!");
                         }
 
                 } else if (chave == 2) {
+                        //Adicionar Obstáculo
+
+                        System.out.println("Digite o x1 \n");
+                        int x1 = leitor.nextInt();
+                        System.out.println("Digite o x2");
+                        int x2 = leitor.nextInt();
+                        System.out.println("Digite o y1");
+                        int y1 = leitor.nextInt();
+                        System.out.println("Digite o y2");
+                        int y2 = leitor.nextInt();
+
+                        while (x1 > amb.getAmbienteX() || x2 > amb.getAmbienteX() || y1 > amb.getAmbienteY() || y2 > amb.getAmbienteY()) {
+                                System.out.println("Valores inválidos! Tente novamente");
+                                System.out.println("Digite o x1 \n");
+                                x1 = leitor.nextInt();
+                                System.out.println("Digite o x2");
+                                x2 = leitor.nextInt();
+                                System.out.println("Digite o y1");
+                                y1 = leitor.nextInt();
+                                System.out.println("Digite o y2");
+                                y2 = leitor.nextInt();
+                        }
+
+                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro \n 2-Bloco \n 3-Placa\n");
+                        int opcao = leitor.nextInt();
+
+                        while (opcao < 1 || opcao > 3) {
+                                System.out.println("Opção inválida! Tente novamente \n");
+                                opcao = leitor.nextInt();
+                        }
+
+                        TipoObstaculo tipo;
+
+                        if (opcao == 1) {
+                                tipo = TipoObstaculo.MURO;
+
+                        } else if (opcao == 2) {
+                                tipo = TipoObstaculo.BLOCO;
+
+                        } else {
+                                tipo = TipoObstaculo.PLACA;
+                        }
+
+                        amb.adicionaObstaculo(x1, x2, y1, y2, tipo);
+                        System.out.println("Obstáculo Criado! \n");
+                        
 
 
                 } else if (chave == 3) {
+                  System.out.println("Digite o número do Robô \n");
+                  int numero = leitor.nextInt();
+
+                  while (numero < 0 || numero > amb.getArrayTamanho()) {
+                        System.out.println("Número inválido! Tente novamente");
+                        numero = leitor.nextInt();
+                  }
+
 
 
                 } else if (chave == 4) {
