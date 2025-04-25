@@ -16,7 +16,7 @@ public abstract class Robo {
         this.habitat = habitat;
         this.posicaoZ = 0;
         this.habitat.adicionaRobo(this);
-        this.sensores = new Arraylist<>();
+        this.sensores = new ArrayList<>();
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
 

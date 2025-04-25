@@ -24,7 +24,7 @@ public class Main {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
                 System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- sair \n ************* \n");
                 int chave = leitor.nextInt();
-
+                leitor.nextLine();
                 if (chave == 1) {
                         System.out.println("Digite o nome do robô: \n");
                         String nome = leitor.nextLine();
@@ -137,6 +137,18 @@ public class Main {
                                 }
                                 
                         }
+                        else if(mover instanceof RoboAereoDinamico){
+                                RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
+                                int mov_z;
+                                System.out.println("Digite o quanto deseja mover em x:");
+                                mov_x = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em y:");
+                                mov_y = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em z:");
+                                mov_z = leitor.nextInt();
+                                dinamico.moverDinamico(mov_x, mov_y, mov_z);   
+
+                        }
                         
 
 
@@ -152,6 +164,8 @@ public class Main {
                         System.out.println("Valor inválido! Tente Novamente");
                 }
         }
+
+        leitor.close();
 
 
      }
