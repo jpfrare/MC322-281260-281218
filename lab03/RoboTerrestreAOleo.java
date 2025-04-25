@@ -52,4 +52,10 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
         } 
     }
 
+    @Override
+    void exibirPosicao() {
+        super.exibirPosicao();
+        exibirLubrificacao();
+    }
+
 }

@@ -1,6 +1,18 @@
 import java.util.Scanner;
 
 public class Main {
+        public static int buscar_robo(Ambiente amb, String nome) {
+                //busca robô pelo nome no array list do ambiente
+                int len = amb.getArrayTamanho();
+
+                for (int i = 0; i < len; i++) {
+                        if (nome.equals(amb.getRobo(i).getNome())) {
+                                return i;
+                        }
+                }
+
+                return -1;
+        }
     
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
@@ -22,7 +34,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- sair \n ************* \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- habilidade especial de um robô \n 6- exibir informações de um robô \n 7- sair \n ************* \n");
                 int chave = leitor.nextInt();
 
                 if (chave == 1) {
@@ -205,6 +217,49 @@ public class Main {
 
 
                 } else if (chave == 5) {
+                        //habilidades especiais
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                                Robo p = amb.getRobo(pos);
+
+                                if (p instanceof RoboTerrestreAOleo) {
+                                        System.out.println("Digite o valor do delta lubrificação \n");
+                                        float valor = leitor.nextFloat();
+                                        ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+
+
+                                } else if (p instanceof RoboAereoDinamico) {
+                                        ((RoboAereoDinamico)p).recarregar();
+
+                                } else {
+                                        ((RoboAereoRelator)p).gerar_relatorio();
+                                }
+                        }
+
+                } else if (chave == 6){
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                                Robo p = amb.getRobo(pos);
+
+                                p.exibirPosicao();
+                        }
+                
+                
+                } else if (chave == 7) {
                         System.out.println("Programa encerrado! Até Mais");
                         break;
 
