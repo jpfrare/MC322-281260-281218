@@ -65,8 +65,17 @@ public class Main {
                         }
 
                         if (opcao == 1 || opcao == 2) {
+                                //Robôs Terrestres: possuem velocidade máxima
+                                System.out.println("Digite a velocidade máxima do robô");
+                                float velocidademax = leitor.nextFloat();
+
+                                while (velocidademax <= 0) {
+                                        System.out.println("valor de velocidade máxima inválido! Tente novamente \n");
+                                        velocidademax = leitor.nextFloat();
+                                }
 
                                 if (opcao == 1) {
+                                        //robô terrestre topeira
                                         System.out.println("Digite a profundidade máxima do robô (valor < 0) \n");
                                         int profundidade_max = leitor.nextInt();
 
@@ -76,31 +85,55 @@ public class Main {
                                                 profundidade_max = leitor.nextInt(); 
                                         }
                                 
-                                        RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, x, amb, profundidade_max, nome, s);
+                                        RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, s);
+                                        amb.adicionaRobo(r);
                                 }
                                   
-                                else if (opcao == 2) {}
+                                else if (opcao == 2) {
+                                        //robo terrestre a óleo
+                                        RoboTerrestreAOleo ro = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, s);
+                                        amb.adicionaRobo(ro);
+                                }
                                 
                         }
                         else if(opcao == 3 || opcao == 4){
-                                if(opcao == 3) {}
+                                //Robôs aéreos: possuem altitude máxima
+
+                                System.out.println("Digite a altura máxima do robô");
+                                int alturamaxima = leitor.nextInt();
+
+                                while (alturamaxima > amb.getAltura() || alturamaxima <= 0) {
+                                        System.out.println("Altura máxima inválida! Tente novamente \n");
+                                        alturamaxima = leitor.nextInt();
+                                }
+
+                                if(opcao == 3) {
+                                        //robô aereo dinâmico
+                                        System.out.println("Digite a capacidade do Robô");
+                                        int capacidade = leitor.nextInt();
+
+                                        while (capacidade <= 0) {
+                                                System.out.println("Valor de capacidade inválido! Tente novamente");
+                                                System.out.println("Digite a capacidade do Robô");
+                                                capacidade = leitor.nextInt();
+                                        }
+
+                                        RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, opcao, alturamaxima, nome, amb, capacidade, s);
+                                }
 
                                 else if(opcao == 4){
+                                        //Robô áereo relator
                                         System.out.println("Digite a altura inicial do robo:");
                                         int posicaoZo = leitor.nextInt();
+
                                         while(z < 0){
                                                 System.out.println("Valor inválido! Digite novamente! \n");
                                                 System.out.println("Digite a altura inicial do robo: \n");
                                                 posicaoZo = leitor.nextInt();
                                         }
-                                        System.out.println("Digite a altura maxima do robo:");
-                                        int h_max = leitor.nextInt();
-                                        while(h_max < 0){
-                                                System.out.println("Valor inválido! Digite novamente! \n");
-                                                System.out.println("Digite a altura maxima do robo: \n");
-                                                h_max = leitor.nextInt();
-                                        }
-                                        RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, h_max, nome, amb, s);
+
+                                        RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, s);
+                                        amb.adicionaRobo(ar);
                                 }
                         }
 
