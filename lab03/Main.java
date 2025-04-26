@@ -112,9 +112,17 @@ public class Main {
                         }
                         else if(opcao == 3 || opcao == 4){
                                 //Robôs aéreos: possuem altitude máxima
+                                System.out.println("Digite a altura inicial do robo:");
+                                int posicaoZo = leitor.nextInt();
+                                while(posicaoZo < 0){
+                                        System.out.println("Valor inválido! Digite novamente! \n");
+                                        System.out.println("Digite a altura inicial do robo: \n");
+                                        posicaoZo = leitor.nextInt();
+                                }
 
                                 System.out.println("Digite a altura máxima do robô");
                                 int alturamaxima = leitor.nextInt();
+                                
 
                                 while (alturamaxima > amb.getAltura() || alturamaxima <= 0) {
                                         System.out.println("Altura máxima inválida! Tente novamente \n");
@@ -132,20 +140,10 @@ public class Main {
                                                 capacidade = leitor.nextInt();
                                         }
 
-                                        RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, opcao, alturamaxima, nome, amb, capacidade, s);
+                                        RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, s);
                                 }
 
                                 else if(opcao == 4){
-                                        //Robô áereo relator
-                                        System.out.println("Digite a altura inicial do robo:");
-                                        int posicaoZo = leitor.nextInt();
-
-                                        while(z < 0){
-                                                System.out.println("Valor inválido! Digite novamente! \n");
-                                                System.out.println("Digite a altura inicial do robo: \n");
-                                                posicaoZo = leitor.nextInt();
-                                        }
-
                                         RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, s);
                                         amb.adicionaRobo(ar);
                                 }

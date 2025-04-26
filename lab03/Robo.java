@@ -96,7 +96,7 @@ public abstract class Robo {
                     }
                 }
                 else if(deltaX < 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaX, this.getAmbiente()); 
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente()); 
                     //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() - avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
@@ -130,7 +130,7 @@ public abstract class Robo {
                 }
                 else if (deltaY < 0){
                     //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
-                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), -deltaY, this.habitat);
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.habitat);
 
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() - avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
