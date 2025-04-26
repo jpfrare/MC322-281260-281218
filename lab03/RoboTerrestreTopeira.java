@@ -2,10 +2,10 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     private int profundidade; //escava o ambiente
     private final int profundidadeMax; //valor < 0
 
-    public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, int velocidademax, Ambiente a, 
-    int profundidadeMax, String direcao, Sensor sensor) {
+    public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a, 
+    int profundidadeMax, SensorMovimento sensor) {
         //construtor levando em consideração os novos atributos
-        super(posicaoXo, posicaoYo, nome, velocidademax, a, direcao, sensor);
+        super(posicaoXo, posicaoYo, nome, velocidademax, a, sensor);
         this.profundidade = 0;
         this.profundidadeMax = profundidadeMax;
     }
@@ -33,7 +33,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
 
         if (Math.abs(deltaZ) > this.getVelocidademax() || this.profundidade + deltaZ < profundidadeMax || 
         this.profundidade + deltaZ > 0) {
-            System.err.printf("Movimento inválido! \n");
+            System.out.printf("Movimento inválido! \n");
             return;
         }
 

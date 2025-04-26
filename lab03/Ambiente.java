@@ -46,7 +46,9 @@ public class Ambiente {
         
     }
   
-    boolean eh_obstaculo(){ return true;}
+    boolean eh_obstaculo(int x, int y, int z){ 
+        return this.mapa[x][y][z] == 1;
+    }
 
     public boolean dentroDosLimites(int x, int y, int z) {
         //retorna true se o robo esta dentro do ambiente e false caso contrario
