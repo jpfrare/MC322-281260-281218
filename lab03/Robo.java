@@ -51,11 +51,11 @@ public abstract class Robo {
         return this.posicaoZ;
     }
 
-    void setPosicaoZ(int z){
+    final void setPosicaoZ(int z){
         this.posicaoZ = z;
     }
 
-    Ambiente getAmbiente() {
+    final Ambiente getAmbiente() {
         //retorna o ambiente do qual o robô pertence
         return this.habitat;
     }
@@ -69,6 +69,8 @@ public abstract class Robo {
     }
 
     boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
+        int posx_ini = this.getPosicaoX();
+        int posy_ini = this.getPosicaoY();
         visitados[passoX][passoY] = 1;
         int avancar;
         if(deltaX == 0 && deltaY == 0){ //chegou ao destino
@@ -86,6 +88,9 @@ public abstract class Robo {
                             this.setPosicaoX(this.getPosicaoX() + avancar);
                             if(moverR(deltaX - avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
+                            else{
+                                this.setPosicaoX(posx_ini);
+                            }
                         }
                         avancar--;
                     }
@@ -98,6 +103,9 @@ public abstract class Robo {
                             this.setPosicaoX(this.getPosicaoX() - avancar);
                             if(moverR(deltaX + avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
+                            else{
+                                this.setPosicaoX(posx_ini);
+                            }
                         }
                         avancar --;
                     }
@@ -113,6 +121,9 @@ public abstract class Robo {
                             this.setPosicaoY(this.getPosicaoY() + avancar);
                             if(moverR(deltaX, deltaY - avancar, passoX, passoY + avancar, visitados))
                                 return true;
+                            else{
+                                this.setPosicaoY(posy_ini);
+                            }
                         }
                         avancar --;
                     }
@@ -126,6 +137,9 @@ public abstract class Robo {
                             this.setPosicaoY(this.getPosicaoY() - avancar);
                             if(moverR(deltaX, deltaY + avancar, passoX, passoY + avancar, visitados))
                                 return true;
+                            else{
+                                this.setPosicaoY(posy_ini);
+                            }
                         }
                         avancar--;
                     }

@@ -282,7 +282,6 @@ public class Main {
                                         float valor = leitor.nextFloat();
                                         ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
 
-
                                 } else if (p instanceof RoboAereoDinamico) {
                                         ((RoboAereoDinamico)p).recarregar();
 
