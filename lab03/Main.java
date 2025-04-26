@@ -1,6 +1,18 @@
 import java.util.Scanner;
 
 public class Main {
+        public static int buscar_robo(Ambiente amb, String nome) {
+                //busca robô pelo nome no array list do ambiente
+                int len = amb.getArrayTamanho();
+
+                for (int i = 0; i < len; i++) {
+                        if (nome.equals(amb.getRobo(i).getNome())) {
+                                return i;
+                        }
+                }
+
+                return -1;
+        }
     
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
@@ -22,10 +34,12 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- sair \n ************* \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
-                if (chave == 1) {
+
+                if (chave == 1) {//Criação de robô
+        
                         System.out.println("Digite o nome do robô: \n");
                         String nome = leitor.nextLine();
                         
@@ -137,93 +151,170 @@ public class Main {
                                 }
                         }
 
-                } else if (chave == 2) {
+                } else if (chave == 2) {//Adicionar Obstáculo
+
+                        System.out.println("Digite o x1 \n");
+                        int x1 = leitor.nextInt();
+                        System.out.println("Digite o x2");
+                        int x2 = leitor.nextInt();
+                        System.out.println("Digite o y1");
+                        int y1 = leitor.nextInt();
+                        System.out.println("Digite o y2");
+                        int y2 = leitor.nextInt();
+
+                        while (x1 > amb.getAmbienteX() || x2 > amb.getAmbienteX() || y1 > amb.getAmbienteY() || y2 > amb.getAmbienteY()) {
+                                System.out.println("Valores inválidos! Tente novamente");
+                                System.out.println("Digite o x1 \n");
+                                x1 = leitor.nextInt();
+                                System.out.println("Digite o x2");
+                                x2 = leitor.nextInt();
+                                System.out.println("Digite o y1");
+                                y1 = leitor.nextInt();
+                                System.out.println("Digite o y2");
+                                y2 = leitor.nextInt();
+                        }
+
+                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro \n 2-Bloco \n 3-Placa\n");
+                        int opcao = leitor.nextInt();
+
+                        while (opcao < 1 || opcao > 3) {
+                                System.out.println("Opção inválida! Tente novamente \n");
+                                opcao = leitor.nextInt();
+                        }
+
+                        TipoObstaculo tipo;
+
+                        if (opcao == 1) {
+                                tipo = TipoObstaculo.MURO;
+
+                        } else if (opcao == 2) {
+                                tipo = TipoObstaculo.BLOCO;
+
+                        } else {
+                                tipo = TipoObstaculo.PLACA;
+                        }
+
+                        amb.adicionaObstaculo(x1, x2, y1, y2, tipo);
+                        System.out.println("Obstáculo Criado! \n");
 
 
-                } else if (chave == 3) {
+                } else if (chave == 3) {//mover um robô
                         String robo;
                         int mov_x;
                         int mov_y;
-                        Robo mover = null;
-                        while(mover == null){
-                                System.out.println("Digite o nome do Robo a se mover:");
-                                robo = leitor.nextLine();
-                                for(Robo r: amb.getArrayRobos()){
-                                        if(robo.equals(r.getNome())){
-                                                mover = r;
-                                                break;
-                                        }
-                                }
-                                if(mover == null){
-                                        System.out.println("Não foi possivel identificar um Robo com o nome inserido.");
-                                }
-                        }
-                        
-                        if (mover instanceof RoboTerrestre){
-                                System.out.println("Digite o quanto deseja mover em x:");
-                                mov_x = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em y:");
-                                mov_y = leitor.nextInt();
-                                mover.mover(mov_x, mov_y);
-                        }
-                        else if(mover instanceof RoboAereoRelator){
-                                RoboAereoRelator relator = (RoboAereoRelator)mover;
-                                int movimento; 
-                                System.out.println("Deseja se mover horizontalmente (digite 1) ou verticalmente (digite 2)?");
-                                movimento = leitor.nextInt();
-                                if(movimento == 1){
+
+                        System.out.println("Digite o nome do Robô");
+                        robo = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, robo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido!");
+
+                        } else {
+                                Robo mover = amb.getRobo(pos);
+                                
+                                if (mover instanceof RoboTerrestre){
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em y:");
                                         mov_y = leitor.nextInt();
-                                        relator.mover(mov_x, mov_y);
+                                        mover.mover(mov_x, mov_y);
                                 }
-                                else if(movimento == 2){
+                                else if(mover instanceof RoboAereoRelator){
+                                        RoboAereoRelator relator = (RoboAereoRelator)mover;
+                                        int movimento; 
+                                        System.out.println("Deseja se mover horizontalmente (digite 1) ou verticalmente (digite 2)?");
+                                        movimento = leitor.nextInt();
+
+                                        if(movimento == 1){
+                                                System.out.println("Digite o quanto deseja mover em x:");
+                                                mov_x = leitor.nextInt();
+                                                System.out.println("Digite o quanto deseja mover em y:");
+                                                mov_y = leitor.nextInt();
+                                                relator.mover(mov_x, mov_y);
+                                        } else if(movimento == 2){
+                                                int mov_z;
+                                                System.out.println("Digite o quanto deseja mover em z:");
+                                                mov_z = leitor.nextInt();
+                                                if(mov_z > 0){
+                                                        relator.subir(mov_z);
+                                                }
+                                                else{
+                                                        relator.descer(-mov_z);
+                                                }
+                                        } else{
+                                                System.out.println("Movimento inválido!");
+                                        }
+
+                                } else if (mover instanceof RoboAereoDinamico){
+                                        RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
                                         int mov_z;
+                                        System.out.println("Digite o quanto deseja mover em x:");
+                                        mov_x = leitor.nextInt();
+                                        System.out.println("Digite o quanto deseja mover em y:");
+                                        mov_y = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em z:");
                                         mov_z = leitor.nextInt();
-                                        if(mov_z > 0){
-                                                relator.subir(mov_z);
-                                        }
-                                        else{
-                                                relator.descer(-mov_z);
-                                        }
-                                }
-                                else{
-                                        System.out.println("Movimento inválido!");
-                                }
-                                
-                        }
-                        else if(mover instanceof RoboAereoDinamico){
-                                RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
-                                int mov_z;
-                                System.out.println("Digite o quanto deseja mover em x:");
-                                mov_x = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em y:");
-                                mov_y = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em z:");
-                                mov_z = leitor.nextInt();
-                                dinamico.moverDinamico(mov_x, mov_y, mov_z);   
+                                        dinamico.moverDinamico(mov_x, mov_y, mov_z);   
 
+                                }
+                        
                         }
                         
-
-
-
                 } else if (chave == 4) {
 
 
-                } else if (chave == 5) {
+                } else if (chave == 5) { //habilidades especiais
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                        Robo p = amb.getRobo(pos);
+
+                                if (p instanceof RoboTerrestreAOleo) {
+                                        System.out.println("Digite o valor do delta lubrificação \n");
+                                        float valor = leitor.nextFloat();
+                                        ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+
+
+                                } else if (p instanceof RoboAereoDinamico) {
+                                        ((RoboAereoDinamico)p).recarregar();
+
+                                } else {
+                                        ((RoboAereoRelator)p).gerar_relatorio();
+                                }
+                        }
+
+                } else if (chave == 6){ //Exibir Posição
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                                Robo p = amb.getRobo(pos);
+
+                                p.exibirPosicao();
+                        }
+        
+        
+                } else if (chave == 7) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
-
-                } else {
-                        System.out.println("Valor inválido! Tente Novamente");
                 }
+
         }
 
         leitor.close();
+        }
 
-
-     }
 }
