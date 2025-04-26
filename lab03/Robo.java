@@ -149,7 +149,10 @@ public abstract class Robo {
         return false;
     }
     void mover(int deltaX, int deltaY){
-        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0)) return; //confere se a região está dentro dos limites
+        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) || this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ)) {
+            System.out.println("movimento não realizado");
+            return;
+        }
         int xo = this.posicaoX;
         int yo = this.posicaoY;
         this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 0;
@@ -165,6 +168,7 @@ public abstract class Robo {
 
         if (moverR(deltaX, deltaY, 0, 0, visitados)) {
             this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = 1;
+            System.out.println("Existe caminho na horizontal!");
 
         } else {
             this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 1;

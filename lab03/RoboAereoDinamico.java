@@ -38,25 +38,20 @@ public class RoboAereoDinamico extends RoboAereo {
         this.altitudemax_atual = this.getAltitudeMax();
     }
 
-    @Override
-    void subir(int delta_h){
-        //similar ao subir da classe robo, agora a altura maxima é condicionada ao nivel energetico atual do robo
-        int pos_final = this.getPosicaoZ() + delta_h;
-        if(this.getAmbiente().dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudemax_atual)){
-            this.setPosicaoZ(pos_final);
-        }
-        else{
-            System.out.println("Movimento invalido de Subida!");
-        }
-    }
-
     boolean moverDinamico(int delta_x, int delta_y, int delta_z){
+        if(this.getAmbiente().identifica_colisao(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)){
+            return false;
+        }
         int pos_z0 = this.getPosicaoZ();
+        int avancar;
         if(delta_z > 0 && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
-            this.setPosicaoZ(this.getPosicaoZ() + 1);
-            if(this.moverDinamico(delta_x, delta_y, delta_z - 1)){
-                return true;
+            avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+            if(avancar > 0){
+                this.setPosicaoZ(this.getPosicaoZ() + avancar);
+                if(this.moverDinamico(delta_x, delta_y, delta_z - avancar)){
+                    return true;
+                }
             }
             
         }
@@ -76,16 +71,22 @@ public class RoboAereoDinamico extends RoboAereo {
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
             if(delta_x != 0 || delta_y != 0){ //caso o robo desca e mais provavel que primeiro mover horizontalmente e depois mover verticalmente seja um caminho valido
                 if(mover_horizontal(delta_x, delta_y)){ //mover horizontalmente em uma altura maior tem maior chance de ele passar por um obstaculo
-                    this.setPosicaoZ(this.getPosicaoZ() - 1);
-                    if(this.moverDinamico(0, 0, delta_z + 1)){
-                        return true;
+                    avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+                    if(avancar > 0){
+                        this.setPosicaoZ(this.getPosicaoZ() - avancar);
+                        if(this.moverDinamico(0, 0, delta_z + avancar)){
+                            return true;
+                        }
                     }
                 }
             }
             else{
-                this.setPosicaoZ(this.getPosicaoZ() - 1);
-                if(this.moverDinamico(delta_x, delta_y, delta_z + 1)){
-                    return true;
+                avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+                if(avancar > 0){
+                    this.setPosicaoZ(this.getPosicaoZ() - avancar);
+                    if(this.moverDinamico(delta_x, delta_y, delta_z + avancar)){
+                        return true;
+                    }
                 }
             }
         }

@@ -45,10 +45,6 @@ public class Ambiente {
         }
         
     }
-  
-    boolean eh_obstaculo(int x, int y, int z){ 
-        return this.mapa[x][y][z] == 1;
-    }
 
     public boolean dentroDosLimites(int x, int y, int z) {
         //retorna true se o robo esta dentro do ambiente e false caso contrario
@@ -94,7 +90,7 @@ public class Ambiente {
     }
 
     boolean identifica_colisao(int x, int y, int h){
-        return this.getMapa()[x][y][h] == 1;
+        return this.mapa[x][y][h] == 1;
     }
 
     public Robo getRobo(int pos){

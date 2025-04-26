@@ -36,6 +36,7 @@ public class RoboAereo extends Robo {
     int getAltitudeMax(){
         return this.altitudeMax;
     }
+    /*
     @Override
     void mover(int deltaX, int deltaY){
         int x_final = this.getPosicaoX() + deltaX;
@@ -65,6 +66,7 @@ public class RoboAereo extends Robo {
             }
         }
     }
+*/
 
     void descer(int delta_h){
         //apenas desce até uma posicao valida (altura > 0)
