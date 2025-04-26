@@ -99,4 +99,3 @@ public class RoboAereoDinamico extends RoboAereo {
         return (x_ini + delta_x == this.getPosicaoX() && y_ini + delta_y == this.getPosicaoY());
     }
 }
-
