@@ -36,13 +36,14 @@ public class RoboAereoDinamico extends RoboAereo {
         //recarrega o nivel de energia e reestabelece a altura maxima padrao
         this.nivel_energetico = this.capacidade;
         this.altitudemax_atual = this.getAltitudeMax();
+        System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
     void moverDinamico(int delta_x, int delta_y, int delta_z){
         int pos_xo = this.getPosicaoX();
         int pos_yo = this.getPosicaoY();
         int pos_zo = this.getPosicaoZ();
-        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
-        && this.getAmbiente().dentroDosLimites(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
+        if(this.getAmbiente().dentroDosLimites(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
+        && !this.getAmbiente().identifica_colisao(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
         && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
@@ -52,7 +53,7 @@ public class RoboAereoDinamico extends RoboAereo {
             }
             else{
                 this.setPosicaoX(pos_xo);
-                this.setPosicaoX(pos_yo);
+                this.setPosicaoY(pos_yo);
                 this.setPosicaoZ(pos_zo);
             }
         }
@@ -119,6 +120,7 @@ public class RoboAereoDinamico extends RoboAereo {
         int x_ini = this.getPosicaoX();
         int y_ini = this.getPosicaoY();
         this.mover(delta_x, delta_y);
+        this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()][this.getPosicaoZ()] = 0;
         return (x_ini + delta_x == this.getPosicaoX() && y_ini + delta_y == this.getPosicaoY());
     }
 }

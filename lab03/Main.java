@@ -223,11 +223,6 @@ public class Main {
 
                         } else {
                                 Robo mover = amb.getRobo(pos);
-                                System.out.println("Digite o quanto deseja mover em x:");
-                                mov_x = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em y:");
-                                mov_y = leitor.nextInt();
-                                
 
                                 if (mover instanceof RoboTerrestre){
                                         System.out.println("Digite o quanto deseja mover em x:");
@@ -245,14 +240,16 @@ public class Main {
                                 }
                                 else if(mover instanceof RoboAereoRelator relator){
                                         int movimento; 
-                                        System.out.println("Deseja se mover apenas horizontalmente (digite 1) ou verticalmente também (digite 2)?");
+                                        System.out.println("Deseja se mover apenas horizontalmente (digite 1) ou apenas verticalmente(digite 2)?");
                                         movimento = leitor.nextInt();
 
                                         if(movimento == 1){
+                                                System.out.println("Digite o quanto deseja mover em x:");
+                                                mov_x = leitor.nextInt();
+                                                System.out.println("Digite o quanto deseja mover em y:");
+                                                mov_y = leitor.nextInt();
                                                 relator.mover(mov_x, mov_y);
                                         } else if(movimento == 2){
-
-                                                relator.mover(mov_x, mov_y);
 
                                                 System.out.println("Digite o quanto deseja mover em z:");
                                                 mov_z = leitor.nextInt();
@@ -268,13 +265,10 @@ public class Main {
 
                                 } else if (mover instanceof RoboAereoDinamico){
                                         RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
-
-
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em y:");
                                         mov_y = leitor.nextInt();
-
                                         System.out.println("Digite o quanto deseja mover em z:");
                                         mov_z = leitor.nextInt();
                                         dinamico.moverDinamico(mov_x, mov_y, mov_z);   

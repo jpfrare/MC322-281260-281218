@@ -85,7 +85,7 @@ public abstract class Robo {
             //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
             if(i == 1){ //mover em x
                 if(deltaX > 0){
-                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
+                    //busca um  avancar dentro do alcance do sensor que resulte em um caminho valido a partir da posicao inicial
                     avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente());
                     while(avancar > 0){
                         if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
