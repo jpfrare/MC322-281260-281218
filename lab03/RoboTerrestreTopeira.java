@@ -1,24 +1,11 @@
 public class RoboTerrestreTopeira extends RoboTerrestre {
-    private int profundidade; //escava o ambiente
     private final int profundidadeMax; //valor < 0
 
     public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a, 
     int profundidadeMax, SensorMovimento sensor) {
         //construtor levando em consideração os novos atributos
         super(posicaoXo, posicaoYo, nome, velocidademax, a, sensor);
-        this.profundidade = 0;
         this.profundidadeMax = profundidadeMax;
-    }
-
-    //sets e gets para as profundidades
-    int getProfundidade() {
-        return this.profundidade;
-    }
-    
-    void setProfundidade(int profundidade) {
-        if (profundidade < 0 && profundidade > this.profundidadeMax) {
-            this.profundidade = profundidade;
-        }
     }
 
     int getProfundidadeMax() {
@@ -31,8 +18,8 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         int xo = this.getPosicaoX();
         int yo = this.getPosicaoY();
 
-        if (Math.abs(deltaZ) > this.getVelocidademax() || this.profundidade + deltaZ < profundidadeMax || 
-        this.profundidade + deltaZ > 0) {
+        if (Math.abs(deltaZ) > this.getVelocidademax() || this.getPosicaoZ() + deltaZ < profundidadeMax || 
+        this.getPosicaoZ() + deltaZ > 0) {
             System.out.printf("Movimento inválido! \n");
             return;
         }
@@ -41,13 +28,13 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
 
         if (deltaX == this.getPosicaoX() - xo && deltaY == this.getPosicaoY() - yo) {
             //se realmente se moveu em xy, move-se em z
-            this.profundidade += deltaZ;
+            this.setPosicaoZ(this.getPosicaoZ() + deltaZ);
         }
     }
     
     @Override
     void exibirPosicao() {
         //leva em cosideração a nova direção
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.profundidade);
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
     }
 }

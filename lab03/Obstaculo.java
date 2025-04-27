@@ -48,5 +48,9 @@ public class Obstaculo {
     int gety2(){
         return y2;
     }
+
+    Ambiente getAmbiente() {
+        return this.ambiente;
+    }
     
 }
