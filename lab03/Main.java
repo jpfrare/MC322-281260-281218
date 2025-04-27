@@ -34,7 +34,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- relatório de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -67,8 +67,9 @@ public class Main {
                         }
                         
                         SensorMovimento s = new SensorMovimento(raio);
+                        Robo r;
 
-                        //tipo de robõ
+                        //tipo de robô
                         System.out.println("Quase lá! Agora, digite qual robô: ");
                         System.out.println("1- Robô terrestre Topeira \n 2- Rôbo Terrestre a Óleo \n 3- Robô Aéreo Dinâmico \n 4- Robô Aéreo Relator \n");
                         int opcao = leitor.nextInt();
@@ -99,18 +100,17 @@ public class Main {
                                                 profundidade_max = leitor.nextInt(); 
                                         }
                                 
-                                        RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, s);
-                                        amb.adicionaRobo(r);
+                                        r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, s);
                                 }
                                   
                                 else if (opcao == 2) {
                                         //robo terrestre a óleo
-                                        RoboTerrestreAOleo ro = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, s);
-                                        amb.adicionaRobo(ro);
+                                        r = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, s);
+                                        
                                 }
                                 
                         }
-                        else if(opcao == 3 || opcao == 4){
+                        else {
                                 //Robôs aéreos: possuem altitude máxima
                                 System.out.println("Digite a altura inicial do robo:");
                                 int posicaoZo = leitor.nextInt();
@@ -140,13 +140,14 @@ public class Main {
                                                 capacidade = leitor.nextInt();
                                         }
 
-                                        RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, s);
+                                        r = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, s);
                                 }
 
-                                else if(opcao == 4){
-                                        RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, s);
-                                        amb.adicionaRobo(ar);
+                                else {
+                                     r = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, s);
                                 }
+
+                                amb.adicionaRobo(r);
                         }
 
                 } else if (chave == 2) {//Adicionar Obstáculo
