@@ -36,37 +36,6 @@ public class RoboAereo extends Robo {
     int getAltitudeMax(){
         return this.altitudeMax;
     }
-    /*
-    @Override
-    void mover(int deltaX, int deltaY){
-        int x_final = this.getPosicaoX() + deltaX;
-        int y_final = this.getPosicaoY() + deltaY;
-        int x_ini = this.getPosicaoX();
-        int y_ini = this.getPosicaoY();
-
-        if(this.getAmbiente().dentroDosLimites(x_final, y_final, this.getPosicaoZ())){
-            if(this.getAmbiente().getMapa()[x_final][y_final][this.getPosicaoZ()] == 0){
-                //posicao final nao é um obstaculo
-                int x_abs = Math.abs(deltaX);
-                int y_abs = Math.abs(deltaY);
-                int [][] visitados = new int[x_abs + 1][y_abs + 1];
-                for(int i = 0; i < x_abs; i++){
-                    for(int j = 0; j < y_abs; j++){
-                        visitados[i][j] = 0;
-                    }
-                }
-                if(!moverR(deltaX, deltaY, 0, 0, visitados)){
-                    this.setPosicaoX(x_ini);
-                    this.setPosicaoY(y_ini);
-                }
-                else{
-                    this.getAmbiente().getMapa()[x_ini][y_ini][this.getPosicaoZ()] = 0;
-                    this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()][this.getPosicaoZ()] = 1;
-                }
-            }
-        }
-    }
-*/
 
     void descer(int delta_h){
         //apenas desce até uma posicao valida (altura > 0)
