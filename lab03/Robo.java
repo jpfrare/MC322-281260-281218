@@ -8,15 +8,15 @@ public abstract class Robo {
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, SensorMovimento sensor) {
+    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão
         this.posicaoX = posicaoXo;
         this.posicaoY = posicaoYo;
         this.nome = nome;
         this.habitat = habitat;
         this.posicaoZ = 0;
-        this.habitat.adicionaRobo(this);
         this.sensores = new ArrayList<>();
+        SensorMovimento sensor = new SensorMovimento(r_sensor);
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
     }
