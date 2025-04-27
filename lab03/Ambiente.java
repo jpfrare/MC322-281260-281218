@@ -7,6 +7,7 @@ public class Ambiente {
     private final ArrayList<Robo> robos;
     private final ArrayList<Obstaculo> obstaculos;
     private int[][][] mapa;
+    private int[][][] temperatura;
 
     public Ambiente(int x, int y, int z) {
         //inicializa o Ambiente atribuindo valores as dimensoes x e y e cria um array vazio de robos
@@ -22,6 +23,17 @@ public class Ambiente {
             for (int j = 0; j < y + 1; j++) {
                 for(int k = 0; k < z + 1; k++){
                     mapa[i][j][k] = 0;
+                }
+            }
+        }
+
+        this.temperatura = new int[x + 1][y + 1][z + 1];
+        for (int i = 0; i < x + 1; i++) {
+            for (int j = 0; j < y + 1; j++) {
+                for (int k = 0; k < z + 1; k++) {
+                    //função completamente aleatória de distribuição de temperatura
+                    this.temperatura[i][j][k] = (i*i - j*j)*((x + y + z)/3 - k);
+                    
                 }
             }
         }
@@ -95,6 +107,10 @@ public class Ambiente {
 
     public Robo getRobo(int pos){
         return this.robos.get(pos);
+    }
+
+    public int[][][] getTemperatura() {
+        return this.temperatura;
     }
 
 }
