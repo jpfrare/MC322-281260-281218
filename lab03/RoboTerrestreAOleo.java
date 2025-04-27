@@ -20,6 +20,12 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
             coeficienteDeLubrificacao += valor;
             
             this.VelMaxInstantanea = this.getVelocidademax()*this.coeficienteDeLubrificacao;
+
+        } else if (this.coeficienteDeLubrificacao + valor > 1) {
+          this.coeficienteDeLubrificacao = 1;  
+
+        } else {
+            System.out.println("Valor inválido de lubrificação! lembre-se que é um valor decimal!");
         }
     }
 
@@ -27,7 +33,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
     void mover(int deltaX, int deltaY) {
         //move-se, priorizando se o movimento atende as condições de lubrificação atuais do robô
         if (Math.abs(deltaX) > this.VelMaxInstantanea || Math.abs(deltaY) > this.VelMaxInstantanea) {
-            System.out.printf("Movimento Inválido!\n");
+            System.out.printf("Movimento Inválido! Baixa Lubrificação\n");
             return;
         }
 

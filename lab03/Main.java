@@ -34,7 +34,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- temperatura de algum ponto \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- relatório de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -58,15 +58,21 @@ public class Main {
                         }
 
                         //raio sensor movimento
-                        System.out.println("Digite o raio do sensor de movimento: \n");
+                        System.out.println("Digite o raio dos sensores de movimento (1) e temperatura (2) \n");
                         int raio = leitor.nextInt();
-                        while (raio <= 0) {
+                        int raiotemp = leitor.nextInt();
+                        while (raio <= 0 || raiotemp <= 0) {
                                 System.out.println("Raio de sensor inválido, digite novamente \n");
                                 System.out.println("Digite o raio do sensor de movimento: \n");
                                 raio = leitor.nextInt();
+                                System.out.println("Digite o raio do sensor de temperatura \n");
+                                raiotemp = leitor.nextInt();
                         }
-                        
-                        //tipo de robõ
+                  
+
+
+                        //tipo de robô
+
                         System.out.println("Quase lá! Agora, digite qual robô: ");
                         System.out.println("1- Robô terrestre Topeira \n 2- Rôbo Terrestre a Óleo \n 3- Robô Aéreo Dinâmico \n 4- Robô Aéreo Relator \n");
                         int opcao = leitor.nextInt();
@@ -97,18 +103,22 @@ public class Main {
                                                 profundidade_max = leitor.nextInt(); 
                                         }
                                 
+
                                         RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, raio);
                                         amb.adicionaRobo(r);
+
                                 }
                                   
                                 else if (opcao == 2) {
                                         //robo terrestre a óleo
+
                                         RoboTerrestreAOleo ro = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, raio);
                                         amb.adicionaRobo(ro);
+
                                 }
                                 
                         }
-                        else if(opcao == 3 || opcao == 4){
+                        else {
                                 //Robôs aéreos: possuem altitude máxima
                                 System.out.println("Digite a altura inicial do robo:");
                                 int posicaoZo = leitor.nextInt();
@@ -146,6 +156,9 @@ public class Main {
                                         RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, raio);
                                         amb.adicionaRobo(ar);
                                 }
+
+                                SensorTemperatura temp = new SensorTemperatura(r, raiotemp);
+                                r.AdicionaSensores(temp);
                         }
 
                 } else if (chave == 2) {//Adicionar Obstáculo
@@ -211,11 +224,12 @@ public class Main {
 
                         } else {
                                 Robo mover = amb.getRobo(pos);
-                                if(mover != null){
-                                        System.out.println("Posicao inicial:");
-                                        mover.exibirPosicao();
-                                }
+                                System.out.println("Digite o quanto deseja mover em x:");
+                                mov_x = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em y:");
+                                mov_y = leitor.nextInt();
                                 
+
                                 if (mover instanceof RoboTerrestre){
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
@@ -232,16 +246,15 @@ public class Main {
                                 }
                                 else if(mover instanceof RoboAereoRelator relator){
                                         int movimento; 
-                                        System.out.println("Deseja se mover horizontalmente (digite 1) ou verticalmente (digite 2)?");
+                                        System.out.println("Deseja se mover apenas horizontalmente (digite 1) ou verticalmente também (digite 2)?");
                                         movimento = leitor.nextInt();
 
                                         if(movimento == 1){
-                                                System.out.println("Digite o quanto deseja mover em x:");
-                                                mov_x = leitor.nextInt();
-                                                System.out.println("Digite o quanto deseja mover em y:");
-                                                mov_y = leitor.nextInt();
                                                 relator.mover(mov_x, mov_y);
                                         } else if(movimento == 2){
+
+                                                relator.mover(mov_x, mov_y);
+
                                                 System.out.println("Digite o quanto deseja mover em z:");
                                                 mov_z = leitor.nextInt();
                                                 if(mov_z > 0){
@@ -256,14 +269,16 @@ public class Main {
 
                                 } else if (mover instanceof RoboAereoDinamico){
                                         RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
+
+
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em y:");
                                         mov_y = leitor.nextInt();
+
                                         System.out.println("Digite o quanto deseja mover em z:");
                                         mov_z = leitor.nextInt();
                                         dinamico.moverDinamico(mov_x, mov_y, mov_z);   
-
                                 }
                                 if(mover != null){
                                         System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
@@ -272,8 +287,17 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 4) {
+                } else if (chave == 4) { //relatório de temperatura
+                        System.out.println("Digite o nome do robô \n");
+                        String vulgo = leitor.nextLine();
+                        int pos = Main.buscar_robo(amb, vulgo);
 
+                        if (pos == -1) {
+                                System.out.println("Nome inválido!");
+
+                        } else {
+                                amb.getRobo(pos).getSensorTemperatura().analise_temperatura();
+                        }
 
                 } else if (chave == 5) { //habilidades especiais
                         System.out.println("Digite o nome do rôbo \n");
@@ -291,6 +315,7 @@ public class Main {
                                         System.out.println("Digite o valor do delta lubrificação \n");
                                         float valor = leitor.nextFloat();
                                         ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+                                        ((RoboTerrestreAOleo)p).exibirLubrificacao();
 
                                 } else if (p instanceof RoboAereoDinamico) {
                                         ((RoboAereoDinamico)p).recarregar();
