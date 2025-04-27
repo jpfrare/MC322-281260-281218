@@ -217,27 +217,29 @@ public class Main {
 
                         } else {
                                 Robo mover = amb.getRobo(pos);
+                                System.out.println("Digite o quanto deseja mover em x:");
+                                mov_x = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em y:");
+                                mov_y = leitor.nextInt();
                                 
-                                if (mover instanceof RoboTerrestre){
-                                        System.out.println("Digite o quanto deseja mover em x:");
-                                        mov_x = leitor.nextInt();
-                                        System.out.println("Digite o quanto deseja mover em y:");
-                                        mov_y = leitor.nextInt();
-                                        mover.mover(mov_x, mov_y);
+                                if (mover instanceof RoboTerrestreAOleo){
+                                        ((RoboTerrestreAOleo)mover).mover(mov_x, mov_y);
+
+                                } else if (mover instanceof RoboTerrestreTopeira) {
+                                        System.out.println("Digite o quanto deseja mover em z");
+                                        int mov_z = leitor.nextInt();
+                                        ((RoboTerrestreTopeira)mover).mover(mov_x, mov_y, mov_z);
                                 }
                                 else if(mover instanceof RoboAereoRelator){
                                         RoboAereoRelator relator = (RoboAereoRelator)mover;
                                         int movimento; 
-                                        System.out.println("Deseja se mover horizontalmente (digite 1) ou verticalmente (digite 2)?");
+                                        System.out.println("Deseja se mover apenas horizontalmente (digite 1) ou verticalmente também (digite 2)?");
                                         movimento = leitor.nextInt();
 
                                         if(movimento == 1){
-                                                System.out.println("Digite o quanto deseja mover em x:");
-                                                mov_x = leitor.nextInt();
-                                                System.out.println("Digite o quanto deseja mover em y:");
-                                                mov_y = leitor.nextInt();
                                                 relator.mover(mov_x, mov_y);
                                         } else if(movimento == 2){
+                                                relator.mover(mov_x, mov_y);
                                                 int mov_z;
                                                 System.out.println("Digite o quanto deseja mover em z:");
                                                 mov_z = leitor.nextInt();
@@ -254,14 +256,9 @@ public class Main {
                                 } else if (mover instanceof RoboAereoDinamico){
                                         RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
                                         int mov_z;
-                                        System.out.println("Digite o quanto deseja mover em x:");
-                                        mov_x = leitor.nextInt();
-                                        System.out.println("Digite o quanto deseja mover em y:");
-                                        mov_y = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em z:");
                                         mov_z = leitor.nextInt();
                                         dinamico.moverDinamico(mov_x, mov_y, mov_z);   
-
                                 }
                         
                         }
@@ -294,6 +291,7 @@ public class Main {
                                         System.out.println("Digite o valor do delta lubrificação \n");
                                         float valor = leitor.nextFloat();
                                         ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+                                        ((RoboTerrestreAOleo)p).exibirLubrificacao();
 
                                 } else if (p instanceof RoboAereoDinamico) {
                                         ((RoboAereoDinamico)p).recarregar();

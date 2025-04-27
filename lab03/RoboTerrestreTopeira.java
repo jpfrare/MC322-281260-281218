@@ -14,20 +14,31 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
 
 
     void mover(int deltaX, int deltaY, int deltaZ) {
-        //faz o movimento, dando prioridade a possibilidade de movimento na na direção z
-        int xo = this.getPosicaoX();
-        int yo = this.getPosicaoY();
-
-        if (Math.abs(deltaZ) > this.getVelocidademax() || this.getPosicaoZ() + deltaZ < profundidadeMax || 
-        this.getPosicaoZ() + deltaZ > 0) {
-            System.out.printf("Movimento inválido! \n");
+        //verificando se a posição final está dentro dos limites
+        if (!this.getAmbiente().dentroDosLimites(this.getPosicaoX() + deltaX, this.getPosicaoY() + deltaY, 0) || 
+        this.getPosicaoZ() + deltaZ < this.profundidadeMax || this.getPosicaoZ() + deltaZ > 0) {
+            System.out.println("Movimento inválido");
+            return;
+        }
+       
+        if (Math.abs(deltaX) >= this.getVelocidademax() || Math.abs(deltaY) >= this.getVelocidademax() || Math.abs(deltaZ) >= this.getVelocidademax()) {
+            System.out.println("Movimento inválido");
             return;
         }
 
-        super.mover(deltaX, deltaY);
+        if (this.getPosicaoZ() + deltaZ == 0 && this.getAmbiente().identifica_colisao(this.getPosicaoX() + deltaX,
+        this.getPosicaoY() + deltaY, 0)) {
+            //a única condição que deve-se ter cuidado, pois o robô topeira pode emergir em um lugar ocupado por obstáculo
+            System.out.println("Movimento inválido");
+            return;
 
-        if (deltaX == this.getPosicaoX() - xo && deltaY == this.getPosicaoY() - yo) {
-            //se realmente se moveu em xy, move-se em z
+        } else {
+            /*por amor a simplicidade e sabendo que não existe um obstáculo no subsolo,
+            supõe-se que sempre existirá um caminho que passa pelo subsolo que garante que o robô chegará ao destino final,
+            eliminando a necessidade de algoritmos baseados em backtrack/uso de sensores*/
+
+            this.setPosicaoX(this.getPosicaoX() + deltaX);
+            this.setPosicaoY(this.getPosicaoY() + deltaY);
             this.setPosicaoZ(this.getPosicaoZ() + deltaZ);
         }
     }
