@@ -3,9 +3,9 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     private final int profundidadeMax; //valor < 0
 
     public RoboTerrestreTopeira(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a, 
-    int profundidadeMax, SensorMovimento sensor) {
+    int profundidadeMax, int r_sensor) {
         //construtor levando em consideração os novos atributos
-        super(posicaoXo, posicaoYo, nome, velocidademax, a, sensor);
+        super(posicaoXo, posicaoYo, nome, velocidademax, a, r_sensor);
         this.profundidade = 0;
         this.profundidadeMax = profundidadeMax;
     }
@@ -77,6 +77,9 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
             }
             
         }
+        else{
+            System.out.println("Movimento Invalido!");
+        }
     }
 
 
@@ -92,7 +95,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         }
 
         this.mover_horizontal(deltaX, deltaY);
-        
+
         if (deltaX == this.getPosicaoX() - xo && deltaY == this.getPosicaoY() - yo) {
             //se realmente se moveu em xy, move-se em z
             this.profundidade += deltaZ;

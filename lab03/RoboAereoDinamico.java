@@ -8,8 +8,8 @@ public class RoboAereoDinamico extends RoboAereo {
     private int altitudemax_atual;
     private int nivel_energetico;
 
-    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int capacidade, SensorMovimento sensor){
-        super(posXo, posYo, alt_o, alt_max, nome, a, sensor);
+    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int capacidade, int r_sensor){
+        super(posXo, posYo, alt_o, alt_max, nome, a, r_sensor);
         this.capacidade = capacidade; //capacidade energetica do robo
         this.nivel_energetico = capacidade; //inicializa o robo com capacidade energetica maxima ("bateria cheia")
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima

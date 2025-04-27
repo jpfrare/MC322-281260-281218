@@ -1,8 +1,8 @@
 public class RoboAereo extends Robo {
     private final int altitudeMax;
 
-    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, SensorMovimento sensor){
-        super(posXo, posYo, nome, a, sensor);
+    public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
+        super(posXo, posYo, nome, a, r_sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
         this.getAmbiente().getMapa()[posXo][posYo][0] = 0; 
