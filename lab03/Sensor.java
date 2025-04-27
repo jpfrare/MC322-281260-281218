@@ -1,4 +1,4 @@
-public class Sensor {
+public abstract class Sensor {
     private final int raio;
 
     public Sensor(int r){
