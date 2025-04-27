@@ -1,5 +1,5 @@
 public  class SensorTemperatura extends Sensor {
-    Robo dono;
+    private Robo dono;
 
     public SensorTemperatura(Robo dono, int raio) {
         super(raio);
@@ -85,7 +85,7 @@ public  class SensorTemperatura extends Sensor {
             }
         }
 
-        System.out.println("Análise de Temperatura da região:");
+        System.out.printf("Análise de Temperatura da região ao redor do Robô %s \n", dono.getNome());
         System.out.printf("Temperatura local (%d, %d, %d) = %d \n", dono.getPosicaoX(), dono.getPosicaoY(), dono.getPosicaoZ(), temperatura_local);
         System.out.printf("Menor temperatura (%d, %d, %d) = %d \n" , i_menor, j_menor, k_menor, menor_temperatura);
         System.out.printf("Maior temperatura (%d, %d, %d) = %d \n", i_maior, j_maior, k_maior, maior_temperatura);

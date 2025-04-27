@@ -68,6 +68,10 @@ public abstract class Robo {
         return (SensorMovimento)this.sensores.get(0);
     }
 
+    SensorTemperatura getSensorTemperatura() {
+        return (SensorTemperatura)this.sensores.get(1);
+    }
+
     boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
         int posx_ini = this.getPosicaoX();
         int posy_ini = this.getPosicaoY();

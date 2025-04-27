@@ -58,12 +58,15 @@ public class Main {
                         }
 
                         //raio sensor movimento
-                        System.out.println("Digite o raio do sensor de movimento: \n");
+                        System.out.println("Digite o raio dos sensores de movimento (1) e temperatura (2) \n");
                         int raio = leitor.nextInt();
-                        while (raio <= 0) {
+                        int raiotemp = leitor.nextInt();
+                        while (raio <= 0 || raiotemp <= 0) {
                                 System.out.println("Raio de sensor inválido, digite novamente \n");
                                 System.out.println("Digite o raio do sensor de movimento: \n");
                                 raio = leitor.nextInt();
+                                System.out.println("Digite o raio do sensor de temperatura \n");
+                                raiotemp = leitor.nextInt();
                         }
                         
                         SensorMovimento s = new SensorMovimento(raio);
@@ -148,6 +151,8 @@ public class Main {
                                 }
 
                                 amb.adicionaRobo(r);
+                                SensorTemperatura temp = new SensorTemperatura(r, raiotemp);
+                                r.AdicionaSensores(temp);
                         }
 
                 } else if (chave == 2) {//Adicionar Obstáculo
@@ -261,8 +266,17 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 4) {
+                } else if (chave == 4) { //relatório de temperatura
+                        System.out.println("Digite o nome do robô \n");
+                        String vulgo = leitor.nextLine();
+                        int pos = Main.buscar_robo(amb, vulgo);
 
+                        if (pos == -1) {
+                                System.out.println("Nome inválido!");
+
+                        } else {
+                                amb.getRobo(pos).getSensorTemperatura().analise_temperatura();
+                        }
 
                 } else if (chave == 5) { //habilidades especiais
                         System.out.println("Digite o nome do rôbo \n");
