@@ -70,7 +70,7 @@ public class Main {
                         }
                   
 
-
+                        Robo r = null;
                         //tipo de robô
 
                         System.out.println("Quase lá! Agora, digite qual robô: ");
@@ -104,21 +104,19 @@ public class Main {
                                         }
                                 
 
-                                        RoboTerrestreTopeira r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, raio);
+                                        r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, raio);
                                         amb.adicionaRobo(r);
 
                                 }
                                   
                                 else if (opcao == 2) {
                                         //robo terrestre a óleo
-
-                                        RoboTerrestreAOleo ro = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, raio);
-                                        amb.adicionaRobo(ro);
+                                        r = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, raio);
 
                                 }
                                 
                         }
-                        else {
+                        else if(opcao == 3 || opcao == 4){
                                 //Robôs aéreos: possuem altitude máxima
                                 System.out.println("Digite a altura inicial do robo:");
                                 int posicaoZo = leitor.nextInt();
@@ -148,15 +146,16 @@ public class Main {
                                                 capacidade = leitor.nextInt();
                                         }
 
-                                        RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, raio);
-                                        amb.adicionaRobo(rd);
+                                        r = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, raio);
                                 }
 
                                 else if(opcao == 4){
-                                        RoboAereoRelator ar = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, raio);
-                                        amb.adicionaRobo(ar);
+                                        r = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, raio);
                                 }
-
+                                
+                        }
+                        if(r != null){
+                                amb.adicionaRobo(r);
                                 SensorTemperatura temp = new SensorTemperatura(r, raiotemp);
                                 r.AdicionaSensores(temp);
                         }

@@ -1,5 +1,5 @@
 public  class SensorTemperatura extends Sensor {
-    private Robo dono;
+    private final Robo dono;
 
     public SensorTemperatura(Robo dono, int raio) {
         super(raio);
@@ -48,7 +48,7 @@ public  class SensorTemperatura extends Sensor {
                         i_menor = i;
                         j_menor = j;
                         menor_temperatura = mapa_temperatura[i][j][0];
-                    };
+                    }
                 }
             }
         }

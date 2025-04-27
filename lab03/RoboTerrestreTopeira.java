@@ -6,7 +6,6 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         //construtor levando em consideração os novos atributos
 
         super(posicaoXo, posicaoYo, nome, velocidademax, a, r_sensor);
-        this.profundidade = 0;
 
         this.profundidadeMax = profundidadeMax;
     }
@@ -14,64 +13,6 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     int getProfundidadeMax() {
         return this.profundidadeMax;
     }
-
-    void mover_horizontal(int delta_x, int delta_y){
-        //para o roboterrestretopeira nao haverá obstaculo (essa é a sua vantagem)
-        int x_final = this.getPosicaoX() + delta_x;
-        int y_final = this.getPosicaoY() + delta_y;
-        if(x_final >= 0 && x_final <= this.getAmbiente().getAmbienteX() && y_final >= 0 && y_final <= this.getAmbiente().getAmbienteY()){
-            int avancar = this.getSensorMovimento().getRaio();
-            while(delta_x != 0){
-                if(delta_x > 0){
-                    if(delta_x > avancar){ //alcance do sensor nao chega no destino
-                        delta_x -= avancar;
-                        this.setPosicaoX(this.getPosicaoX() + avancar);
-                    }
-                    else{   //alcance do sensor chega no destino
-                        this.setPosicaoX(this.getPosicaoX() + delta_x);
-                        delta_x = 0;
-                    }
-                }
-                else{
-                    if(avancar < -delta_x){ //alcance do sensor nao chega no destino
-                        delta_x += avancar;
-                        this.setPosicaoX(this.getPosicaoX() - avancar);
-                    }
-                    else{   //alcance do sensor chega no destino
-                        this.setPosicaoX(this.getPosicaoX() + delta_x);
-                        delta_x = 0;
-                    }
-                }
-            }
-            while(delta_y != 0){
-                if(delta_y > 0){
-                    if(delta_y > avancar){ //alcance do sensor nao chega no destino
-                        delta_y -= avancar;
-                        this.setPosicaoY(this.getPosicaoY() + avancar);
-                    }
-                    else{   //alcance do sensor chega no destino
-                        this.setPosicaoY(this.getPosicaoY() + delta_y);
-                        delta_y = 0;
-                    }
-                }
-                else{
-                    if(avancar < -delta_y){ //alcance do sensor nao chega no destino
-                        delta_y += avancar;
-                        this.setPosicaoY(this.getPosicaoY() - avancar);
-                    }
-                    else{   //alcance do sensor chega no destino
-                        this.setPosicaoY(this.getPosicaoY() + delta_y);
-                        delta_y = 0;
-                    }
-                }
-            }
-            
-        }
-        else{
-            System.out.println("Movimento Invalido!");
-        }
-    }
-
 
     void mover(int deltaX, int deltaY, int deltaZ) {
         //verificando se a posição final está dentro dos limites
