@@ -139,6 +139,7 @@ public class Main {
                                         }
 
                                         RoboAereoDinamico rd = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, raio);
+                                        amb.adicionaRobo(rd);
                                 }
 
                                 else if(opcao == 4){
@@ -210,6 +211,10 @@ public class Main {
 
                         } else {
                                 Robo mover = amb.getRobo(pos);
+                                if(mover != null){
+                                        System.out.println("Posicao inicial:");
+                                        mover.exibirPosicao();
+                                }
                                 
                                 if (mover instanceof RoboTerrestre){
                                         System.out.println("Digite o quanto deseja mover em x:");
@@ -259,6 +264,10 @@ public class Main {
                                         mov_z = leitor.nextInt();
                                         dinamico.moverDinamico(mov_x, mov_y, mov_z);   
 
+                                }
+                                if(mover != null){
+                                        System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
+                                        mover.exibirPosicao();
                                 }
                         
                         }
