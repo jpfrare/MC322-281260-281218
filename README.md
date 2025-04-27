@@ -5,6 +5,8 @@ Repositório destinado ao desenvolvimento dos laboratórios da disciplina de MC3
 
 
 Considerações relevantes sobre o projeto, com foco no arquivo main: (Explicações minusciosas sobre as classes existentes e seus métodos estão contidas tanto nos cometários do código quanto no diagrama UML)
+OBS: é fortemente recomendado a leitura deste arquivo no modo de edição, pois este contém espaçamentos e quebra de linhas que tornam a leitura mais agradável
+
   1-A classe main é uma interface interativa relativamente simples, porém seu tamanho é devido as várias etapas de tratamento de erro de input (talvez seja conveniente a criação de uma função que capta as entradas e já realiza este tratamento, porém optou-se, em função das variações de mensagem no casos de erro, por não fazê-la).
   2- Cria-se um ambiente (dados os inputs relacionados ao comprimento do mesmo), e após isso, temos as opções de:
     1- adicionar um robô ao ambiente
