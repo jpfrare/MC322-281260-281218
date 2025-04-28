@@ -183,7 +183,7 @@ public class Main {
                                 y2 = leitor.nextInt();
                         }
 
-                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro \n 2-Bloco \n 3-Placa\n");
+                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro: Altura igual a 10, impede passagem. \n 2-Bloco: Altura igual a 5, impede passagem. \n 3-Placa: Altura igual a 3, nao impede passagem.\n");
                         int opcao = leitor.nextInt();
 
                         while (opcao < 1 || opcao > 3) {
