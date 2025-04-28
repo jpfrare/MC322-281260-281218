@@ -1,8 +1,8 @@
 
 # Repositório destinado ao desenvolvimento dos laboratórios da disciplina de MC322
 IDE utilizada: VS Code.  
+Versão do Java:  11.0.26 2025-01-21  
 
-Versão do Java:  11.0.26 2025-01-21
 
 <p>Considerações relevantes sobre o projeto, com foco no arquivo main: (Explicações minusciosas sobre as classes existentes e seus métodos estão contidas tanto nos cometários do código quanto no diagrama UML).  
 
@@ -27,7 +27,7 @@ Contém os inputs de nome, posição inicial, raio do sensor de movimento e de t
 <p> Nesta opção, há os inputs de variação de comprimento em cada coordenada (xy para o terrestre a óleo e xyz para os aéreos e terrestre toupeira) e a chamada da respectiva função de mover (condicionada a classe do robô escolhido), esta que é um algorítmo baseado em backtracking, que utiliza o sensor de movimento para perfazer um caminho livre de obstáculos (salvo o robô topeira, que se aproveita do fato de que não há obstáculos no subsolo para evitar o uso de chamadas recursivas/sensores).  
   
 ## 4. Relatório de Temperatura: 
-</p> sensor de temperatura de cada robô utiliza a matriz de temperatura contida no ambiente (existe uma temperatura relacionada a cada ponto xyz no ambiente (salvo no subsolo), que é baseada em uma função arbitrária e aleatória definida no construtor de ambiente) e a posição em que o robô se encontra no ambiente da seguinte forma: o sensor procura, na região compreendida por um cubo de lado de duas vezes o raio deste sensor e de centro na posição atual do robô a maior e menor temperatura e as imprime na tela (juntamente com suas respectivas localizações), bem como a temperatura associada a posição atual do robô.  
+</p> Sensor de temperatura de cada robô utiliza a matriz de temperatura contida no ambiente (existe uma temperatura relacionada a cada ponto xyz no ambiente (salvo no subsolo), que é baseada em uma função arbitrária e aleatória definida no construtor de ambiente) e a posição em que o robô se encontra no ambiente da seguinte forma: o sensor procura, na região compreendida por um cubo de lado de duas vezes o raio deste sensor e de centro na posição atual do robô a maior e menor temperatura e as imprime na tela (juntamente com suas respectivas localizações), bem como a temperatura associada a posição atual do robô.  
 
 ## 5. Habilidades Especiais:
 <p> Invoca a função única assocdiada â classe robô escolhido, a saber: alteração de lubrificação do robô terrestre a óleo, recarga de bateria do robô aéreo dinâmico e geração de relatório do robô aéreo relator.  
