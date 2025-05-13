@@ -1,4 +1,4 @@
-public class Obstaculo {
+public class Obstaculo implements InterfaceEntidadeObstaculo{
     private final int x1;
     private final int x2;
     private final int y1;
@@ -33,19 +33,22 @@ public class Obstaculo {
         return this.tipo;
     }
 
-    int getx1(){
+    @Override
+    int getX(){
         return x1;
     }
 
-    int getx2(){
+    @Override
+    int getX2(){
         return x2;
     }
     
-    int gety1() {
+    @Override
+    int getY() {
         return y1;
     }
-
-    int gety2(){
+    @Override
+    int getY2(){
         return y2;
     }
 
