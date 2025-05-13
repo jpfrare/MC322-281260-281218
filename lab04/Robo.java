@@ -7,6 +7,7 @@ public abstract class Robo {
     private int posicaoZ;
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
+    EstadoRobo estado;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão
@@ -19,8 +20,18 @@ public abstract class Robo {
         SensorMovimento sensor = new SensorMovimento(r_sensor);
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
+        this.estado = EstadoRobo.LIGADO;
     }
 
+    void ligarRobo() {
+        System.out.println("O Robô " + this.getNome() + " está ligado!");
+        estado = EstadoRobo.LIGADO;
+    }
+
+    void desligarRobo() {
+        System.out.println("O Robô " + this.getNome() + " está desligado!");
+        estado = EstadoRobo.LIGADO;
+    }
 
     String getNome() {
         return this.nome;
@@ -153,6 +164,11 @@ public abstract class Robo {
         return false;
     }
     void mover(int deltaX, int deltaY){
+        if (!this.estado.esta_ligado()) {
+            System.out.println("O robô está desligado!");
+            return;
+        }
+
         if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) || this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ)) {
             System.out.println("movimento não realizado");
             return;
