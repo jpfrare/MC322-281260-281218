@@ -4,9 +4,8 @@ public class Ambiente {
     private final int X;
     private final int Y;
     private final int Z;
-    private final ArrayList<Robo> robos;
-    private final ArrayList<Obstaculo> obstaculos;
-    private int[][][] mapa;
+    private final ArrayList<Entidade> elementos;
+    private TipoEntidade[][][] mapa;
     private int[][][] temperatura;
 
     public Ambiente(int x, int y, int z) {
@@ -14,8 +13,7 @@ public class Ambiente {
         this.X = x;
         this.Y = y;
         this.Z = z;
-        this.robos = new ArrayList<>();
-        this.obstaculos = new ArrayList<>();
+        this.elementos = new ArrayList<Entidade>();
         this.mapa = new int[x + 1][y + 1][z + 1]; //posicoes (0,0) e (x, y) serao validas
         
         //inicialização do mapa
