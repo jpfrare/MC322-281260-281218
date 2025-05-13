@@ -10,7 +10,7 @@ public class RoboAereo extends Robo {
     }
 
     void subir(int delta_h){
-        int pos_inicial = this.getPosicaoZ();
+        int pos_inicial = this.getZ();
         int pos_final = this.getPosicaoZ() + delta_h; //posicao final prevista (caso seja um movimento valido)
         int avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_h, this.getAmbiente());
         if(this.getAmbiente().dentroDosLimites(this.getPosicaoX(), this.getPosicaoY(), pos_final) && (pos_final <= this.altitudeMax)){
