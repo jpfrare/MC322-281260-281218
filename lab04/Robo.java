@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
-public abstract class Robo {
+public abstract class Robo implements InterfaceEntidade{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
-    EstadoRobo estado;
+    private EstadoRobo estado;
+    private final TipoEntidade tipo;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão
@@ -21,6 +22,7 @@ public abstract class Robo {
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
         this.estado = EstadoRobo.LIGADO;
+        this.tipo = TipoEntidade.ROBO;
     }
 
     void ligarRobo() {
@@ -36,7 +38,7 @@ public abstract class Robo {
     String getNome() {
         return this.nome;
     }
-
+    
     void setPosicaoX(int posicaoX) {
         //mudar a posição em X
         this.posicaoX = posicaoX;
@@ -47,17 +49,25 @@ public abstract class Robo {
         this.posicaoY = posicaoY;
     }
 
-    int getPosicaoX() {
+    @Override
+    public TipoEntidade getTipo() {
+        return this.tipo;
+    }
+
+    @Override
+    public int getX() {
         //retorna a posicão em X
         return this.posicaoX;
     }
 
-    int getPosicaoY() {
+    @Override
+    public int getY() {
         //retorna a posição em Y
         return this.posicaoY;
     }
 
-    int getPosicaoZ() {
+    @Override
+    public int getZ() {
         //esse método torna possível a implementação de uma análise de arraylist do ambiente baseada na dimensão Z
         return this.posicaoZ;
     }
