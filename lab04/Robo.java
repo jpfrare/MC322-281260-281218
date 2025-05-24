@@ -7,6 +7,8 @@ public abstract class Robo implements InterfaceEntidade{
     private int posicaoZ;
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
+    private EstadoRobo estado;
+    private TipoEntidade tipo;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão
@@ -19,8 +21,19 @@ public abstract class Robo implements InterfaceEntidade{
         SensorMovimento sensor = new SensorMovimento(r_sensor);
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
+        this.estado = EstadoRobo.LIGADO;
+        this.tipo = TipoEntidade.ROBO;
     }
 
+    void ligarRobo() {
+        System.out.println("O Robô " + this.getNome() + " está ligado!");
+        estado = EstadoRobo.LIGADO;
+    }
+
+    void desligarRobo() {
+        System.out.println("O Robô " + this.getNome() + " está desligado!");
+        estado = EstadoRobo.LIGADO;
+    }
 
     String getNome() {
         return this.nome;
@@ -28,7 +41,7 @@ public abstract class Robo implements InterfaceEntidade{
 
     @Override
     public TipoEntidade getTipo(){
-        return TipoEntidade.ROBO;
+        return tipo;
     }
 
     void setPosicaoX(int posicaoX) {
@@ -158,6 +171,12 @@ public abstract class Robo implements InterfaceEntidade{
         return false;
     }
     void mover(int deltaX, int deltaY){
+
+        if (estado == EstadoRobo.DESLIGADO) {
+            System.out.println("movimento não realizado");
+            return;
+        }
+
         if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) || this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ)) {
             System.out.println("movimento não realizado");
             return;
