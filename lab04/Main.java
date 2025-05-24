@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-        public static int buscar_robo(Ambiente amb, String nome) {
+        /*public static int buscar_robo(Ambiente amb, String nome) {
                 //busca robô pelo nome no array list do ambiente
                 int len = amb.getArrayTamanho();
 
@@ -12,7 +12,7 @@ public class Main {
                 }
 
                 return -1;
-        }
+        }*/
     
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);

@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.print.DocFlavor.STRING;
-
 public class Ambiente {
     private final int X;
     private final int Y;
@@ -126,9 +124,8 @@ public class Ambiente {
                 }
 
             }
-        else{
-            return null;
         }
+        return null;
     }
 
     public TipoEntidade [][][] getMapa(){
