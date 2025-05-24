@@ -22,7 +22,7 @@ public class RoboAereoDinamico extends RoboAereo {
             this.nivel_energetico--;
             //reduz a capacidade de voar mais alto proporcionalente ao nivel energetico atual
             this.altitudemax_atual = (this.getAltitudeMax() * (this.nivel_energetico + 1)) / this.capacidade;
-            if(this.getPosicaoZ() > this.altitudemax_atual) //corrige a altura atual com a altura maxima menor
+            if(this.getZ() > this.altitudemax_atual) //corrige a altura atual com a altura maxima menor
                 this.setPosicaoZ(this.altitudemax_atual);
             
         }
@@ -39,16 +39,16 @@ public class RoboAereoDinamico extends RoboAereo {
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
     void moverDinamico(int delta_x, int delta_y, int delta_z){
-        int pos_xo = this.getPosicaoX();
-        int pos_yo = this.getPosicaoY();
-        int pos_zo = this.getPosicaoZ();
-        if(this.getAmbiente().dentroDosLimites(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
-        && !this.getAmbiente().identifica_colisao(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)
-        && this.getPosicaoZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
+        int pos_xo = this.getX();
+        int pos_yo = this.getY();
+        int pos_zo = this.getZ();
+        if(this.getAmbiente().dentroDosLimites(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)
+        && !this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)
+        && this.getZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
-                this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = 0;
-                this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()][this.getPosicaoZ()] = 1;
+                this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = TipoEntidade.VAZIO;
+                this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.ROBO;
                 this.reduzir_autonomia();
             }
             else{
@@ -61,16 +61,16 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     boolean mover_3d(int delta_x, int delta_y, int delta_z){
-        if(this.getAmbiente().identifica_colisao(this.getPosicaoX() + delta_x, this.getPosicaoY() + delta_y, this.getPosicaoZ() + delta_z)){
+        if(this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)){
             return false;
         }
-        int pos_z0 = this.getPosicaoZ();
+        int pos_z0 = this.getZ();
         int avancar;
         if(delta_z > 0 ){
             // o movimento pretendido de subida é possivel considerando a reducao do nivel energetico(e consequentemente a sua altura maxima)
-            avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+            avancar = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), delta_z, this.getAmbiente());
             if(avancar > 0){
-                this.setPosicaoZ(this.getPosicaoZ() + avancar);
+                this.setPosicaoZ(this.getZ() + avancar);
                 if(this.mover_3d(delta_x, delta_y, delta_z - avancar)){
                     return true;
                 }
@@ -78,8 +78,8 @@ public class RoboAereoDinamico extends RoboAereo {
             
         }
         else if(delta_z == 0){
-            int x_ini = this.getPosicaoX();
-            int y_ini = this.getPosicaoY();
+            int x_ini = this.getX();
+            int y_ini = this.getY();
             if((delta_x == 0 && delta_y == 0) || this.mover_horizontal(delta_x, delta_y)){
                 return true;
             }
@@ -93,9 +93,9 @@ public class RoboAereoDinamico extends RoboAereo {
             // o movimento pretendido de descida é possivel considerando a reducao do nivel energetico (e consequentemente a sua altura maxima), e a posicao final é valida acima de z=0
             if(delta_x != 0 || delta_y != 0){ //caso o robo desca e mais provavel que primeiro mover horizontalmente e depois mover verticalmente seja um caminho valido
                 if(mover_horizontal(delta_x, delta_y)){ //mover horizontalmente em uma altura maior tem maior chance de ele passar por um obstaculo
-                    avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+                    avancar = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), delta_z, this.getAmbiente());
                     if(avancar > 0){
-                        this.setPosicaoZ(this.getPosicaoZ() - avancar);
+                        this.setPosicaoZ(this.getZ() - avancar);
                         if(this.mover_3d(0, 0, delta_z + avancar)){
                             return true;
                         }
@@ -103,9 +103,9 @@ public class RoboAereoDinamico extends RoboAereo {
                 }
             }
             else{
-                avancar = this.getSensorMovimento().consegueAvancar(3, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), delta_z, this.getAmbiente());
+                avancar = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), delta_z, this.getAmbiente());
                 if(avancar > 0){
-                    this.setPosicaoZ(this.getPosicaoZ() - avancar);
+                    this.setPosicaoZ(this.getZ() - avancar);
                     if(this.mover_3d(delta_x, delta_y, delta_z + avancar)){
                         return true;
                     }
@@ -117,10 +117,10 @@ public class RoboAereoDinamico extends RoboAereo {
     }
 
     boolean mover_horizontal(int delta_x, int delta_y){
-        int x_ini = this.getPosicaoX();
-        int y_ini = this.getPosicaoY();
+        int x_ini = this.getX();
+        int y_ini = this.getY();
         this.mover(delta_x, delta_y);
-        this.getAmbiente().getMapa()[this.getPosicaoX()][this.getPosicaoY()][this.getPosicaoZ()] = 0;
-        return (x_ini + delta_x == this.getPosicaoX() && y_ini + delta_y == this.getPosicaoY());
+        this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
+        return (x_ini + delta_x == this.getX() && y_ini + delta_y == this.getY());
     }
 }

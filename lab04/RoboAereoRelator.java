@@ -9,12 +9,12 @@ public class RoboAereoRelator extends RoboAereo {
 
     void gerar_relatorio(){
         //gera um relatorio do conjunto de robos (aereos ou terrestres) que estao a uma altura abaixo do RoboAereoRelator
-        int altura_corte = this.getPosicaoZ(); 
+        int altura_corte = this.getZ(); 
         this.n_relatorios++; 
 
-        System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
+        System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getZ());
         for(Robo r: this.getAmbiente().getArrayRobos()){
-            if(r.getPosicaoZ() < altura_corte){
+            if(r.getZ() < altura_corte){
                 r.exibirPosicao();
             }
         }

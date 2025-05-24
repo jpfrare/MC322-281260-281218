@@ -3,7 +3,7 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
     private final int x2;
     private final int y1;
     private final int y2;
-    private final TipoObstaculo tipo;
+    private final TipoObstaculo forma;
     private final Ambiente ambiente;
 
     public Obstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo, Ambiente local) {
@@ -24,13 +24,13 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
             this.y1 = y2;
             this.y2 = y1;
         }
-        this.tipo = tipo;
+        this.forma = tipo;
         this.ambiente = local;
         //this.ambiente.adicionaObstaculo(this);
     }
 
-    TipoObstaculo getTipo() {
-        return this.tipo;
+    TipoObstaculo getForma() {
+        return this.forma;
     }
 
     @Override
@@ -50,6 +50,11 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
     @Override
     int getY2(){
         return y2;
+    }
+    
+    @Override
+    int getZ(){
+        return this.getForma().getAltura();
     }
 
     Ambiente getAmbiente() {

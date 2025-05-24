@@ -16,8 +16,8 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
 
     void mover(int deltaX, int deltaY, int deltaZ) {
         //verificando se a posição final está dentro dos limites
-        if (!this.getAmbiente().dentroDosLimites(this.getPosicaoX() + deltaX, this.getPosicaoY() + deltaY, 0) || 
-        this.getPosicaoZ() + deltaZ < this.profundidadeMax || this.getPosicaoZ() + deltaZ > 0) {
+        if (!this.getAmbiente().dentroDosLimites(this.getX() + deltaX, this.getY() + deltaY, 0) || 
+        this.getZ() + deltaZ < this.profundidadeMax || this.getZ() + deltaZ > 0) {
             System.out.println("Movimento inválido");
             return;
         }
@@ -28,8 +28,8 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         }
 
 
-        if (this.getPosicaoZ() + deltaZ == 0 && this.getAmbiente().identifica_colisao(this.getPosicaoX() + deltaX,
-        this.getPosicaoY() + deltaY, 0)) {
+        if (this.getZ() + deltaZ == 0 && this.getAmbiente().identifica_colisao(this.getX() + deltaX,
+        this.getY() + deltaY, 0)) {
             //a única condição que deve-se ter cuidado, pois o robô topeira pode emergir em um lugar ocupado por obstáculo
             System.out.println("Movimento inválido");
             return;
@@ -40,15 +40,15 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
             eliminando a necessidade de algoritmos baseados em backtrack/uso de sensores*/
 
 
-            this.setPosicaoX(this.getPosicaoX() + deltaX);
-            this.setPosicaoY(this.getPosicaoY() + deltaY);
-            this.setPosicaoZ(this.getPosicaoZ() + deltaZ);
+            this.setPosicaoX(this.getX() + deltaX);
+            this.setPosicaoY(this.getY() + deltaY);
+            this.setPosicaoZ(this.getZ() + deltaZ);
         }
     }
     
     @Override
     void exibirPosicao() {
         //leva em cosideração a nova direção
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 }
