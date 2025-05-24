@@ -171,9 +171,8 @@ public abstract class Robo implements InterfaceEntidade{
         return false;
     }
     void mover(int deltaX, int deltaY){
-
-        if (estado == EstadoRobo.DESLIGADO) {
-            System.out.println("movimento não realizado: robô desligado!");
+        if (!this.estado.esta_ligado()) {
+            System.out.println("O robô está desligado!");
             return;
         }
 
