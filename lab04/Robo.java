@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public abstract class Robo implements InterfaceEntidade{
-public abstract class Robo implements InterfaceEntidade{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
@@ -9,7 +8,7 @@ public abstract class Robo implements InterfaceEntidade{
     private final ArrayList<Sensor> sensores; 
     private final Ambiente habitat;
     private EstadoRobo estado;
-    private final TipoEntidade tipo;
+    private TipoEntidade tipo;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão
@@ -21,7 +20,7 @@ public abstract class Robo implements InterfaceEntidade{
         this.sensores = new ArrayList<>();
         SensorMovimento sensor = new SensorMovimento(r_sensor);
         sensores.add(sensor);
-        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
+        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
         this.estado = EstadoRobo.LIGADO;
         this.tipo = TipoEntidade.ROBO;
     }
@@ -42,10 +41,9 @@ public abstract class Robo implements InterfaceEntidade{
 
     @Override
     public TipoEntidade getTipo(){
-        return TipoEntidade.ROBO;
+        return tipo;
     }
 
-    
     void setPosicaoX(int posicaoX) {
         //mudar a posição em X
         this.posicaoX = posicaoX;
@@ -57,28 +55,14 @@ public abstract class Robo implements InterfaceEntidade{
     }
     @Override
     public int getX() {
-
-    @Override
-    public TipoEntidade getTipo() {
-        return this.tipo;
-    }
-
-    @Override
-    public int getX() {
         //retorna a posicão em X
         return this.posicaoX;
     }
     @Override
     public int getY() {
-
-    @Override
-    public int getY() {
         //retorna a posição em Y
         return this.posicaoY;
     }
-    @Override
-    public int getZ() {
-
     @Override
     public int getZ() {
         //esse método torna possível a implementação de uma análise de arraylist do ambiente baseada na dimensão Z
