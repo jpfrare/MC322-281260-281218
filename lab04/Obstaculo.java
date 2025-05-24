@@ -33,27 +33,32 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
         return this.forma;
     }
 
+    public TipoEntidade getTipo(){
+        return TipoEntidade.OBSTACULO;
+    }
+
     @Override
-    int getX(){
+    public int getX(){
         return x1;
     }
 
     @Override
-    int getX2(){
+    public int getX2(){
         return x2;
     }
     
     @Override
-    int getY() {
+    public int getY() {
         return y1;
     }
+
     @Override
-    int getY2(){
+    public int getY2(){
         return y2;
     }
-    
+
     @Override
-    int getZ(){
+    public int getZ(){
         return this.getForma().getAltura();
     }
 

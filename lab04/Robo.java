@@ -18,12 +18,17 @@ public abstract class Robo implements InterfaceEntidade{
         this.sensores = new ArrayList<>();
         SensorMovimento sensor = new SensorMovimento(r_sensor);
         sensores.add(sensor);
-        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = 1;
+        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
     }
 
 
     String getNome() {
         return this.nome;
+    }
+
+    @Override
+    public TipoEntidade getTipo(){
+        return TipoEntidade.ROBO;
     }
 
     void setPosicaoX(int posicaoX) {
@@ -36,17 +41,17 @@ public abstract class Robo implements InterfaceEntidade{
         this.posicaoY = posicaoY;
     }
     @Override
-    int getX() {
+    public int getX() {
         //retorna a posicão em X
         return this.posicaoX;
     }
     @Override
-    int getY() {
+    public int getY() {
         //retorna a posição em Y
         return this.posicaoY;
     }
-
-    int getZ() {
+    @Override
+    public int getZ() {
         //esse método torna possível a implementação de uma análise de arraylist do ambiente baseada na dimensão Z
         return this.posicaoZ;
     }
