@@ -33,6 +33,7 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
         return this.forma;
     }
 
+    @Override
     public TipoEntidade getTipo(){
         return TipoEntidade.OBSTACULO;
     }
