@@ -37,14 +37,9 @@ public class Ambiente {
 
     }
 
-    public void registra_objeto(InterfaceEntidadeObstaculo objeto){
-        int x_ini, x_fim, y_ini, y_fim;
-        x_ini = objeto.getX();
-        x_fim = objeto.getX2();
-        y_ini = objeto.getY();
-        y_fim = objeto.getY2();
-        for(int i = x_ini; i <= x_fim; i++){
-            for(int j = y_ini; j <= y_fim; j++){
+    public void registra_obstaculo(Obstaculo objeto){
+        for(int i = objeto.getX(); i <= objeto.getX2(); i++){
+            for(int j = objeto.getY(); j <= objeto.getY2(); j++){
                 for(int k = 0; k <= objeto.getZ(); k++){
                     this.mapa[i][j][k] = TipoEntidade.OBSTACULO;
                 }
@@ -53,22 +48,52 @@ public class Ambiente {
         
     }
 
+    public void apaga_obstaculo(Obstaculo objeto){
+        for(int i = objeto.getX(); i <= objeto.getX2(); i++){
+            for(int j = objeto.getY(); j <= objeto.getY2(); j++){
+                for(int k = 0; k <= objeto.getZ(); k++){
+                    this.mapa[i][j][k] = TipoEntidade.VAZIO;
+                }
+            }
+        }
+    }
+
+    public void registra_robo(InterfaceEntidade robo){
+        this.mapa[robo.getX()][robo.getY()][robo.getZ()] = TipoEntidade.ROBO;
+    }
+
+    public void apaga_robo(InterfaceEntidade robo){
+        this.mapa[robo.getX()][robo.getY()][robo.getZ()] = TipoEntidade.VAZIO;
+    }
+
     public boolean dentroDosLimites(int x, int y, int z) {
         //retorna true se o robo esta dentro do ambiente e false caso contrario
         return (x >= 0 && this.X >= x && this.Y >= y && y >= 0 && z >=0 && this.Z >= z);
 
     }
 
-    public void adicionaEntidade(InterfaceEntidade adicionar){
+    public void adicionarEntidade(InterfaceEntidade adicionar){
         if(adicionar.getTipo() == TipoEntidade.ROBO){
-            this.mapa[adicionar.getX()][adicionar.getY()][adicionar.getZ()] = TipoEntidade.ROBO;
+            this.registra_robo(adicionar);
         }
         else if(adicionar.getTipo() == TipoEntidade.OBSTACULO){
-            this.registra_objeto((Obstaculo)adicionar);
+            this.registra_obstaculo((Obstaculo)adicionar);
         }
         this.elementos.add(adicionar);
 
     }
+
+    public void removerEntidade(InterfaceEntidade remover){
+        if(remover.getTipo() == TipoEntidade.ROBO){
+            this.apaga_robo(remover);
+        }
+        else if(remover.getTipo() == TipoEntidade.OBSTACULO){
+            this.apaga_obstaculo((Obstaculo)(InterfaceEntidadeObstaculo)remover);
+        }
+        elementos.remove(remover);
+    }
+
+
 
     public int getArrayTamanho() {
         return this.elementos.size();
