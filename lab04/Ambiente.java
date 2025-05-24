@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.print.DocFlavor.STRING;
+
 public class Ambiente {
     private final int X;
     private final int Y;
@@ -94,7 +96,6 @@ public class Ambiente {
     }
 
 
-
     public int getArrayTamanho() {
         return this.elementos.size();
     }
@@ -114,6 +115,20 @@ public class Ambiente {
     public TipoEntidade tipoPosicao(int x, int y, int z){
         //retorna o  tipo de elemento que esta ocupando a posicao x,y,z do ambiente
         return this.mapa[x][y][z];
+    }
+
+    public Robo getRobo(String nome){
+        for(InterfaceEntidade entidade: this.elementos){
+            if(entidade.getTipo() == TipoEntidade.ROBO){
+                Robo busca = (Robo)entidade;
+                if(nome.equals(busca.getNome())){
+                    return busca;
+                }
+
+            }
+        else{
+            return null;
+        }
     }
 
     public TipoEntidade [][][] getMapa(){
