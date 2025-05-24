@@ -37,12 +37,12 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
             return;
         }
 
-        int xo = this.getPosicaoX();
-        int yo = this.getPosicaoY();
+        int xo = this.getX();
+        int yo = this.getY();
         super.mover(deltaX, deltaY);
 
 
-        if (deltaX == this.getPosicaoX() - xo && deltaY == this.getPosicaoY() - yo) {
+        if (deltaX == this.getX() - xo && deltaY == this.getY() - yo) {
             /*se ele conseguiu se mover, desce a lubrificação pela média das razoes
             do tamanho do deslocamento pelo tamanho do ambiente em cada coordenada*/
             int ambienteX = this.getAmbiente().getAmbienteX();
@@ -62,6 +62,15 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
     void exibirPosicao() {
         super.exibirPosicao();
         exibirLubrificacao();
+    }
+
+    @Override
+    public String getDescricao() {
+        return "Sua velocidade máxima, por ser robô terrestre, depende do quanto lubrificado ele está!";
+    }
+
+    @Override public char getRepresentacao() {
+        return 'o';
     }
 
 }

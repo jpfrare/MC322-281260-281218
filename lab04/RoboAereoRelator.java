@@ -9,13 +9,13 @@ public class RoboAereoRelator extends RoboAereo {
 
     void gerar_relatorio(){
         //gera um relatorio do conjunto de robos (aereos ou terrestres) que estao a uma altura abaixo do RoboAereoRelator
-        int altura_corte = this.getPosicaoZ(); 
+        int altura_corte = this.getZ(); 
         this.n_relatorios++; 
 
-        System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getPosicaoZ());
-        for(Robo r: this.getAmbiente().getArrayRobos()){
-            if(r.getPosicaoZ() < altura_corte){
-                r.exibirPosicao();
+        System.out.println("\nRelatorio numero " + this.getNrelatorios() + " do Robo " + this.getNome() + " realizado a uma altura " + this.getZ());
+        for(InterfaceEntidade r: this.getAmbiente().getElementos()){
+            if(r.getTipo() == TipoEntidade.ROBO && r.getZ() < altura_corte && r.getZ() >= 0){
+                System.out.printf("Representação: %c. Posicão (%d, %d, %d)\n", r.getRepresentacao(), r.getX(), r.getY(), r.getZ());
             }
         }
 
@@ -26,5 +26,13 @@ public class RoboAereoRelator extends RoboAereo {
         return this.n_relatorios;
     }
 
-    
+    @Override
+    public String getDescricao() {
+        return "Robo Aéreo que faz relatórios sobre os robôs que estão abaixo de sua altura, exibindo seu nome e posição";
+    }
+
+    @Override
+    public char getRepresentacao() {
+        return 'r';
+    }
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class Robo implements InterfaceEntidade{
+public abstract class Robo implements InterfaceEntidade{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
@@ -38,6 +39,12 @@ public abstract class Robo implements InterfaceEntidade{
     String getNome() {
         return this.nome;
     }
+
+    @Override
+    public TipoEntidade getTipo(){
+        return TipoEntidade.ROBO;
+    }
+
     
     void setPosicaoX(int posicaoX) {
         //mudar a posição em X
@@ -48,6 +55,8 @@ public abstract class Robo implements InterfaceEntidade{
         //mudar a posição em Y
         this.posicaoY = posicaoY;
     }
+    @Override
+    public int getX() {
 
     @Override
     public TipoEntidade getTipo() {
@@ -59,12 +68,16 @@ public abstract class Robo implements InterfaceEntidade{
         //retorna a posicão em X
         return this.posicaoX;
     }
+    @Override
+    public int getY() {
 
     @Override
     public int getY() {
         //retorna a posição em Y
         return this.posicaoY;
     }
+    @Override
+    public int getZ() {
 
     @Override
     public int getZ() {
@@ -94,8 +107,8 @@ public abstract class Robo implements InterfaceEntidade{
     }
 
     boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
-        int posx_ini = this.getPosicaoX();
-        int posy_ini = this.getPosicaoY();
+        int posx_ini = this.getX();
+        int posy_ini = this.getY();
         visitados[passoX][passoY] = 1;
         int avancar;
         if(deltaX == 0 && deltaY == 0){ //chegou ao destino
@@ -107,10 +120,10 @@ public abstract class Robo implements InterfaceEntidade{
             if(i == 1){ //mover em x
                 if(deltaX > 0){
                     //busca um  avancar dentro do alcance do sensor que resulte em um caminho valido a partir da posicao inicial
-                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente());
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente());
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() + avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
-                            this.setPosicaoX(this.getPosicaoX() + avancar);
+                        if(!this.getAmbiente().identifica_colisao(this.getX() + avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
+                            this.setPosicaoX(this.getX() + avancar);
                             if(moverR(deltaX - avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
                             else{
@@ -121,11 +134,11 @@ public abstract class Robo implements InterfaceEntidade{
                     }
                 }
                 else if(deltaX < 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaX, this.getAmbiente()); 
+                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente()); 
                     //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX() - avancar, this.getPosicaoY(), this.getPosicaoZ()) && visitados[passoX + avancar][passoY] == 0){
-                            this.setPosicaoX(this.getPosicaoX() - avancar);
+                        if(!this.getAmbiente().identifica_colisao(this.getX() - avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
+                            this.setPosicaoX(this.getX() - avancar);
                             if(moverR(deltaX + avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
                             else{
@@ -139,11 +152,11 @@ public abstract class Robo implements InterfaceEntidade{
             }
             if(i == 2){//mover em y
                 if(deltaY > 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.habitat); 
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat); 
                     //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() + avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
-                            this.setPosicaoY(this.getPosicaoY() + avancar);
+                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() + avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
+                            this.setPosicaoY(this.getY() + avancar);
                             if(moverR(deltaX, deltaY - avancar, passoX, passoY + avancar, visitados))
                                 return true;
                             else{
@@ -155,11 +168,11 @@ public abstract class Robo implements InterfaceEntidade{
                 }
                 else if (deltaY < 0){
                     //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
-                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ(), deltaY, this.habitat);
+                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat);
 
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getPosicaoX(), this.getPosicaoY() - avancar, this.getPosicaoZ()) && visitados[passoX][passoY + avancar] == 0){
-                            this.setPosicaoY(this.getPosicaoY() - avancar);
+                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() - avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
+                            this.setPosicaoY(this.getY() - avancar);
                             if(moverR(deltaX, deltaY + avancar, passoX, passoY + avancar, visitados))
                                 return true;
                             else{
@@ -185,7 +198,7 @@ public abstract class Robo implements InterfaceEntidade{
         }
         int xo = this.posicaoX;
         int yo = this.posicaoY;
-        this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 0;
+        this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.VAZIO;
         
         int abs_x = Math.abs(deltaX);
         int abs_y = Math.abs(deltaY);
@@ -197,11 +210,11 @@ public abstract class Robo implements InterfaceEntidade{
         }
 
         if (moverR(deltaX, deltaY, 0, 0, visitados)) {
-            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = 1;
+            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = TipoEntidade.ROBO;
             System.out.println("Existe caminho na horizontal!");
 
         } else {
-            this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = 1;
+            this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.ROBO;
             System.out.println("movimento não realizado");
         }
 
@@ -209,7 +222,7 @@ public abstract class Robo implements InterfaceEntidade{
 
 
     void exibirPosicao() {
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getPosicaoX(), this.getPosicaoY(), this.getPosicaoZ());
+        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 
 

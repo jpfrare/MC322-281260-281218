@@ -1,9 +1,9 @@
-public class Obstaculo {
+public class Obstaculo implements InterfaceEntidadeObstaculo{
     private final int x1;
     private final int x2;
     private final int y1;
     private final int y2;
-    private final TipoObstaculo tipo;
+    private final TipoObstaculo forma;
     private final Ambiente ambiente;
 
     public Obstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo, Ambiente local) {
@@ -24,29 +24,42 @@ public class Obstaculo {
             this.y1 = y2;
             this.y2 = y1;
         }
-        this.tipo = tipo;
+        this.forma = tipo;
         this.ambiente = local;
         //this.ambiente.adicionaObstaculo(this);
     }
 
-    TipoObstaculo getTipo() {
-        return this.tipo;
+    TipoObstaculo getForma() {
+        return this.forma;
     }
 
-    int getx1(){
+    public TipoEntidade getTipo(){
+        return TipoEntidade.OBSTACULO;
+    }
+
+    @Override
+    public int getX(){
         return x1;
     }
 
-    int getx2(){
+    @Override
+    public int getX2(){
         return x2;
     }
     
-    int gety1() {
+    @Override
+    public int getY() {
         return y1;
     }
 
-    int gety2(){
+    @Override
+    public int getY2(){
         return y2;
+    }
+
+    @Override
+    public int getZ(){
+        return this.getForma().getAltura();
     }
 
     Ambiente getAmbiente() {

@@ -4,7 +4,7 @@ public class Ambiente {
     private final int X;
     private final int Y;
     private final int Z;
-    private final ArrayList<Entidade> elementos;
+    private final ArrayList<InterfaceEntidade> elementos;
     private TipoEntidade[][][] mapa;
     private int[][][] temperatura;
 
@@ -13,14 +13,13 @@ public class Ambiente {
         this.X = x;
         this.Y = y;
         this.Z = z;
-        this.elementos = new ArrayList<Entidade>();
-        this.mapa = new int[x + 1][y + 1][z + 1]; //posicoes (0,0) e (x, y) serao validas
-        
+        this.elementos = new ArrayList<>();
+        this.mapa = new TipoEntidade[x + 1][y + 1][z + 1]; //posicoes (0,0) e (x, y) serao validas
         //inicialização do mapa
         for (int i = 0; i < x + 1; i++) {
             for (int j = 0; j < y + 1; j++) {
                 for(int k = 0; k < z + 1; k++){
-                    mapa[i][j][k] = 0;
+                    mapa[i][j][k] = TipoEntidade.VAZIO;
                 }
             }
         }
@@ -38,18 +37,16 @@ public class Ambiente {
 
     }
 
-    public void registra_no_mapa(Obstaculo objeto){
+    public void registra_objeto(InterfaceEntidadeObstaculo objeto){
         int x_ini, x_fim, y_ini, y_fim;
-        x_ini = objeto.getx1();
-        x_fim = objeto.getx2();
-        y_ini = objeto.gety1();
-        y_fim = objeto.gety2();
-        if(objeto.getTipo().getBloqueia()){ // obstaculo é do tipo que bloqueia
-            for(int i = x_ini; i <= x_fim; i++){
-                for(int j = y_ini; j <= y_fim; j++){
-                    for(int k = 0; k <= objeto.getTipo().getAltura(); k++){
-                        this.mapa[i][j][k] = 1;
-                    }
+        x_ini = objeto.getX();
+        x_fim = objeto.getX2();
+        y_ini = objeto.getY();
+        y_fim = objeto.getY2();
+        for(int i = x_ini; i <= x_fim; i++){
+            for(int j = y_ini; j <= y_fim; j++){
+                for(int k = 0; k <= objeto.getZ(); k++){
+                    this.mapa[i][j][k] = TipoEntidade.OBSTACULO;
                 }
             }
         }
@@ -62,20 +59,19 @@ public class Ambiente {
 
     }
 
-    public void adicionaRobo(Robo robo){
-        //adiciona um objeto da classe robo ao array de robos
-        this.robos.add(robo);
-    }
+    public void adicionaEntidade(InterfaceEntidade adicionar){
+        if(adicionar.getTipo() == TipoEntidade.ROBO){
+            this.mapa[adicionar.getX()][adicionar.getY()][adicionar.getZ()] = TipoEntidade.ROBO;
+        }
+        else if(adicionar.getTipo() == TipoEntidade.OBSTACULO){
+            this.registra_objeto((Obstaculo)adicionar);
+        }
+        this.elementos.add(adicionar);
 
-    public void adicionaObstaculo(int x1, int x2, int y1, int y2, TipoObstaculo tipo){
-        //composicao ambiente-obstaculo
-        Obstaculo novo = new Obstaculo(x1, x2, y1, y2, tipo, this);
-        this.obstaculos.add(novo);
-        this.registra_no_mapa(novo);
     }
 
     public int getArrayTamanho() {
-        return this.robos.size();
+        return this.elementos.size();
     }
 
     public int getAmbienteX(){
@@ -90,25 +86,24 @@ public class Ambiente {
         return this.Z;
     }
 
-    public int[][][] getMapa(){
-        //retorna o valor correspondente a posicao x y no mapa(0 se nao for posicao de um obstaculo, e z diferente de zero sendo a altura do obstaculo)
+    public TipoEntidade tipoPosicao(int x, int y, int z){
+        //retorna o  tipo de elemento que esta ocupando a posicao x,y,z do ambiente
+        return this.mapa[x][y][z];
+    }
+
+    public TipoEntidade [][][] getMapa(){
         return this.mapa;
     }
 
-    public ArrayList<Robo> getArrayRobos(){
-        return this.robos;
-    }
-
     boolean identifica_colisao(int x, int y, int h){
-        return this.mapa[x][y][h] == 1;
-    }
-
-    public Robo getRobo(int pos){
-        return this.robos.get(pos);
+        return this.mapa[x][y][h] != TipoEntidade.VAZIO;
     }
 
     public int[][][] getTemperatura() {
         return this.temperatura;
     }
 
+    ArrayList<InterfaceEntidade> getElementos() {
+        return this.elementos;
+    }
 }
