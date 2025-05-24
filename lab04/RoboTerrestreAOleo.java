@@ -64,4 +64,13 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
         exibirLubrificacao();
     }
 
+    @Override
+    public String getDescricao() {
+        return "Sua velocidade máxima, por ser robô terrestre, depende do quanto lubrificado ele está!";
+    }
+
+    @Override public char getRepresentacao() {
+        return 'o';
+    }
+
 }

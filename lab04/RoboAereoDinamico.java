@@ -2,7 +2,6 @@
 
 public class RoboAereoDinamico extends RoboAereo {
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
-    //Para o Robo Aereo Dinamico, sera possivel em apenas um movimento, poder executar simultaneamente o movimento na horizontal e na vertical
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
     private final int capacidade;
     private int altitudemax_atual;
@@ -122,5 +121,13 @@ public class RoboAereoDinamico extends RoboAereo {
         this.mover(delta_x, delta_y);
         this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
         return (x_ini + delta_x == this.getX() && y_ini + delta_y == this.getY());
+    }
+
+    @Override public String getDescricao() {
+        return "Robô Aéreo que possui autonomia, ou seja, seus movimentos custam capacidade energética, caso esta esgote, não consegue se mover";
+    }
+
+    @Override public char getRepresentacao() {
+        return 'd';
     }
 }
