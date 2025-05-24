@@ -1,213 +1,347 @@
-import java.util.ArrayList;
+import java.util.Scanner;
 
-public abstract class Robo implements InterfaceEntidade{
-    private final String nome;
-    private int posicaoX;
-    private int posicaoY;
-    private int posicaoZ;
-    private final ArrayList<Sensor> sensores; 
-    private final Ambiente habitat;
-    private EstadoRobo estado;
-    private TipoEntidade tipo;
+public class Main {
+        public static int buscar_robo(Ambiente amb, String nome) {
+                //busca robô pelo nome no array list do ambiente
+                int len = amb.getArrayTamanho();
 
-    public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
-        //construtor padrão
-        this.posicaoX = posicaoXo;
-        this.posicaoY = posicaoYo;
-        this.nome = nome;
-        this.habitat = habitat;
-        this.posicaoZ = 0;
-        this.sensores = new ArrayList<>();
-        SensorMovimento sensor = new SensorMovimento(r_sensor);
-        sensores.add(sensor);
-        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
-        this.estado = EstadoRobo.LIGADO;
-        this.tipo = TipoEntidade.ROBO;
-    }
-
-    void ligarRobo() {
-        System.out.println("O Robô " + this.getNome() + " está ligado!");
-        estado = EstadoRobo.LIGADO;
-    }
-
-    void desligarRobo() {
-        System.out.println("O Robô " + this.getNome() + " está desligado!");
-        estado = EstadoRobo.LIGADO;
-    }
-
-    String getNome() {
-        return this.nome;
-    }
-
-    @Override
-    public TipoEntidade getTipo(){
-        return tipo;
-    }
-
-    void setPosicaoX(int posicaoX) {
-        //mudar a posição em X
-        this.posicaoX = posicaoX;
-    }
-
-    void setPosicaoY(int posicaoY) {
-        //mudar a posição em Y
-        this.posicaoY = posicaoY;
-    }
-    @Override
-    public int getX() {
-        //retorna a posicão em X
-        return this.posicaoX;
-    }
-    @Override
-    public int getY() {
-        //retorna a posição em Y
-        return this.posicaoY;
-    }
-    @Override
-    public int getZ() {
-        //esse método torna possível a implementação de uma análise de arraylist do ambiente baseada na dimensão Z
-        return this.posicaoZ;
-    }
-
-    final void setPosicaoZ(int z){
-        this.posicaoZ = z;
-    }
-
-    final Ambiente getAmbiente() {
-        //retorna o ambiente do qual o robô pertence
-        return this.habitat;
-    }
-
-    void AdicionaSensores(Sensor s){
-        this.sensores.add(s);
-    }
-
-    SensorMovimento getSensorMovimento(){
-        return (SensorMovimento)this.sensores.get(0);
-    }
-
-    SensorTemperatura getSensorTemperatura() {
-        return (SensorTemperatura)this.sensores.get(1);
-    }
-
-    boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
-        int posx_ini = this.getX();
-        int posy_ini = this.getY();
-        visitados[passoX][passoY] = 1;
-        int avancar;
-        if(deltaX == 0 && deltaY == 0){ //chegou ao destino
-            return true;
-        }
-        for(int i = 1; i <= 2; i++){
-            //iteracao: i igual a 1 move em x, i igual a 2 move em y
-            //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
-            if(i == 1){ //mover em x
-                if(deltaX > 0){
-                    //busca um  avancar dentro do alcance do sensor que resulte em um caminho valido a partir da posicao inicial
-                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente());
-                    while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX() + avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
-                            this.setPosicaoX(this.getX() + avancar);
-                            if(moverR(deltaX - avancar, deltaY, passoX + avancar, passoY, visitados))
-                                return true;
-                            else{
-                                this.setPosicaoX(posx_ini);
-                            }
+                for (int i = 0; i < len; i++) {
+                        if (nome.equals(amb.getRobo(i).getNome())) {
+                                return i;
                         }
-                        avancar--;
-                    }
                 }
-                else if(deltaX < 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente()); 
-                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
-                    while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX() - avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
-                            this.setPosicaoX(this.getX() - avancar);
-                            if(moverR(deltaX + avancar, deltaY, passoX + avancar, passoY, visitados))
-                                return true;
-                            else{
-                                this.setPosicaoX(posx_ini);
-                            }
-                        }
-                        avancar --;
-                    }
-                        
-                }
-            }
-            if(i == 2){//mover em y
-                if(deltaY > 0){
-                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat); 
-                    //busca um alcance que resulte em um caminho valido a partir da posicao inicial
-                    while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() + avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
-                            this.setPosicaoY(this.getY() + avancar);
-                            if(moverR(deltaX, deltaY - avancar, passoX, passoY + avancar, visitados))
-                                return true;
-                            else{
-                                this.setPosicaoY(posy_ini);
-                            }
-                        }
-                        avancar --;
-                    }
-                }
-                else if (deltaY < 0){
-                    //tenta andar o maior valor em uma direcao (int avancar) que corresponde ao raio de alcance do sensor
-                    avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat);
 
-                    while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() - avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
-                            this.setPosicaoY(this.getY() - avancar);
-                            if(moverR(deltaX, deltaY + avancar, passoX, passoY + avancar, visitados))
-                                return true;
-                            else{
-                                this.setPosicaoY(posy_ini);
-                            }
-                        }
-                        avancar--;
-                    }
-                }
-            }
+                return -1;
         }
-        return false;
-    }
-    void mover(int deltaX, int deltaY){
-        if (!this.estado.esta_ligado()) {
-            System.out.println("O robô está desligado!");
-            return;
-        }
+    
+    public static void main(String[] args) {
+        Scanner leitor = new Scanner(System.in);
+        System.out.println("\n Olá, bem vindo! Em primeiro lugar, escolha as dimensões do ambiente! \n");
 
-        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) || this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ)) {
-            System.out.println("movimento não realizado");
-            return;
-        }
-        int xo = this.posicaoX;
-        int yo = this.posicaoY;
-        this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.VAZIO;
+        System.out.println("tamanho em X:");
+        int x = leitor.nextInt();
+
+        System.out.println("tamanho em y");
+        int y = leitor.nextInt();
         
-        int abs_x = Math.abs(deltaX);
-        int abs_y = Math.abs(deltaY);
-        int [][] visitados = new int[abs_x + 1][abs_y + 1];
-        for(int i = 0; i <= abs_x; i++){
-            for(int j = 0; j <= abs_y; j++){
-                visitados[i][j] = 0;
-            }
+
+        System.out.println("tamanho em z");
+        int z = leitor.nextInt();
+
+        Ambiente amb = new Ambiente(x, y, z);
+        System.out.println("Ambiente criado!");
+
+
+        while(true) {
+                System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- relatório de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- sair \n ************* \n");
+                int chave = leitor.nextInt();
+                leitor.nextLine();
+
+                if (chave == 1) {//Criação de robô
+        
+                        System.out.println("Digite o nome do robô: \n");
+                        String nome = leitor.nextLine();
+                        
+                        //coordenadas padrão iniciais
+                        System.out.println("Digite a coordenada X do rôbo \n");
+                        int posicaoXo = leitor.nextInt();
+                        System.out.println("Digite a coordenada Y do rôbo \n");
+                        int posicaoYo = leitor.nextInt();
+
+                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
+                                System.out.println("Coordenadas inválidas! Tente novamente");
+                                System.out.println("Digite a coordenada X do rôbo \n");
+                                posicaoXo = leitor.nextInt();
+                                System.out.println("Digite a coordenada Y do rôbo \n");
+                                posicaoYo = leitor.nextInt();
+                        }
+
+                        //raio sensor movimento
+                        System.out.println("Digite o raio dos sensores de movimento (1) e temperatura (2) \n");
+                        int raio = leitor.nextInt();
+                        int raiotemp = leitor.nextInt();
+                        while (raio <= 0 || raiotemp <= 0) {
+                                System.out.println("Raio de sensor inválido, digite novamente \n");
+                                System.out.println("Digite o raio do sensor de movimento: \n");
+                                raio = leitor.nextInt();
+                                System.out.println("Digite o raio do sensor de temperatura \n");
+                                raiotemp = leitor.nextInt();
+                        }
+                  
+
+                        Robo r = null;
+                        //tipo de robô
+
+                        System.out.println("Quase lá! Agora, digite qual robô: ");
+                        System.out.println("1- Robô terrestre Topeira \n 2- Rôbo Terrestre a Óleo \n 3- Robô Aéreo Dinâmico \n 4- Robô Aéreo Relator \n");
+                        int opcao = leitor.nextInt();
+
+                        while (opcao <= 0 || opcao >= 5) {
+                                System.out.println("Opção inválida! Tente Novamente! \n");
+                                opcao = leitor.nextInt();
+                        }
+
+                        if (opcao == 1 || opcao == 2) {
+                                //Robôs Terrestres: possuem velocidade máxima
+                                System.out.println("Digite a velocidade máxima do robô");
+                                float velocidademax = leitor.nextFloat();
+
+                                while (velocidademax <= 0) {
+                                        System.out.println("valor de velocidade máxima inválido! Tente novamente \n");
+                                        velocidademax = leitor.nextFloat();
+                                }
+
+                                if (opcao == 1) {
+                                        //robô terrestre topeira
+                                        System.out.println("Digite a profundidade máxima do robô (valor < 0) \n");
+                                        int profundidade_max = leitor.nextInt();
+
+                                        while (profundidade_max >= 0) {
+                                                System.out.println("Valor inválido! Tente novamente! \n");
+                                                System.out.println("Digite a profundidade máxima do robô (valor < 0) \n");
+                                                profundidade_max = leitor.nextInt(); 
+                                        }
+                                
+
+                                        r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, raio);
+                                        amb.adicionaRobo(r);
+
+                                }
+                                  
+                                else if (opcao == 2) {
+                                        //robo terrestre a óleo
+                                        r = new RoboTerrestreAOleo(posicaoXo, posicaoYo, nome, velocidademax, amb, raio);
+
+                                }
+                                
+                        }
+                        else if(opcao == 3 || opcao == 4){
+                                //Robôs aéreos: possuem altitude máxima
+                                System.out.println("Digite a altura inicial do robo:");
+                                int posicaoZo = leitor.nextInt();
+                                while(posicaoZo < 0){
+                                        System.out.println("Valor inválido! Digite novamente! \n");
+                                        System.out.println("Digite a altura inicial do robo: \n");
+                                        posicaoZo = leitor.nextInt();
+                                }
+
+                                System.out.println("Digite a altura máxima do robô");
+                                int alturamaxima = leitor.nextInt();
+                                
+
+                                while (alturamaxima > amb.getAltura() || alturamaxima <= 0) {
+                                        System.out.println("Altura máxima inválida! Tente novamente \n");
+                                        alturamaxima = leitor.nextInt();
+                                }
+
+                                if(opcao == 3) {
+                                        //robô aereo dinâmico
+                                        System.out.println("Digite a capacidade do Robô");
+                                        int capacidade = leitor.nextInt();
+
+                                        while (capacidade <= 0) {
+                                                System.out.println("Valor de capacidade inválido! Tente novamente");
+                                                System.out.println("Digite a capacidade do Robô");
+                                                capacidade = leitor.nextInt();
+                                        }
+
+                                        r = new RoboAereoDinamico(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, capacidade, raio);
+                                }
+
+                                else if(opcao == 4){
+                                        r = new RoboAereoRelator(posicaoXo, posicaoYo, posicaoZo, alturamaxima, nome, amb, raio);
+                                }
+                                
+                        }
+                        if(r != null){
+                                amb.adicionaRobo(r);
+                                SensorTemperatura temp = new SensorTemperatura(r, raiotemp);
+                                r.AdicionaSensores(temp);
+                        }
+
+                } else if (chave == 2) {//Adicionar Obstáculo
+
+                        System.out.println("Digite o x1 \n");
+                        int x1 = leitor.nextInt();
+                        System.out.println("Digite o x2");
+                        int x2 = leitor.nextInt();
+                        System.out.println("Digite o y1");
+                        int y1 = leitor.nextInt();
+                        System.out.println("Digite o y2");
+                        int y2 = leitor.nextInt();
+
+                        while (x1 > amb.getAmbienteX() || x2 > amb.getAmbienteX() || y1 > amb.getAmbienteY() || y2 > amb.getAmbienteY()) {
+                                System.out.println("Valores inválidos! Tente novamente");
+                                System.out.println("Digite o x1 \n");
+                                x1 = leitor.nextInt();
+                                System.out.println("Digite o x2");
+                                x2 = leitor.nextInt();
+                                System.out.println("Digite o y1");
+                                y1 = leitor.nextInt();
+                                System.out.println("Digite o y2");
+                                y2 = leitor.nextInt();
+                        }
+
+                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro: Altura igual a 10, impede passagem. \n 2-Bloco: Altura igual a 5, impede passagem. \n 3-Placa: Altura igual a 3, nao impede passagem.\n");
+                        int opcao = leitor.nextInt();
+
+                        while (opcao < 1 || opcao > 3) {
+                                System.out.println("Opção inválida! Tente novamente \n");
+                                opcao = leitor.nextInt();
+                        }
+
+                        TipoObstaculo tipo;
+
+                        if (opcao == 1) {
+                                tipo = TipoObstaculo.MURO;
+
+                        } else if (opcao == 2) {
+                                tipo = TipoObstaculo.BLOCO;
+
+                        } else {
+                                tipo = TipoObstaculo.PLACA;
+                        }
+
+                        amb.adicionaObstaculo(x1, x2, y1, y2, tipo);
+                        System.out.println("Obstáculo Criado! \n");
+
+
+                } else if (chave == 3) {//mover um robô
+                        String robo;
+                        int mov_x;
+                        int mov_y;
+                        int mov_z;
+
+                        System.out.println("Digite o nome do Robô");
+                        robo = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, robo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido!");
+
+                        } else {
+                                Robo mover = amb.getRobo(pos);
+
+                                if (mover instanceof RoboTerrestre){
+                                        System.out.println("Digite o quanto deseja mover em x:");
+                                        mov_x = leitor.nextInt();
+                                        System.out.println("Digite o quanto deseja mover em y:");
+                                        mov_y = leitor.nextInt();
+                                        if(mover instanceof RoboTerrestreAOleo){
+                                                mover.mover(mov_x, mov_y); 
+                                        }
+                                        else if(mover instanceof RoboTerrestreTopeira){
+                                                System.out.println("Digite o quanto deseja mover em z:");
+                                                mov_z = leitor.nextInt();
+                                                ((RoboTerrestreTopeira) mover).mover(mov_x, mov_y, mov_z);
+                                        }
+                                }
+                                else if(mover instanceof RoboAereoRelator relator){
+                                        int movimento; 
+                                        System.out.println("Deseja se mover apenas horizontalmente (digite 1) ou apenas verticalmente(digite 2)?");
+                                        movimento = leitor.nextInt();
+
+                                        if(movimento == 1){
+                                                System.out.println("Digite o quanto deseja mover em x:");
+                                                mov_x = leitor.nextInt();
+                                                System.out.println("Digite o quanto deseja mover em y:");
+                                                mov_y = leitor.nextInt();
+                                                relator.mover(mov_x, mov_y);
+                                        } else if(movimento == 2){
+
+                                                System.out.println("Digite o quanto deseja mover em z:");
+                                                mov_z = leitor.nextInt();
+                                                if(mov_z > 0){
+                                                        relator.subir(mov_z);
+                                                }
+                                                else{
+                                                        relator.descer(-mov_z);
+                                                }
+                                        } else{
+                                                System.out.println("Movimento inválido!");
+                                        }
+
+                                } else if (mover instanceof RoboAereoDinamico){
+                                        RoboAereoDinamico dinamico = (RoboAereoDinamico)mover;
+                                        System.out.println("Digite o quanto deseja mover em x:");
+                                        mov_x = leitor.nextInt();
+                                        System.out.println("Digite o quanto deseja mover em y:");
+                                        mov_y = leitor.nextInt();
+                                        System.out.println("Digite o quanto deseja mover em z:");
+                                        mov_z = leitor.nextInt();
+                                        dinamico.moverDinamico(mov_x, mov_y, mov_z);   
+                                }
+                                if(mover != null){
+                                        System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
+                                        mover.exibirPosicao();
+                                }
+                        
+                        }
+                        
+                } else if (chave == 4) { //relatório de temperatura
+                        System.out.println("Digite o nome do robô \n");
+                        String vulgo = leitor.nextLine();
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido!");
+
+                        } else {
+                                amb.getRobo(pos).getSensorTemperatura().analise_temperatura();
+                        }
+
+                } else if (chave == 5) { //habilidades especiais
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                        Robo p = amb.getRobo(pos);
+
+                                if (p instanceof RoboTerrestreAOleo) {
+                                        System.out.println("Digite o valor do delta lubrificação \n");
+                                        float valor = leitor.nextFloat();
+                                        ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+                                        ((RoboTerrestreAOleo)p).exibirLubrificacao();
+
+                                } else if (p instanceof RoboAereoDinamico) {
+                                        ((RoboAereoDinamico)p).recarregar();
+
+                                } else {
+                                        ((RoboAereoRelator)p).gerar_relatorio();
+                                }
+                        }
+
+                } else if (chave == 6){ //Exibir Posição
+                        System.out.println("Digite o nome do rôbo \n");
+                        String vulgo  = leitor.nextLine();
+
+                        int pos = Main.buscar_robo(amb, vulgo);
+
+                        if (pos == -1) {
+                                System.out.println("Nome inválido! \n");
+
+                        } else {
+                                Robo p = amb.getRobo(pos);
+
+                                p.exibirPosicao();
+                        }
+        
+        
+                } else if (chave == 7) {//Sáida
+                        System.out.println("Programa encerrado! Até Mais");
+                        break;
+                }
+
         }
 
-        if (moverR(deltaX, deltaY, 0, 0, visitados)) {
-            this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = TipoEntidade.ROBO;
-            System.out.println("Existe caminho na horizontal!");
-
-        } else {
-            this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.ROBO;
-            System.out.println("movimento não realizado");
+        leitor.close();
         }
-
-    }
-
-
-    void exibirPosicao() {
-        System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
-    }
-
 
 }
