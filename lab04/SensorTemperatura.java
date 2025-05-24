@@ -7,30 +7,30 @@ public  class SensorTemperatura extends Sensor {
     }
 
     public void analise_temperatura() {
-        if (dono.getPosicaoZ() < 0) {
+        if (dono.getZ() < 0) {
             System.out.println("Não é possível fazer análise de temperatura para o robô (está no subsolo)");
             return; //não é possível fazer análise de temperatura no subsolo
         }
 
         //ajustando limites em xy
-        int menorx = dono.getPosicaoX() - this.getRaio();
+        int menorx = dono.getX() - this.getRaio();
         if (menorx < 0) menorx = 0;
 
-        int maiorx = dono.getPosicaoX() + this.getRaio();
+        int maiorx = dono.getX() + this.getRaio();
         if (maiorx > dono.getAmbiente().getAmbienteX()) maiorx = dono.getAmbiente().getAmbienteX();
 
-        int menory = dono.getPosicaoY() - this.getRaio();
+        int menory = dono.getY() - this.getRaio();
         if (menory < 0) menory = 0;
 
-        int maiory = dono.getPosicaoY() + this.getRaio();
+        int maiory = dono.getY() + this.getRaio();
         if (maiory > dono.getAmbiente().getAmbienteY()) maiory = dono.getAmbiente().getAmbienteY();
 
         //inicializando as variaveis que guardam os picos de temperatura, bem como a temperatura local
         int[][][] mapa_temperatura = dono.getAmbiente().getTemperatura();
-        int temperatura_local = mapa_temperatura[dono.getPosicaoX()][dono.getPosicaoY()][dono.getPosicaoZ()];
+        int temperatura_local = mapa_temperatura[dono.getX()][dono.getY()][dono.getZ()];
         int menor_temperatura = temperatura_local;
         int maior_temperatura = temperatura_local;
-        int i_menor = dono.getPosicaoX(), j_menor = dono.getPosicaoY(), k_menor = dono.getPosicaoZ();
+        int i_menor = dono.getX(), j_menor = dono.getY(), k_menor = dono.getZ();
         int i_maior = i_menor, j_maior = j_menor, k_maior = k_menor;
 
 
@@ -57,10 +57,10 @@ public  class SensorTemperatura extends Sensor {
         else if (dono instanceof RoboAereo) {
 
         //ajustando limites em z
-        int menorz = dono.getPosicaoZ() - this.getRaio();
+        int menorz = dono.getZ() - this.getRaio();
         if (menorz < 0) menorz = 0;
 
-        int maiorz = dono.getPosicaoZ() + this.getRaio();
+        int maiorz = dono.getZ() + this.getRaio();
         if (maiorz > dono.getAmbiente().getAltura()) maiorz = dono.getAmbiente().getAltura();
 
 
@@ -86,7 +86,7 @@ public  class SensorTemperatura extends Sensor {
         }
 
         System.out.printf("Análise de Temperatura da região ao redor do Robô %s \n", dono.getNome());
-        System.out.printf("Temperatura local (%d, %d, %d) = %d \n", dono.getPosicaoX(), dono.getPosicaoY(), dono.getPosicaoZ(), temperatura_local);
+        System.out.printf("Temperatura local (%d, %d, %d) = %d \n", dono.getX(), dono.getY(), dono.getZ(), temperatura_local);
         System.out.printf("Menor temperatura (%d, %d, %d) = %d \n" , i_menor, j_menor, k_menor, menor_temperatura);
         System.out.printf("Maior temperatura (%d, %d, %d) = %d \n", i_maior, j_maior, k_maior, maior_temperatura);
     }

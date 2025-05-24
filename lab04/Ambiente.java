@@ -128,4 +128,7 @@ public class Ambiente {
         return this.temperatura;
     }
 
+    ArrayList<InterfaceEntidade> getElementos() {
+        return this.elementos;
+    }
 }

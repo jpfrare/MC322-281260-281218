@@ -1,5 +1,5 @@
 
-public class RoboTerrestre extends Robo {
+public abstract class RoboTerrestre extends Robo {
     private final float velocidademax;
 
     public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a,  int r_sensor) {
@@ -12,7 +12,7 @@ public class RoboTerrestre extends Robo {
         //get para velMax
         return velocidademax;
     }
-     
+  
     @Override
     void mover(int deltaX, int deltaY) {
         /*move o robo terrestre considerando o limite de velocidade (supoe que o salto de coordenadas individuais 

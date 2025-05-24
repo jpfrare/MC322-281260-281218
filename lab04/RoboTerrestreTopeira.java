@@ -51,4 +51,14 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         //leva em cosideração a nova direção
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
+
+    @Override
+    public String getDescricao() {
+        return "O único robô que consegue escavar o ambiente e portanto desviar de obstáculos, tal como um robô terrestre, possui velocidade máxima";
+    }
+
+    @Override
+    public char getRepresentacao() {
+        return 't';
+    }
 }
