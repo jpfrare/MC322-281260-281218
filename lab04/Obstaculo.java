@@ -67,4 +67,13 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
         return this.ambiente;
     }
     
+    @Override
+    public String getDescricao() {
+        return "Obstáculo com dimensões consideraveis e altura definida a depender de seu tipo, bloqueia o caminho no caso de movimentação de robôs";
+    }
+
+    @Override
+    public char getRepresentacao() {
+        return 'o';
+    }
 }
