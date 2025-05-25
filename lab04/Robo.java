@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
-public abstract class Robo implements InterfaceEntidade{
+public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
-    private final ArrayList<Sensor> sensores; 
+    private final ArrayList<Sensor> sensores;
+    private final CentralComunicacao chat;
     private final Ambiente habitat;
     private EstadoRobo estado;
     private TipoEntidade tipo;
@@ -19,6 +20,7 @@ public abstract class Robo implements InterfaceEntidade{
         this.posicaoZ = 0;
         this.sensores = new ArrayList<>();
         SensorMovimento sensor = new SensorMovimento(r_sensor);
+        this.chat = null;
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
         this.estado = EstadoRobo.LIGADO;
