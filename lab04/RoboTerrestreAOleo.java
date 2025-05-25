@@ -30,10 +30,10 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
     }
 
     @Override
-    void mover(int deltaX, int deltaY) {
+    void mover(int deltaX, int deltaY) throws RoboDesligadoException {
         //move-se, priorizando se o movimento atende as condições de lubrificação atuais do robô
         if (Math.abs(deltaX) > this.VelMaxInstantanea || Math.abs(deltaY) > this.VelMaxInstantanea) {
-            System.out.printf("Movimento Inválido! Baixa Lubrificação\n");
+            System.err.printf("Movimento Inválido! Baixa Lubrificação\n");
             return;
         }
 

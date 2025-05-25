@@ -14,7 +14,7 @@ public abstract class RoboTerrestre extends Robo {
     }
   
     @Override
-    void mover(int deltaX, int deltaY) {
+    void mover(int deltaX, int deltaY) throws RoboDesligadoException {
         /*move o robo terrestre considerando o limite de velocidade (supoe que o salto de coordenadas individuais 
         tem que ser menor que a velocidade maxima)*/
         if (Math.abs(deltaX) > this.velocidademax || Math.abs(deltaY) > this.velocidademax) {
