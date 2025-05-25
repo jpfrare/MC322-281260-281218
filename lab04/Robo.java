@@ -7,6 +7,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
     private int posicaoZ;
     private final ArrayList<Sensor> sensores;
     private CentralComunicacao central;
+    private CaixadeEntrada caixa;
     private final Ambiente habitat;
     private EstadoRobo estado;
     private TipoEntidade tipo;
@@ -21,6 +22,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         this.sensores = new ArrayList<>();
         SensorMovimento sensor = new SensorMovimento(r_sensor);
         this.central = null;
+        this.caixa = null;
         sensores.add(sensor);
         this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
         this.estado = EstadoRobo.LIGADO;
@@ -45,20 +47,26 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
 
     void adicionarComunicacao(CentralComunicacao central){
         this.central = central;
+        this.caixa = new CaixadeEntrada();
     }
 
     @Override
-    void enviarMensagem(InterfaceComunicavel destinatario, String mensagem){
-        if(this.central != null){
+    public void enviarMensagem(InterfaceComunicavel destinatario, String mensagem){
+        if(this.central != null && this.caixa != null){
             Robo r = (Robo)destinatario;
             if(this.central.buscaRobo(r.getNome())){
-                
+                Mensagem enviar = new Mensagem( (Robo)this, mensagem);
+                r.caixa.armazenar_mensagem(enviar);
             }
         }
     }
 
     @Override
-    void receberMensagem()
+    public void receberMensagem(){
+        if(this.caixa.getNaoLidas() > 0){
+            this.caixa.ler_mensagem();
+        }
+    }
     
     @Override
     public TipoEntidade getTipo(){
