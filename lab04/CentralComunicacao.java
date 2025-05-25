@@ -11,12 +11,12 @@ public class CentralComunicacao {
         this.comunicaveis.add(r);
     }
 
-    public Robo buscaRobo(String nome){
+    public boolean buscaRobo(String nome){
         for(Robo r : this.comunicaveis){
             if(nome.equals(r.getNome()))
-                return r;
+                return true;
         }
-        return null;
+        return false;
     }
 
 }
