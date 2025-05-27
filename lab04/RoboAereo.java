@@ -5,15 +5,24 @@ public abstract class RoboAereo extends Robo {
         super(posXo, posYo, nome, a, r_sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
-        this.getAmbiente().getMapa()[posXo][posYo][0] = TipoEntidade.VAZIO; 
-        this.getAmbiente().getMapa()[posXo][posYo][alt_o] = TipoEntidade.ROBO;
     }
 
-    void subir(int delta_h){
+    void subir(int delta_h) throws RoboDesligadoException{
+        if (!this.getEstado().esta_ligado()) {
+            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.getNome() + " desligado!");
+        }
+
         int pos_inicial = this.getZ();
         int pos_final = this.getZ() + delta_h; //posicao final prevista (caso seja um movimento valido)
         int avancar = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), delta_h, this.getAmbiente());
-        if(this.getAmbiente().dentroDosLimites(this.getX(), this.getY(), pos_final) && (pos_final <= this.altitudeMax)){
+        try {
+            this.getAmbiente().dentroDosLimites(this.getX(), this.getY(), pos_final);
+
+        } catch (ForaDosLimitesException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+
+        if((pos_final <= this.altitudeMax)){
             while(avancar > 0){
                 this.setPosicaoZ(this.getZ() + avancar);
                 delta_h -= avancar;
@@ -29,7 +38,7 @@ public abstract class RoboAereo extends Robo {
             
         }
         else{
-            System.out.println("Movimento Invalido de subida! Nao atende as especificacoes do ambiente e/ou do robo");
+            System.err.println("Movimento Invalido de subida! Nao atende as especificacoes do ambiente e/ou do robo");
         }
     }
 
@@ -37,8 +46,12 @@ public abstract class RoboAereo extends Robo {
         return this.altitudeMax;
     }
 
-    void descer(int delta_h){
+    void descer(int delta_h) throws RoboDesligadoException{
         //apenas desce até uma posicao valida (altura > 0)
+        if (!this.getEstado().esta_ligado()) {
+            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.getNome() + " desligado!");
+        }
+
         int z_inicial = this.getZ();
         int z_final = this.getZ() - delta_h;
         int avanca = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -delta_h, this.getAmbiente());
@@ -56,7 +69,7 @@ public abstract class RoboAereo extends Robo {
                 this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.ROBO;
             }
         }else{
-            System.out.println("Movimento invalido de descida! Altura abaixo de 0 somente é possível para o RoboTopeira!");
+            System.err.println("Movimento invalido de descida! Altura abaixo de 0 somente é possível para o RoboTopeira!");
 
         }
     }

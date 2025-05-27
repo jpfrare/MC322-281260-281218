@@ -37,13 +37,19 @@ public class RoboAereoDinamico extends RoboAereo {
         this.altitudemax_atual = this.getAltitudeMax();
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
-    void moverDinamico(int delta_x, int delta_y, int delta_z){
+    void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
         int pos_xo = this.getX();
         int pos_yo = this.getY();
         int pos_zo = this.getZ();
-        if(this.getAmbiente().dentroDosLimites(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)
-        && !this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)
-        && this.getZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
+        try {
+            this.getAmbiente().dentroDosLimites(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z);
+            this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z);
+
+        } catch (Exception e) {
+            return;
+        }
+
+        if(this.getZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
                 this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = TipoEntidade.VAZIO;
@@ -59,10 +65,14 @@ public class RoboAereoDinamico extends RoboAereo {
 
     }
 
-    boolean mover_3d(int delta_x, int delta_y, int delta_z){
-        if(this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z)){
+    private boolean mover_3d(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+        try {
+            this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z);
+
+        } catch (ColisaoException e) {
             return false;
         }
+
         int pos_z0 = this.getZ();
         int avancar;
         if(delta_z > 0 ){
@@ -115,7 +125,7 @@ public class RoboAereoDinamico extends RoboAereo {
         return false;
     }
 
-    boolean mover_horizontal(int delta_x, int delta_y){
+    private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException{
         int x_ini = this.getX();
         int y_ini = this.getY();
         this.mover(delta_x, delta_y);

@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 
-public abstract class Robo implements InterfaceEntidade{
+public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
     private int posicaoZ;
-    private final ArrayList<Sensor> sensores; 
+    private final ArrayList<Sensor> sensores;
+    private CentralComunicacao central;
+    private CaixadeEntrada caixa;
     private final Ambiente habitat;
     private EstadoRobo estado;
     private TipoEntidade tipo;
@@ -19,26 +21,54 @@ public abstract class Robo implements InterfaceEntidade{
         this.posicaoZ = 0;
         this.sensores = new ArrayList<>();
         SensorMovimento sensor = new SensorMovimento(r_sensor);
+        this.central = null;
+        this.caixa = null;
         sensores.add(sensor);
-        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
         this.estado = EstadoRobo.LIGADO;
         this.tipo = TipoEntidade.ROBO;
     }
 
     void ligarRobo() {
         System.out.println("O Robô " + this.getNome() + " está ligado!");
-        estado = EstadoRobo.LIGADO;
+        this.estado = EstadoRobo.LIGADO;
     }
 
     void desligarRobo() {
         System.out.println("O Robô " + this.getNome() + " está desligado!");
-        estado = EstadoRobo.LIGADO;
+        this.estado = EstadoRobo.LIGADO;
+    }
+
+    EstadoRobo getEstado() {
+        return this.estado;
     }
 
     String getNome() {
         return this.nome;
     }
 
+    void adicionarComunicacao(CentralComunicacao central){
+        this.central = central;
+        this.caixa = new CaixadeEntrada();
+    }
+
+    @Override
+    public void enviarMensagem(InterfaceComunicavel destinatario, String mensagem){
+        if(this.central != null && this.caixa != null){
+            Robo r = (Robo)destinatario;
+            if(this.central.buscaRobo(r.getNome())){
+                Mensagem enviar = new Mensagem( (Robo)this, mensagem);
+                r.caixa.armazenar_mensagem(enviar);
+            }
+        }
+    }
+
+    @Override
+    public void receberMensagem(){
+        if(this.caixa.getNaoLidas() > 0){
+            this.caixa.ler_mensagem();
+        }
+    }
+    
     @Override
     public TipoEntidade getTipo(){
         return tipo;
@@ -90,7 +120,7 @@ public abstract class Robo implements InterfaceEntidade{
         return (SensorTemperatura)this.sensores.get(1);
     }
 
-    boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
+    private boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
         int posx_ini = this.getX();
         int posy_ini = this.getY();
         visitados[passoX][passoY] = 1;
@@ -106,7 +136,13 @@ public abstract class Robo implements InterfaceEntidade{
                     //busca um  avancar dentro do alcance do sensor que resulte em um caminho valido a partir da posicao inicial
                     avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente());
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX() + avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
+                        try {
+                            this.getAmbiente().identifica_colisao(this.getX() + avancar, this.getY(), this.getZ());
+                        } catch (ColisaoException e) {
+                            System.err.println("Buscando outro caminho!");
+                        }
+
+                        if(visitados[passoX + avancar][passoY] == 0){
                             this.setPosicaoX(this.getX() + avancar);
                             if(moverR(deltaX - avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
@@ -121,7 +157,14 @@ public abstract class Robo implements InterfaceEntidade{
                     avancar = this.getSensorMovimento().consegueAvancar(1, this.getX(), this.getY(), this.getZ(), deltaX, this.getAmbiente()); 
                     //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX() - avancar, this.getY(), this.getZ()) && visitados[passoX + avancar][passoY] == 0){
+                        try {
+                            this.getAmbiente().identifica_colisao(this.getX() - avancar, this.getY(), this.getZ());
+
+                        } catch(ColisaoException e) {
+                            System.err.println("Buscando outro caminho!");
+                        }
+
+                        if(visitados[passoX + avancar][passoY] == 0){
                             this.setPosicaoX(this.getX() - avancar);
                             if(moverR(deltaX + avancar, deltaY, passoX + avancar, passoY, visitados))
                                 return true;
@@ -139,7 +182,13 @@ public abstract class Robo implements InterfaceEntidade{
                     avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat); 
                     //busca um alcance que resulte em um caminho valido a partir da posicao inicial
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() + avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
+                        try {
+                            this.getAmbiente().identifica_colisao(this.getX(), this.getY() + avancar, this.getZ());
+                        } catch (ColisaoException e) {
+                            System.err.println("Buscando outro caminho!");
+                        }
+
+                        if(visitados[passoX][passoY + avancar] == 0){
                             this.setPosicaoY(this.getY() + avancar);
                             if(moverR(deltaX, deltaY - avancar, passoX, passoY + avancar, visitados))
                                 return true;
@@ -155,7 +204,13 @@ public abstract class Robo implements InterfaceEntidade{
                     avancar = this.getSensorMovimento().consegueAvancar(2, this.getX(), this.getY(), this.getZ(), deltaY, this.habitat);
 
                     while(avancar > 0){
-                        if(!this.getAmbiente().identifica_colisao(this.getX(), this.getY() - avancar, this.getZ()) && visitados[passoX][passoY + avancar] == 0){
+                        try {
+                            this.getAmbiente().identifica_colisao(this.getX(), this.getY() - avancar, this.getZ());
+                        } catch (ColisaoException e) {
+                            System.err.println("Buscando outro caminho!");
+                        }
+
+                        if(visitados[passoX][passoY + avancar] == 0){
                             this.setPosicaoY(this.getY() - avancar);
                             if(moverR(deltaX, deltaY + avancar, passoX, passoY + avancar, visitados))
                                 return true;
@@ -170,16 +225,25 @@ public abstract class Robo implements InterfaceEntidade{
         }
         return false;
     }
-    void mover(int deltaX, int deltaY){
+
+    void mover(int deltaX, int deltaY) throws RoboDesligadoException {
         if (!this.estado.esta_ligado()) {
-            System.out.println("O robô está desligado!");
+            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.nome + " desligado!");
+        }
+
+        try {
+            this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0);
+            this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ);
+
+        } catch (ForaDosLimitesException e) {
+            System.err.println("Erro: " + e.getMessage());
+            return;
+
+        } catch (ColisaoException f) {
+            System.err.println("Erro: " + f.getMessage());
             return;
         }
 
-        if (!this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0) || this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ)) {
-            System.out.println("movimento não realizado");
-            return;
-        }
         int xo = this.posicaoX;
         int yo = this.posicaoY;
         this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.VAZIO;
@@ -199,7 +263,7 @@ public abstract class Robo implements InterfaceEntidade{
 
         } else {
             this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.ROBO;
-            System.out.println("movimento não realizado");
+            System.err.println("Caminho cercado! Impossível avançar!");
         }
 
     }
