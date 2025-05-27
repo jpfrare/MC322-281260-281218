@@ -140,7 +140,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
                         try {
                             this.getAmbiente().identifica_colisao(this.getX() + avancar, this.getY(), this.getZ());
                         } catch (ColisaoException e) {
-                            return false;
+                            System.err.println("Buscando outro caminho!");
                         }
 
                         if(visitados[passoX + avancar][passoY] == 0){
@@ -162,7 +162,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
                             this.getAmbiente().identifica_colisao(this.getX() - avancar, this.getY(), this.getZ());
 
                         } catch(ColisaoException e) {
-                            return false;
+                            System.err.println("Buscando outro caminho!");
                         }
 
                         if(visitados[passoX + avancar][passoY] == 0){
@@ -186,7 +186,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
                         try {
                             this.getAmbiente().identifica_colisao(this.getX(), this.getY() + avancar, this.getZ());
                         } catch (ColisaoException e) {
-                            return false;
+                            System.err.println("Buscando outro caminho!");
                         }
 
                         if(visitados[passoX][passoY + avancar] == 0){
@@ -208,7 +208,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
                         try {
                             this.getAmbiente().identifica_colisao(this.getX(), this.getY() - avancar, this.getZ());
                         } catch (ColisaoException e) {
-                            return false;
+                            System.err.println("Buscando outro caminho!");
                         }
 
                         if(visitados[passoX][passoY + avancar] == 0){

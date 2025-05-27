@@ -139,12 +139,17 @@ public class Ambiente {
                 int deltaY = novoY - mover.getY();
                 int deltaZ = novoZ - mover.getZ();
                 if (mover instanceof RoboAereoRelator) {
-                    ((RoboAereoRelator)mover).mover(deltaX, deltaY);
+                    if((deltaZ != 0 && (deltaX != 0 || deltaY != 0))){
+                        throw new MovimentoRelatorException();
+                    }
                     if (deltaZ < 0) {
-                        ((RoboAereoRelator)mover).descer(deltaZ);
+                        ((RoboAereoRelator)mover).descer(-deltaZ);
 
-                    } else {
+                    } else if(deltaZ > 0){
                         ((RoboAereoRelator)mover).subir(deltaZ);
+                    }
+                    else{
+                        ((RoboAereoRelator)mover).mover(deltaX, deltaY);
                     }
                     
                 } else if (mover instanceof RoboAereoDinamico) {
