@@ -1,6 +1,6 @@
 
 
-public class RoboAereoDinamico extends RoboAereo {
+public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
     private final int capacidade;
@@ -139,5 +139,24 @@ public class RoboAereoDinamico extends RoboAereo {
 
     @Override public char getRepresentacao() {
         return 'd';
+    }
+
+    @Override public void preferenciaTermica() {
+        //robôs aéreos têm preferência por baixas temperaturas, ele tentará se mover para o lugar de menor temperatura possível
+        try {
+            SensorTemperatura t = this.getSensorTemperatura();
+            int[] menor_temperatura = t.getMenorTemperatura();
+            int delta_x = menor_temperatura[0] - this.getX();
+            int delta_y = menor_temperatura[1] - this.getY();
+            int delta_z = menor_temperatura[2] - this.getZ();
+
+            this.mover_3d(delta_x, delta_y, delta_z);
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("este robô não possui sensor de temperatura, ainda");
+
+        } catch (RoboDesligadoException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

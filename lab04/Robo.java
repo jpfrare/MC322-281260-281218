@@ -116,8 +116,16 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         return (SensorMovimento)this.sensores.get(0);
     }
 
-    SensorTemperatura getSensorTemperatura() {
-        return (SensorTemperatura)this.sensores.get(1);
+    SensorTemperatura getSensorTemperatura() throws ArrayIndexOutOfBoundsException{
+
+        try {
+            return (SensorTemperatura)this.sensores.get(1);
+            
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("este robô não possui sensor de temperatura no momento");
+            return null;
+        }
+        
     }
 
     private boolean moverR(int deltaX, int deltaY, int passoX, int passoY, int [][] visitados){
