@@ -46,8 +46,17 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         return this.nome;
     }
 
+    CentralComunicacao getCentral(){
+        return this.central;
+    }
+
+    CaixadeEntrada getCaixadeEntrada(){
+        return this.caixa;
+    }
+
     void adicionarComunicacao(CentralComunicacao central){
         this.central = central;
+        central.adicionarRobo(this);
         this.caixa = new CaixadeEntrada();
     }
 
@@ -59,6 +68,12 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
                 Mensagem enviar = new Mensagem( (Robo)this, mensagem);
                 r.caixa.armazenar_mensagem(enviar);
             }
+            else{
+                System.out.println("O robo a quem se destina a mensagem eh incomunicavel.");
+            }
+        }
+        else{
+            System.out.println("Robo incomunicavel.");
         }
     }
 

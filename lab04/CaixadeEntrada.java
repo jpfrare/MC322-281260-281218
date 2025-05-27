@@ -19,7 +19,7 @@ public class CaixadeEntrada {
     }
 
     public void ler_mensagem(){
-        if(mensagem.size() > 0 && nao_lidas > 0){
+        if(!mensagem.isEmpty() && nao_lidas > 0){
             System.out.println(mensagem.get(mensagem.size() - this.nao_lidas));
             this.nao_lidas--;
         }
