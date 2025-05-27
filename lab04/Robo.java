@@ -24,7 +24,6 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         this.central = null;
         this.caixa = null;
         sensores.add(sensor);
-        this.habitat.getMapa()[posicaoXo][posicaoYo][this.posicaoZ] = TipoEntidade.ROBO;
         this.estado = EstadoRobo.LIGADO;
         this.tipo = TipoEntidade.ROBO;
     }

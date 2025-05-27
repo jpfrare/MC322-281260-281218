@@ -14,7 +14,7 @@ public class Main {
                 return -1;
         }*/
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RoboDesligadoException {
         Scanner leitor = new Scanner(System.in);
         System.out.println("\n Olá, bem vindo! Em primeiro lugar, escolha as dimensões do ambiente! \n");
 
@@ -49,13 +49,13 @@ public class Main {
                         System.out.println("Digite a coordenada Y do rôbo \n");
                         int posicaoYo = leitor.nextInt();
 
-                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
+                        /*while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
                                 System.out.println("Coordenadas inválidas! Tente novamente");
                                 System.out.println("Digite a coordenada X do rôbo \n");
                                 posicaoXo = leitor.nextInt();
                                 System.out.println("Digite a coordenada Y do rôbo \n");
                                 posicaoYo = leitor.nextInt();
-                        }
+                        }*/
 
                         //raio sensor movimento
                         System.out.println("Digite o raio dos sensores de movimento (1) e temperatura (2) \n");
@@ -224,8 +224,17 @@ public class Main {
 
                         } else {
                                 //Robo mover = amb.getRobo(pos);
+                                System.out.println("Digite o quanto deseja mover em x:");
+                                mov_x = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em y:");
+                                mov_y = leitor.nextInt();
+                                System.out.println("Digite o quanto deseja mover em z:");
+                                mov_z = leitor.nextInt();
+                                amb.moverEntidade(mover, mov_x, mov_y, mov_z);
+                                System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
+                                mover.exibirPosicao();
 
-                                if (mover instanceof RoboTerrestre){
+                                /*if (mover instanceof RoboTerrestre){
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em y:");
@@ -277,7 +286,7 @@ public class Main {
                                 if(mover != null){
                                         System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
                                         mover.exibirPosicao();
-                                }
+                                }*/
                         
                         }
                         

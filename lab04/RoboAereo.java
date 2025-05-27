@@ -5,8 +5,6 @@ public abstract class RoboAereo extends Robo {
         super(posXo, posYo, nome, a, r_sensor);
         this.setPosicaoZ(alt_o);
         this.altitudeMax = alt_max;
-        this.getAmbiente().getMapa()[posXo][posYo][0] = TipoEntidade.VAZIO; 
-        this.getAmbiente().getMapa()[posXo][posYo][alt_o] = TipoEntidade.ROBO;
     }
 
     void subir(int delta_h) throws RoboDesligadoException{
