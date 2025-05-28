@@ -152,7 +152,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
 
             this.mover_3d(delta_x, delta_y, delta_z);
 
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             System.err.println("este robô não possui sensor de temperatura, ainda");
 
         } catch (RoboDesligadoException e) {

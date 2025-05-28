@@ -38,8 +38,10 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         this.estado = EstadoRobo.LIGADO;
     }
 
-    EstadoRobo getEstado() {
-        return this.estado;
+    void Robofunciona() throws RoboDesligadoException{
+        if (!this.estado.esta_ligado()) {
+            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.nome + " desligado!");
+        }
     }
 
     String getNome() {
@@ -116,14 +118,12 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         return (SensorMovimento)this.sensores.get(0);
     }
 
-    SensorTemperatura getSensorTemperatura() throws ArrayIndexOutOfBoundsException{
+    SensorTemperatura getSensorTemperatura() throws IndexOutOfBoundsException{
+        if (this.sensores.size() < 2) {
+            throw new IndexOutOfBoundsException();
 
-        try {
+        } else {
             return (SensorTemperatura)this.sensores.get(1);
-            
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("este robô não possui sensor de temperatura no momento");
-            return null;
         }
         
     }
@@ -235,11 +235,9 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
     }
 
     void mover(int deltaX, int deltaY) throws RoboDesligadoException {
-        if (!this.estado.esta_ligado()) {
-            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.nome + " desligado!");
-        }
 
         try {
+            this.Robofunciona();
             this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0);
             this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ);
 
@@ -250,6 +248,9 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         } catch (ColisaoException f) {
             System.err.println("Erro: " + f.getMessage());
             return;
+
+        } catch(RoboDesligadoException g) {
+            System.err.println("Erro: " + g.getMessage());
         }
 
         int xo = this.posicaoX;
