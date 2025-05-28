@@ -1,5 +1,5 @@
 
-public abstract class RoboTerrestre extends Robo {
+public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
 
     public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a,  int r_sensor) {
@@ -23,6 +23,25 @@ public abstract class RoboTerrestre extends Robo {
         }
 
         super.mover(deltaX, deltaY);
+    }
+
+    @Override public void preferenciaTermica() {
+        //o robô terrestre prefere altas temperaturas
+        try {
+            SensorTemperatura t = this.getSensorTemperatura();
+            int[] temps = t.getMaiorTemperatura();
+
+            int deltax = temps[0] - this.getX();
+            int deltay = temps[1] - this.getY();
+
+            this.mover(deltax, deltay);
+
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("este robô não possui sensor de temperatura, ainda");
+
+        } catch (RoboDesligadoException e) {
+            System.err.println(e.getMessage());
+        }
     }
     
 }

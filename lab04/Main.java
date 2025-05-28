@@ -1,11 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-<<<<<<< HEAD
-        public static int buscar_robo(Ambiente amb, String nome) {
-=======
         /*public static int buscar_robo(Ambiente amb, String nome) {
->>>>>>> main
                 //busca robô pelo nome no array list do ambiente
                 int len = amb.getArrayTamanho();
 
@@ -16,15 +12,9 @@ public class Main {
                 }
 
                 return -1;
-<<<<<<< HEAD
-        }
-    
-    public static void main(String[] args) {
-=======
         }*/
     
     public static void main(String[] args) throws RoboDesligadoException {
->>>>>>> main
         Scanner leitor = new Scanner(System.in);
         System.out.println("\n Olá, bem vindo! Em primeiro lugar, escolha as dimensões do ambiente! \n");
 
@@ -59,21 +49,13 @@ public class Main {
                         System.out.println("Digite a coordenada Y do rôbo \n");
                         int posicaoYo = leitor.nextInt();
 
-<<<<<<< HEAD
-                        while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
-=======
                         /*while (!amb.dentroDosLimites(posicaoXo, posicaoYo, 0) || amb.identifica_colisao(posicaoXo, posicaoYo, 0)) {
->>>>>>> main
                                 System.out.println("Coordenadas inválidas! Tente novamente");
                                 System.out.println("Digite a coordenada X do rôbo \n");
                                 posicaoXo = leitor.nextInt();
                                 System.out.println("Digite a coordenada Y do rôbo \n");
                                 posicaoYo = leitor.nextInt();
-<<<<<<< HEAD
-                        }
-=======
                         }*/
->>>>>>> main
 
                         //raio sensor movimento
                         System.out.println("Digite o raio dos sensores de movimento (1) e temperatura (2) \n");
@@ -123,11 +105,7 @@ public class Main {
                                 
 
                                         r = new RoboTerrestreTopeira(posicaoXo, posicaoYo, nome, velocidademax, amb, profundidade_max, raio);
-<<<<<<< HEAD
-                                        amb.adicionaRobo(r);
-=======
                                         amb.adicionarEntidade(r);
->>>>>>> main
 
                                 }
                                   
@@ -177,11 +155,7 @@ public class Main {
                                 
                         }
                         if(r != null){
-<<<<<<< HEAD
-                                amb.adicionaRobo(r);
-=======
                                 amb.adicionarEntidade(r);
->>>>>>> main
                                 SensorTemperatura temp = new SensorTemperatura(r, raiotemp);
                                 r.AdicionaSensores(temp);
                         }
@@ -229,11 +203,7 @@ public class Main {
                                 tipo = TipoObstaculo.PLACA;
                         }
 
-<<<<<<< HEAD
-                        amb.adicionaObstaculo(x1, x2, y1, y2, tipo);
-=======
                         amb.adicionarEntidade(new Obstaculo(x1, x2, y1, y2, tipo, amb));
->>>>>>> main
                         System.out.println("Obstáculo Criado! \n");
 
 
@@ -246,17 +216,6 @@ public class Main {
                         System.out.println("Digite o nome do Robô");
                         robo = leitor.nextLine();
 
-<<<<<<< HEAD
-                        int pos = Main.buscar_robo(amb, robo);
-
-                        if (pos == -1) {
-                                System.out.println("Nome inválido!");
-
-                        } else {
-                                Robo mover = amb.getRobo(pos);
-
-                                if (mover instanceof RoboTerrestre){
-=======
                         //int pos = Main.buscar_robo(amb, robo);
                         Robo mover = amb.getRobo(robo);
 
@@ -276,7 +235,6 @@ public class Main {
                                 mover.exibirPosicao();
 
                                 /*if (mover instanceof RoboTerrestre){
->>>>>>> main
                                         System.out.println("Digite o quanto deseja mover em x:");
                                         mov_x = leitor.nextInt();
                                         System.out.println("Digite o quanto deseja mover em y:");
@@ -328,26 +286,13 @@ public class Main {
                                 if(mover != null){
                                         System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
                                         mover.exibirPosicao();
-<<<<<<< HEAD
-                                }
-=======
                                 }*/
->>>>>>> main
                         
                         }
                         
                 } else if (chave == 4) { //relatório de temperatura
                         System.out.println("Digite o nome do robô \n");
                         String vulgo = leitor.nextLine();
-<<<<<<< HEAD
-                        int pos = Main.buscar_robo(amb, vulgo);
-
-                        if (pos == -1) {
-                                System.out.println("Nome inválido!");
-
-                        } else {
-                                amb.getRobo(pos).getSensorTemperatura().analise_temperatura();
-=======
                         //int pos = Main.buscar_robo(amb, vulgo);
                         Robo temp = amb.getRobo(vulgo);
 
@@ -356,22 +301,12 @@ public class Main {
 
                         } else {
                                 temp.getSensorTemperatura().analise_temperatura();
->>>>>>> main
                         }
 
                 } else if (chave == 5) { //habilidades especiais
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
 
-<<<<<<< HEAD
-                        int pos = Main.buscar_robo(amb, vulgo);
-
-                        if (pos == -1) {
-                                System.out.println("Nome inválido! \n");
-
-                        } else {
-                        Robo p = amb.getRobo(pos);
-=======
                         Robo p = amb.getRobo(vulgo);
 
                         //int pos = Main.buscar_robo(amb, vulgo);
@@ -380,7 +315,6 @@ public class Main {
                                 System.out.println("Nome inválido! \n");
 
                         } else {
->>>>>>> main
 
                                 if (p instanceof RoboTerrestreAOleo) {
                                         System.out.println("Digite o valor do delta lubrificação \n");
@@ -400,17 +334,6 @@ public class Main {
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
 
-<<<<<<< HEAD
-                        int pos = Main.buscar_robo(amb, vulgo);
-
-                        if (pos == -1) {
-                                System.out.println("Nome inválido! \n");
-
-                        } else {
-                                Robo p = amb.getRobo(pos);
-
-                                p.exibirPosicao();
-=======
                         Robo p = amb.getRobo(vulgo);
 
                         //int pos = Main.buscar_robo(amb, vulgo);
@@ -420,7 +343,6 @@ public class Main {
 
                         } else {
                             p.exibirPosicao();
->>>>>>> main
                         }
         
         
