@@ -1,12 +1,21 @@
 public  class SensorTemperatura extends Sensor {
     private final Robo dono;
+    private int[] maior_temperatura; //ponto de maior temperatura
+    private int[] menor_temperatura; //ponto de menor temperatura
 
     public SensorTemperatura(Robo dono, int raio) {
         super(raio);
         this.dono = dono;
+        this.maior_temperatura = new int[3];
+        this.menor_temperatura = new int[3];
+
+        System.out.println("Primeira análise do Robô! Automática!:");
+
+        this.analise_temperatura();
     }
 
-    public void analise_temperatura() {
+    final public void analise_temperatura() {
+
         if (dono.getZ() < 0) {
             System.out.println("Não é possível fazer análise de temperatura para o robô (está no subsolo)");
             return; //não é possível fazer análise de temperatura no subsolo
@@ -30,8 +39,12 @@ public  class SensorTemperatura extends Sensor {
         int temperatura_local = mapa_temperatura[dono.getX()][dono.getY()][dono.getZ()];
         int menor_temperatura = temperatura_local;
         int maior_temperatura = temperatura_local;
-        int i_menor = dono.getX(), j_menor = dono.getY(), k_menor = dono.getZ();
-        int i_maior = i_menor, j_maior = j_menor, k_maior = k_menor;
+        this.menor_temperatura[0] = dono.getX();
+        this.menor_temperatura[1] = dono.getY();
+        this.menor_temperatura[2] = dono.getZ();
+        this.maior_temperatura[0] = this.menor_temperatura[0];
+        this.maior_temperatura[1] = this.menor_temperatura[1];
+        this.maior_temperatura[2] = this.menor_temperatura[2];
 
 
         //análises
@@ -39,14 +52,14 @@ public  class SensorTemperatura extends Sensor {
             for (int i = menorx; i <= maiorx; i++) {
                 for (int j = menory; j <= maiory; j++) {
                     if (mapa_temperatura[i][j][0] > maior_temperatura){
-                        i_maior = i;
-                        j_maior = j;
+                        this.maior_temperatura[0] = i;
+                        this.maior_temperatura[1] = j;
                         maior_temperatura = mapa_temperatura[i][j][0];
                     }
 
                     else if (mapa_temperatura[i][j][0] < menor_temperatura){
-                        i_menor = i;
-                        j_menor = j;
+                        this.menor_temperatura[0] = i;
+                        this.menor_temperatura[1] = j;
                         menor_temperatura = mapa_temperatura[i][j][0];
                     }
                 }
@@ -69,15 +82,15 @@ public  class SensorTemperatura extends Sensor {
                     for (int k = menorz; k <= maiorz; k++) {
 
                         if (mapa_temperatura[i][j][k] > maior_temperatura) {
-                            i_maior = i;
-                            j_maior = j;
-                            k_maior = k;
+                            this.maior_temperatura[0]= i;
+                            this.maior_temperatura[1]= j;
+                            this.maior_temperatura[2] = k;
                             maior_temperatura = mapa_temperatura[i][j][k];
 
                         } else if (mapa_temperatura[i][j][k] < menor_temperatura) {
-                            i_menor = i;
-                            j_menor = j;
-                            k_menor = k;
+                            this.menor_temperatura[0] = i;
+                            this.menor_temperatura[1] = j;
+                            this.menor_temperatura[2] = k;
                             menor_temperatura = mapa_temperatura[i][j][k];
                         }
                     }
@@ -87,7 +100,15 @@ public  class SensorTemperatura extends Sensor {
 
         System.out.printf("Análise de Temperatura da região ao redor do Robô %s \n", dono.getNome());
         System.out.printf("Temperatura local (%d, %d, %d) = %d \n", dono.getX(), dono.getY(), dono.getZ(), temperatura_local);
-        System.out.printf("Menor temperatura (%d, %d, %d) = %d \n" , i_menor, j_menor, k_menor, menor_temperatura);
-        System.out.printf("Maior temperatura (%d, %d, %d) = %d \n", i_maior, j_maior, k_maior, maior_temperatura);
+        System.out.printf("Menor temperatura (%d, %d, %d) = %d \n" , this.menor_temperatura[0], this.menor_temperatura[1],this.menor_temperatura[2], menor_temperatura);
+        System.out.printf("Maior temperatura (%d, %d, %d) = %d \n", this.maior_temperatura[0], this.maior_temperatura[1], this.maior_temperatura[2], maior_temperatura);
+    }
+
+    public int[] getMaiorTemperatura() {
+        return this.maior_temperatura;
+    }
+
+    public int[] getMenorTemperatura() {
+        return this.menor_temperatura;
     }
 } 
