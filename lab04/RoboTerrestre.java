@@ -105,7 +105,7 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica, In
 
             for (int x = menorx; x <= maiorx; x++) {
                 for (int y = menory; y <= maiory; y++) {
-                    if ((x != this.getX() || y != this.getY()) && this.procura(x, y, raio)) {
+                    if ((x != this.getX() || y != this.getY()) && !this.procura(x, y, raio)) {
                         System.out.printf("Tentando mover para (%d, %d, %d)...\n", x, y, this.getZ());
 
                         if(this.mover(x - this.getX(), y - getY())) {
