@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
+public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
@@ -40,7 +40,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
 
     void Robofunciona() throws RoboDesligadoException{
         if (!this.estado.esta_ligado()) {
-            throw new RoboDesligadoException("Movimento não realizado, Robô" + this.nome + " desligado!");
+            throw new RoboDesligadoException("Não realizado, Robô " + this.nome + " desligado!");
         }
     }
 
@@ -249,7 +249,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         return false;
     }
 
-    void mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
 
         try {
             this.Robofunciona();
@@ -258,14 +258,15 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
 
         } catch (ForaDosLimitesException e) {
             System.err.println("Erro: " + e.getMessage());
-            return;
+            return false;
 
         } catch (ColisaoException f) {
             System.err.println("Erro: " + f.getMessage());
-            return;
+            return false;
 
         } catch(RoboDesligadoException g) {
             System.err.println("Erro: " + g.getMessage());
+            return false;
         }
 
         int xo = this.posicaoX;
@@ -283,11 +284,13 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
 
         if (moverR(deltaX, deltaY, 0, 0, visitados)) {
             this.getAmbiente().getMapa()[this.posicaoX][this.posicaoY][this.posicaoZ] = TipoEntidade.ROBO;
-            System.out.println("Existe caminho na horizontal!");
+            System.out.println("Existe caminho!");
+            return true;
 
         } else {
             this.getAmbiente().getMapa()[xo][yo][this.posicaoZ] = TipoEntidade.ROBO;
             System.err.println("Caminho cercado! Impossível avançar!");
+            return false;
         }
 
     }
@@ -297,5 +300,17 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel{
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 
+    @Override public void acionarSensores() {
+        try {
+            this.Robofunciona();
+            SensorTemperatura t = this.getSensorTemperatura();
+            t.analise_temperatura();
 
+        } catch (RoboDesligadoException e) {
+            System.err.println(e.getMessage());
+
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Este robô não possui sensor de temperatura, ainda");
+        }
+    }
 }

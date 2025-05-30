@@ -30,19 +30,16 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
     }
 
     @Override
-    void mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
         //move-se, priorizando se o movimento atende as condições de lubrificação atuais do robô
         if (Math.abs(deltaX) > this.VelMaxInstantanea || Math.abs(deltaY) > this.VelMaxInstantanea) {
             System.err.printf("Movimento Inválido! Baixa Lubrificação\n");
-            return;
+            return false;
         }
 
-        int xo = this.getX();
-        int yo = this.getY();
-        super.mover(deltaX, deltaY);
+        boolean moveu = super.mover(deltaX, deltaY);
 
-
-        if (deltaX == this.getX() - xo && deltaY == this.getY() - yo) {
+        if (moveu) {
             /*se ele conseguiu se mover, desce a lubrificação pela média das razoes
             do tamanho do deslocamento pelo tamanho do ambiente em cada coordenada*/
             int ambienteX = this.getAmbiente().getAmbienteX();
@@ -54,8 +51,10 @@ public class RoboTerrestreAOleo extends RoboTerrestre {
             float coeffinal = (coefx + coefy)/(2);
 
             this.AlterarLubrificacao(-coeffinal);
-            return;
-        } 
+            return true;
+        }
+
+        return false;
     }
 
     @Override

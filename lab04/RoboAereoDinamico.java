@@ -126,11 +126,9 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
     }
 
     private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException{
-        int x_ini = this.getX();
-        int y_ini = this.getY();
-        this.mover(delta_x, delta_y);
+        boolean moveu = this.mover(delta_x, delta_y);
         this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
-        return (x_ini + delta_x == this.getX() && y_ini + delta_y == this.getY());
+        return moveu;
     }
 
     @Override public String getDescricao() {
@@ -150,6 +148,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
             int delta_y = menor_temperatura[1] - this.getY();
             int delta_z = menor_temperatura[2] - this.getZ();
 
+            //tenta mover apenas uma vez, se não conseguir ir para a menor temperatura, fica no mesmo local
             this.mover_3d(delta_x, delta_y, delta_z);
 
         } catch (IndexOutOfBoundsException e) {
@@ -158,5 +157,10 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
         } catch (RoboDesligadoException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    @Override public void acionarSensores() {
+        super.acionarSensores();
+        this.preferenciaTermica();
     }
 }
