@@ -280,7 +280,7 @@ public class Main {
         
         
                 }
-                else if(chave == 7) {
+                else if(chave == 7){
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
                         Robo p = amb.getRobo(vulgo);
@@ -297,6 +297,7 @@ public class Main {
                         vulgo = leitor.nextLine();
                         System.out.println("Deseja: \n 1- Enviar Mensagem\n 2- Receber Mensagem\n");
                         comunicacao = leitor.nextInt();
+                        leitor.nextLine();
                         if(comunicacao != 1 && comunicacao != 2){
                                 throw new EntradaException("Valores incorretos para selecionar as operacoes relacionadas a comunicacao entre robos.");
                         }
