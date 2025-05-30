@@ -113,7 +113,7 @@ public abstract class RoboAereo extends Robo implements InterfaceFujao {
     }
 
     @Override public void fugir() {
-        //Robôs terrestres fogem de robôs aéreos, faz a tentativa de fuga apenas num quadrado ao redor do seu raio
+        //Robôs aéreos fogem de robôs abaixo ou acima, faz a tentativa de fuga apenas num quadrado ao redor do seu raio
         try {
             this.Robofunciona();
             int raio = this.getSensorMovimento().getRaio();
