@@ -209,9 +209,6 @@ public class Ambiente {
             
             }
     }
-    
-    
-
 
     public int getArrayTamanho() {
         return this.elementos.size();

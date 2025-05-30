@@ -74,6 +74,7 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica, In
             int raio = this.getSensorMovimento().getRaio();
             if (!procura(this.getX(), this.getY(), raio)) {
                 System.out.println("não há robô acima, dentro do raio do sensor, está tudo bem!");
+                return;
             }
 
             int menorx, maiorx, menory, maiory;
