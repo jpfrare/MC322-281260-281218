@@ -20,7 +20,7 @@ public class CaixadeEntrada {
 
     public void ler_mensagem(){
         if(!mensagem.isEmpty() && nao_lidas > 0){
-            System.out.println("Mensagem de " + mensagem.get(mensagem.size() - this.nao_lidas).getAutor() + ":");
+            System.out.println("Mensagem de " + mensagem.get(mensagem.size() - this.nao_lidas).getAutor().getNome() + ":");
             System.out.println(mensagem.get(mensagem.size() - this.nao_lidas).getMensagem());
             this.nao_lidas--;
         }

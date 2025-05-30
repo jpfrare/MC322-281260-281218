@@ -63,7 +63,13 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
     }
 
     @Override
-    public void enviarMensagem(InterfaceComunicavel destinatario, String mensagem){
+    public void enviarMensagem(InterfaceComunicavel destinatario, String mensagem) throws RoboDesligadoException{
+        try{
+            this.Robofunciona();
+        }
+        catch(RoboDesligadoException e){
+            System.err.println("Erro: " + e.getMessage());
+        }
         if(this.central != null && this.caixa != null){
             Robo r = (Robo)destinatario;
             if(this.central.buscaRobo(r.getNome())){
@@ -80,7 +86,13 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
     }
 
     @Override
-    public void receberMensagem(){
+    public void receberMensagem() throws RoboDesligadoException{
+        try{
+            this.Robofunciona();
+        }
+        catch(RoboDesligadoException e){
+            System.err.println("Erro: " + e.getMessage());
+        }
         if(this.caixa.getNaoLidas() > 0){
             this.caixa.ler_mensagem();
         }
