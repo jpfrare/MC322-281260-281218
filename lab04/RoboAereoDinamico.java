@@ -1,26 +1,24 @@
 
 
-public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
+public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, InterfaceFurtoEnergia{
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
-    private final int capacidade;
     private int altitudemax_atual;
-    private int nivel_energetico;
+    private float coeficiente_energetico;
 
-    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int capacidade, int r_sensor){
+    public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
         super(posXo, posYo, alt_o, alt_max, nome, a, r_sensor);
-        this.capacidade = capacidade; //capacidade energetica do robo
-        this.nivel_energetico = capacidade; //inicializa o robo com capacidade energetica maxima ("bateria cheia")
+        this.coeficiente_energetico = 1; //inicializa o robo com capacidade energetica maxima (100% de coeficiente energetico)
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima
     }
 
     void reduzir_autonomia(){
         //reduz a autonomia e altura maxima padrao
-        if(this.nivel_energetico > 0){
-            //caso o robo nao tenha sido totalmente descarregado
-            this.nivel_energetico--;
+        if(this.coeficiente_energetico > 0){
+            //caso o robo nao tenha sido totalmente descarregado: reducao de 10% de seu nivel energetico
+            this.coeficiente_energetico = this.coeficiente_energetico - (float)(1/10);
             //reduz a capacidade de voar mais alto proporcionalente ao nivel energetico atual
-            this.altitudemax_atual = (this.getAltitudeMax() * (this.nivel_energetico + 1)) / this.capacidade;
+            this.altitudemax_atual = (int)(this.getAltitudeMax() * (this.coeficiente_energetico + (float)(1/10)));
             if(this.getZ() > this.altitudemax_atual) //corrige a altura atual com a altura maxima menor
                 this.setPosicaoZ(this.altitudemax_atual);
             
@@ -133,6 +131,9 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica{
 
     @Override public String getDescricao() {
         return "Robô Aéreo que possui autonomia, ou seja, seus movimentos custam capacidade energética, caso esta esgote, não consegue se mover";
+    }
+
+    @Override public void furtar_energia(InterfaceFurtoEnergia furtado){
     }
 
     @Override public char getRepresentacao() {
