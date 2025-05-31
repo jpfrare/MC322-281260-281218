@@ -30,11 +30,11 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- relatório de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- adicionar robo na central \n 8- comunicacao entre robos \n 9- sair \n ************* \n");
+                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
-                if (chave == 3) {//mover um robô
+                if (chave == 1) {//mover um robô
                         String robo;
                         int mov_x;
                         int mov_y;
@@ -63,7 +63,7 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 4) { //relatório de temperatura
+                } else if (chave == 2) { //relatório de temperatura
                         System.out.println("Digite o nome do robô \n");
                         String vulgo = leitor.nextLine();
                         //int pos = Main.buscar_robo(amb, vulgo);
@@ -76,7 +76,7 @@ public class Main {
                                 temp.getSensorTemperatura().analise_temperatura();
                         }
 
-                } else if (chave == 5) { //habilidades especiais
+                } else if (chave == 3) { //habilidades especiais
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
 
@@ -90,9 +90,9 @@ public class Main {
                         } else {
 
                                 if (p instanceof RoboTerrestreAOleo) {
-                                        System.out.println("Digite o valor do delta lubrificação \n");
+                                        System.out.println("Digite o valor da nova lubrificação \n");
                                         float valor = leitor.nextFloat();
-                                        ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+                                        ((RoboTerrestreAOleo)p).setCoeficiente(valor);
                                         ((RoboTerrestreAOleo)p).exibirLubrificacao();
 
                                 } else if (p instanceof RoboAereoDinamico) {
@@ -103,7 +103,7 @@ public class Main {
                                 }
                         }
 
-                } else if (chave == 6){ //Exibir Posição
+                } else if (chave == 4){ //Exibir Posição
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
 
@@ -120,7 +120,7 @@ public class Main {
         
         
                 }
-                else if(chave == 7){
+                else if(chave == 5){ //adicionar um robo a central de comunicacao
                         System.out.println("Digite o nome do rôbo \n");
                         String vulgo  = leitor.nextLine();
                         Robo p = amb.getRobo(vulgo);
@@ -129,7 +129,7 @@ public class Main {
                         }
                 }
                 
-                else if(chave == 8){
+                else if(chave == 6){ //operar a comunicacao entre robos (operacao de enviar ou receber uma mensagem)
                         String vulgo;
                         String mensagem;
                         int comunicacao;
@@ -142,7 +142,6 @@ public class Main {
                                 throw new EntradaException("Valores incorretos para selecionar as operacoes relacionadas a comunicacao entre robos.");
                         }
                         else{
-
                                 if(comunicacao == 1){ //envio de mensagem
                                         Robo envia = amb.getRobo(vulgo);
                                         if(envia != null){
@@ -165,8 +164,18 @@ public class Main {
                         }
 
                 }
+                else if(chave == 7){
+                        System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
+                        String ator  = leitor.nextLine();
+                        Robo furtar = amb.getRobo(ator);
+                        if(furtar != null && (furtar instanceof RoboAereoRelator || furtar instanceof RoboAereoDinamico)){ //usuario buscou um robo que existe e que implementa a InterfaceFurtoCombustivel
+                                System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
+                                String vitima = leitor.nextLine();
+                                Robo furtado = amb.getRobo(vitima);
+                        }
+                }
                 
-                else if (chave == 9) {//Sáida
+                else if (chave == 8) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
                 }

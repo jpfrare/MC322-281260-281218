@@ -9,7 +9,7 @@ public  class SensorTemperatura extends Sensor {
         this.maior_temperatura = new int[3];
         this.menor_temperatura = new int[3];
 
-        System.out.println("Primeira análise do Robô! Automática!:");
+        System.out.println("\nPrimeira análise do Robô! Automática!:");
 
         this.analise_temperatura();
     }
