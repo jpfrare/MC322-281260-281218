@@ -88,8 +88,8 @@ public abstract class RoboAereo extends Robo implements InterfaceFujao {
             int maiorz;
 
             //definindo os limites de iteração
-            if(this.getZ() + raio > this.getAmbiente().getAltura()) {
-                maiorz = this.getAmbiente().getAltura();
+            if(this.getZ() + raio > this.getAmbiente().getAmbienteZ()) {
+                maiorz = this.getAmbiente().getAmbienteZ();
             } else {
                 maiorz = this.getZ() + raio;
             }
