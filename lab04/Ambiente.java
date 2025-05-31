@@ -271,8 +271,12 @@ public class Ambiente {
                 if (this.mapa[i][j][altura] == TipoEntidade.VAZIO) {
                     System.out.printf("v");
 
+                } else if (this.mapa[i][j][altura] == TipoEntidade.OBSTACULO) {
+                    System.out.printf("o");
+
                 } else {
                     for (InterfaceEntidade e : this.elementos) {
+                        //imprime a representação do robô
                         if (e.getX() == i && e.getY() == j && e.getZ() == altura) {
                             System.out.printf("%c", e.getRepresentacao());
                             break;
