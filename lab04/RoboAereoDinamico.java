@@ -1,6 +1,6 @@
 
 
-public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, InterfaceFurtoEnergia{
+public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, InterfaceFurtoCombustivel{
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
     private int altitudemax_atual;
@@ -16,12 +16,11 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         //reduz a autonomia e altura maxima padrao
         if(this.coeficiente_energetico > 0){
             //caso o robo nao tenha sido totalmente descarregado: reducao de 10% de seu nivel energetico
-            this.coeficiente_energetico = this.coeficiente_energetico - (float)(1/10);
+            this.coeficiente_energetico = this.coeficiente_energetico - 0.1f;
             //reduz a capacidade de voar mais alto proporcionalente ao nivel energetico atual
-            this.altitudemax_atual = (int)(this.getAltitudeMax() * (this.coeficiente_energetico + (float)(1/10)));
+            this.altitudemax_atual = (int)(this.getAltitudeMax() * (this.coeficiente_energetico + 0.1f));
             if(this.getZ() > this.altitudemax_atual) //corrige a altura atual com a altura maxima menor
                 this.setPosicaoZ(this.altitudemax_atual);
-            
         }
         else{//robo vai para o chao caso tenha descarregado
             this.altitudemax_atual = 0;
@@ -31,7 +30,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
     void recarregar(){
         //recarrega o nivel de energia e reestabelece a altura maxima padrao
-        this.nivel_energetico = this.capacidade;
+        this.coeficiente_energetico = 1;
         this.altitudemax_atual = this.getAltitudeMax();
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
@@ -47,7 +46,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             return;
         }
 
-        if(this.getZ() + delta_z <= (this.altitudemax_atual * (this.nivel_energetico)) / this.capacidade){
+        if(this.getZ() + delta_z <= (this.altitudemax_atual * (this.coeficiente_energetico))){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
                 this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = TipoEntidade.VAZIO;
@@ -123,6 +122,16 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         return false;
     }
 
+    int z_minimo_descida(){
+        int z = this.getZ();
+        int desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ(), this.getAmbiente()); 
+        do { 
+            z -= desce;
+            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ() + desce, this.getAmbiente()); 
+        } while (desce > 0);
+        return z; //retorna o menor z que o robo consegue de descer (o robo desce ate chegar ao chao ou identificar uma colisao)
+    }
+
     private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException{
         boolean moveu = this.mover(delta_x, delta_y);
         this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
@@ -131,9 +140,6 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
     @Override public String getDescricao() {
         return "Robô Aéreo que possui autonomia, ou seja, seus movimentos custam capacidade energética, caso esta esgote, não consegue se mover";
-    }
-
-    @Override public void furtar_energia(InterfaceFurtoEnergia furtado){
     }
 
     @Override public char getRepresentacao() {
@@ -163,5 +169,84 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
     @Override public void acionarSensores() {
         super.acionarSensores();
         this.preferenciaTermica();
+    }
+
+    @Override public void setCoeficiente(float c) throws EntradaException{
+        if(c > 0 && c < 0){
+            this.coeficiente_energetico = c;
+            this.altitudemax_atual = (int)(this.getAltitudeMax() * c);
+        }
+        else if(c == 0){
+            this.coeficiente_energetico = 0;
+            this.altitudemax_atual = 0;
+            this.setPosicaoZ(0);
+            this.desligarRobo();
+        }
+        else{
+            throw new EntradaException("Coeficiente energetico compreende valores entre 0 e 1!");
+        }
+    }
+
+    @Override public float getCoeficiente(){
+        return this.coeficiente_energetico;
+    }
+
+    @Override public float perder_combustivel(float quantidade) throws  EntradaException{
+        float maximo;
+        if(quantidade > 0.3f){
+            maximo = 0.3f;
+        }
+        else{
+            maximo = quantidade;
+        }
+        
+        if(this.getCoeficiente() > maximo){ //sobra combustivel
+            if((int)(this.getAltitudeMax() * (this.getCoeficiente() - maximo)) >= this.z_minimo_descida()){
+                //a reducao da altura maxima como consequencia da perda de combustivel nao implica em uma colisao com um obstaculo
+                try{
+                    this.setCoeficiente(this.getCoeficiente() - maximo);
+                    if(this.getZ() > this.altitudemax_atual){
+                        this.setPosicaoZ(this.altitudemax_atual);
+                    }
+                    return maximo;
+                }
+                catch(EntradaException e){
+                    return 0.0f;
+                }
+
+            }
+            else{ // robo ira descer menos do que desceria caso nao identificasse colisao, a perda de combustivel sera menor
+                maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+                if(maximo > 0.f){
+                    try{
+                        this.setCoeficiente(this.getCoeficiente() - maximo);
+                        if(this.getZ() > this.altitudemax_atual){
+                            this.setPosicaoZ(this.altitudemax_atual);
+                        }
+                        return maximo;
+                    }
+                    catch(EntradaException e){
+                        return 0.0f;
+                    }
+                }
+            }
+        }
+        else{ // combustivel pode acabar
+            maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+            this.setCoeficiente(0);
+            return maximo;
+        }
+        return 0;
+        
+    }
+
+    @Override public void furtar_combustivel(InterfaceFurtoCombustivel furtado) throws EntradaException{
+        try {    
+            float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
+            this.setCoeficiente(this.getCoeficiente() + furto);
+        }
+        catch(EntradaException e){
+            return;
+        }
     }
 }
