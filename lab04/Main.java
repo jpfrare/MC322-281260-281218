@@ -9,6 +9,11 @@ public class Main {
         Ambiente amb = new Ambiente(20, 20, 20);
         CentralComunicacao central = new CentralComunicacao();
 
+        //insercao dos obstaculos no ambiente
+        amb.adicionarEntidade(new Obstaculo(2, 4, 3, 6, TipoObstaculo.BLOCO, amb)); // obstaculo de altura 5
+        amb.adicionarEntidade(new Obstaculo(14, 18, 10, 12, TipoObstaculo.MURO, amb)); // obstaculo de altura 10
+        amb.adicionarEntidade(new Obstaculo(7, 3, 17, 19, TipoObstaculo.PLACA, amb)); // "obstaculo" de altura 2. Robos passam pelo obstaculo independentemente
+
         //Criacao dos robos e adicao ao ambiente:
         RoboTerrestreTopeira r_top = new RoboTerrestreTopeira(0, 5, "topeira", 8, amb, -10, 4);
         amb.adicionarEntidade(r_top);
@@ -29,54 +34,7 @@ public class Main {
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
-                if (chave == 2) {//Adicionar Obstáculo
-
-                        System.out.println("Digite o x1 \n");
-                        int x1 = leitor.nextInt();
-                        System.out.println("Digite o x2");
-                        int x2 = leitor.nextInt();
-                        System.out.println("Digite o y1");
-                        int y1 = leitor.nextInt();
-                        System.out.println("Digite o y2");
-                        int y2 = leitor.nextInt();
-
-                        while (x1 > amb.getAmbienteX() || x2 > amb.getAmbienteX() || y1 > amb.getAmbienteY() || y2 > amb.getAmbienteY()) {
-                                System.out.println("Valores inválidos! Tente novamente");
-                                System.out.println("Digite o x1 \n");
-                                x1 = leitor.nextInt();
-                                System.out.println("Digite o x2");
-                                x2 = leitor.nextInt();
-                                System.out.println("Digite o y1");
-                                y1 = leitor.nextInt();
-                                System.out.println("Digite o y2");
-                                y2 = leitor.nextInt();
-                        }
-
-                        System.out.println("Digite o tipo de obstáculo: \n 1- Muro: Altura igual a 10, impede passagem. \n 2-Bloco: Altura igual a 5, impede passagem. \n 3-Placa: Altura igual a 3, nao impede passagem.\n");
-                        int opcao = leitor.nextInt();
-
-                        while (opcao < 1 || opcao > 3) {
-                                System.out.println("Opção inválida! Tente novamente \n");
-                                opcao = leitor.nextInt();
-                        }
-
-                        TipoObstaculo tipo;
-
-                        if (opcao == 1) {
-                                tipo = TipoObstaculo.MURO;
-
-                        } else if (opcao == 2) {
-                                tipo = TipoObstaculo.BLOCO;
-
-                        } else {
-                                tipo = TipoObstaculo.PLACA;
-                        }
-
-                        amb.adicionarEntidade(new Obstaculo(x1, x2, y1, y2, tipo, amb));
-                        System.out.println("Obstáculo Criado! \n");
-
-
-                } else if (chave == 3) {//mover um robô
+                if (chave == 3) {//mover um robô
                         String robo;
                         int mov_x;
                         int mov_y;
