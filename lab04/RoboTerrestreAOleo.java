@@ -1,4 +1,4 @@
-public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoEnergia{
+public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoCombustivel{
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação
     float VelMaxInstantanea; //parametro que lida com o fato da velocidade máxima ser do tipo final
 
@@ -14,18 +14,54 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoE
         System.out.printf("O coeficiente de lubrificação é de %.2f, e portanto, a velocidade máxima instantanea é de %.2f\n", this.coeficienteDeLubrificacao, this.VelMaxInstantanea);
     }
 
-    void AlterarLubrificacao(float valor) {
+    @Override public float getCoeficiente(){
+        return this.coeficienteDeLubrificacao;
+    }
+
+    @Override public void setCoeficiente(float valor) {
         //altera a lubrificação, e portanto, a velocidade máxima
-        if (this.coeficienteDeLubrificacao + valor >= 0 && this.coeficienteDeLubrificacao + valor <= 1) {
-            coeficienteDeLubrificacao += valor;
-            
+        if (valor >= 0 && valor <= 1) {
+            this.coeficienteDeLubrificacao = valor;  
             this.VelMaxInstantanea = this.getVelocidademax()*this.coeficienteDeLubrificacao;
 
-        } else if (this.coeficienteDeLubrificacao + valor > 1) {
+        } else if (valor > 1) {
           this.coeficienteDeLubrificacao = 1;  
 
         } else {
             System.out.println("Valor inválido de lubrificação! lembre-se que é um valor decimal!");
+        }
+    }
+
+    @Override public float perder_combustivel(float quantidade){
+        float maximo;
+        float perda = 0;
+        // limitar o furto de combustivel a 50% ou o necessario para completar o combustivel de quem ira furtar
+        if(quantidade > 0.5f){
+            maximo = 0.5f;
+        }
+        else{
+            maximo = quantidade;
+        }
+        //dado o limite anterior de furto, verificar a quantidade de combustiveis que esta disponivel para furto
+        if(maximo > this.getCoeficiente()){
+            perda = this.getCoeficiente();
+            this.setCoeficiente(0);
+        }
+        else{
+            perda = maximo;
+            this.setCoeficiente(this.getCoeficiente() - maximo);
+        }
+        return perda;
+
+    }
+
+    @Override public void furtar_combustivel(InterfaceFurtoCombustivel furtado) throws EntradaException{
+        try {    
+            float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
+            this.setCoeficiente(this.getCoeficiente() + furto);
+        }
+        catch(EntradaException e){
+            return;
         }
     }
 
@@ -50,7 +86,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoE
 
             float coeffinal = (coefx + coefy)/(2);
 
-            this.AlterarLubrificacao(-coeffinal);
+            this.setCoeficiente(this.coeficienteDeLubrificacao - coeffinal);
             return true;
         }
 

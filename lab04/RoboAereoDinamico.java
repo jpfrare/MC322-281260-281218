@@ -200,9 +200,10 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             maximo = quantidade;
         }
         
-        if(this.getCoeficiente() > maximo){ //sobra combustivel
+        if(this.getCoeficiente() > maximo){ //sobra combustivel no robo que sera furtado
             if((int)(this.getAltitudeMax() * (this.getCoeficiente() - maximo)) >= this.z_minimo_descida()){
                 //a reducao da altura maxima como consequencia da perda de combustivel nao implica em uma colisao com um obstaculo
+                //nesse caso a perda o furto sera de 30% (maximo igual a 0.3f)
                 try{
                     this.setCoeficiente(this.getCoeficiente() - maximo);
                     if(this.getZ() > this.altitudemax_atual){
@@ -216,6 +217,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
             }
             else{ // robo ira descer menos do que desceria caso nao identificasse colisao, a perda de combustivel sera menor
+                //nesse caso a perda sera menor que 0.3f
                 maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
                 if(maximo > 0.f){
                     try{
@@ -233,7 +235,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         }
         else{ // combustivel pode acabar
             maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
-            this.setCoeficiente(0);
+            this.setCoeficiente(this.getCoeficiente() - maximo);
             return maximo;
         }
         return 0;
