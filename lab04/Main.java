@@ -92,7 +92,7 @@ public class Main {
                                 if (p instanceof RoboTerrestreAOleo) {
                                         System.out.println("Digite o valor do delta lubrificação \n");
                                         float valor = leitor.nextFloat();
-                                        ((RoboTerrestreAOleo)p).AlterarLubrificacao(valor);
+                                        ((RoboTerrestreAOleo)p).setCoeficiente(valor);
                                         ((RoboTerrestreAOleo)p).exibirLubrificacao();
 
                                 } else if (p instanceof RoboAereoDinamico) {
