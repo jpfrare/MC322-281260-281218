@@ -25,7 +25,7 @@ public class Main {
         amb.adicionarEntidade(r_dinam);
         r_dinam.AdicionaSensores(new SensorTemperatura(r_dinam, 3));
         RoboAereoRelator r_relator = new RoboAereoRelator(16, 12, 14, 14, "relator", amb, 3);
-        amb.adicionarEntidade(r_dinam);
+        amb.adicionarEntidade(r_relator);
         r_relator.AdicionaSensores(new SensorTemperatura(r_relator, 4));
 
         while(true) {
@@ -178,7 +178,7 @@ public class Main {
                                         furtar = (InterfaceFurtoCombustivel)((RoboAereoDinamico)r1);
                 
                                 }
-                                System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
+                                System.out.println("Digite o nome do robo que tera seu combustivel furtado: \n");
                                 String vitima = leitor.nextLine();
                                 Robo r2 = amb.getRobo(vitima);
                         
