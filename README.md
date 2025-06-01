@@ -8,7 +8,7 @@ Versão do Java:  11.0.26 2025-01-21
 
 <p>A classe main é uma interface interativa relativamente simples, porém seu tamanho é devido as várias etapas de tratamento de erro de input (talvez seja conveniente a criação de uma função que capta as entradas e já realiza este tratamento, porém optou-se, em função das variações de mensagem no casos de erro, por não fazê-la).  
   
-<p>Cria-se um ambiente (dados os inputs relacionados ao comprimento do mesmo), e após isso, temos as opções de:  
+<p>Cria-se um ambiente e após isso, temos as opções de:  
   
   1. Adicionar um robô ao ambiente
   2. Adicionar um obstáculo ao ambiente

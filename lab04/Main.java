@@ -55,7 +55,7 @@ public class Main {
                                 mov_x = leitor.nextInt();
                                 System.out.println("Digite a posicao y do destino:");
                                 mov_y = leitor.nextInt();
-                                System.out.println("Digite a posicao z do destino: (Sera considerado apenas para Robos Aereos e TerrestreTopeira)");
+                                System.out.println("Digite a posicao z do destino: (Sera considerado apenas para Robos Aereos e TerrestreTopeira).\nCaso deseja mover um RoboTerrestreAOleo, digite 0.");
                                 mov_z = leitor.nextInt();
                                 amb.moverEntidade(mover, mov_x, mov_y, mov_z);
                                 System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");

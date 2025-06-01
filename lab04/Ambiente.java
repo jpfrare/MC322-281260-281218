@@ -160,7 +160,7 @@ public class Ambiente {
 
                 } else if (mover instanceof RoboTerrestreAOleo) {
                     if(deltaZ != 0){
-                        throw new EntradaException("Alerta! RoboTerrestreAOleo nao se movimenta no eixo z!\n");
+                        throw new EntradaException("Alerta! RoboTerrestreAOleo nao se movimenta no eixo z!\n O z final deve ser 0!");
                     }
                     ((RoboTerrestreAOleo)mover).mover(deltaX, deltaY);
 

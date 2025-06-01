@@ -127,7 +127,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         int desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ(), this.getAmbiente()); 
         do { 
             z -= desce;
-            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -z + desce, this.getAmbiente()); 
+            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), z, -z , this.getAmbiente()); 
         } while (desce > 0);
         return z; //retorna o menor z que o robo consegue de descer (o robo desce ate chegar ao chao ou identificar uma colisao)
     }
