@@ -34,7 +34,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
 
     @Override public float perder_combustivel(float quantidade){
         float maximo;
-        float perda = 0;
+        float perda;
         // limitar o furto de combustivel a 50% ou o necessario para completar o combustivel de quem ira furtar
         if(quantidade > 0.5f){
             maximo = 0.5f;
@@ -59,6 +59,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
+            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;

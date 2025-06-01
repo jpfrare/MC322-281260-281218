@@ -46,7 +46,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             return;
         }
 
-        if(this.getZ() + delta_z <= (this.altitudemax_atual * (this.coeficiente_energetico))){
+        if(this.getZ() + delta_z <= (this.getAltitudeMax() * (this.coeficiente_energetico))){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
                 this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = TipoEntidade.VAZIO;
@@ -127,7 +127,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         int desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ(), this.getAmbiente()); 
         do { 
             z -= desce;
-            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ() + desce, this.getAmbiente()); 
+            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -z + desce, this.getAmbiente()); 
         } while (desce > 0);
         return z; //retorna o menor z que o robo consegue de descer (o robo desce ate chegar ao chao ou identificar uma colisao)
     }
@@ -172,7 +172,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
     }
 
     @Override public void setCoeficiente(float c) throws EntradaException{
-        if(c > 0 && c < 0){
+        if(c > 0 && c <= 1){
             this.coeficiente_energetico = c;
             this.altitudemax_atual = (int)(this.getAltitudeMax() * c);
         }
@@ -246,6 +246,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
+            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;
