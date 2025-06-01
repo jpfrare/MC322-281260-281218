@@ -172,7 +172,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
     }
 
     @Override public void setCoeficiente(float c) throws EntradaException{
-        if(c > 0 && c < 0){
+        if(c > 0 && c <= 1){
             this.coeficiente_energetico = c;
             this.altitudemax_atual = (int)(this.getAltitudeMax() * c);
         }
@@ -246,6 +246,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
+            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;

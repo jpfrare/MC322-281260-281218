@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- sair \n ************* \n");
+                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -51,11 +51,11 @@ public class Main {
 
                         } else {
                                 //Robo mover = amb.getRobo(pos);
-                                System.out.println("Digite o quanto deseja mover em x:");
+                                System.out.println("Digite a posicao x do destino:");
                                 mov_x = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em y:");
+                                System.out.println("Digite a posicao y do destino:");
                                 mov_y = leitor.nextInt();
-                                System.out.println("Digite o quanto deseja mover em z:");
+                                System.out.println("Digite a posicao z do destino: (Sera considerado apenas para Robos Aereos e TerrestreTopeira)");
                                 mov_z = leitor.nextInt();
                                 amb.moverEntidade(mover, mov_x, mov_y, mov_z);
                                 System.err.println("Posicao apos tentativa de movimento (com ou sem exito):");
@@ -165,13 +165,33 @@ public class Main {
 
                 }
                 else if(chave == 7){
+                        InterfaceFurtoCombustivel furtar;
+                        InterfaceFurtoCombustivel furtado;
                         System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
                         String ator  = leitor.nextLine();
-                        Robo furtar = amb.getRobo(ator);
-                        if(furtar != null && (furtar instanceof RoboAereoRelator || furtar instanceof RoboAereoDinamico)){ //usuario buscou um robo que existe e que implementa a InterfaceFurtoCombustivel
+                        Robo r1 = amb.getRobo(ator);
+                        if(r1 != null && (r1 instanceof RoboAereoDinamico || r1 instanceof RoboTerrestreAOleo)){ //usuario buscou um robo que existe e que implementa a InterfaceFurtoCombustivel
+                                if(r1 instanceof  RoboTerrestreAOleo){
+                                        furtar = (InterfaceFurtoCombustivel)((RoboTerrestreAOleo)r1);
+                                }
+                                else{
+                                        furtar = (InterfaceFurtoCombustivel)((RoboAereoDinamico)r1);
+                
+                                }
                                 System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
                                 String vitima = leitor.nextLine();
-                                Robo furtado = amb.getRobo(vitima);
+                                Robo r2 = amb.getRobo(vitima);
+                        
+                                if(r2 != null && (r2 instanceof RoboTerrestreAOleo || r2 instanceof RoboAereoDinamico)){
+                                        if(r2 instanceof  RoboTerrestreAOleo){
+                                                furtado = (InterfaceFurtoCombustivel)((RoboTerrestreAOleo)r2);
+                                        }
+                                        else{
+                                                furtado = (InterfaceFurtoCombustivel)((RoboAereoDinamico)r2);
+                        
+                                        }
+                                        furtar.furtar_combustivel(furtado);
+                                }
                         }
                 }
                 

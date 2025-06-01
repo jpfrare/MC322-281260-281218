@@ -59,6 +59,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
+            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;

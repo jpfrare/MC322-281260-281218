@@ -140,7 +140,7 @@ public class Ambiente {
                 int deltaZ = novoZ - mover.getZ();
                 if (mover instanceof RoboAereoRelator) {
                     if((deltaZ != 0 && (deltaX != 0 || deltaY != 0))){
-                        throw new MovimentoRelatorException();
+                        throw new EntradaException("RoboAereoRelator nao eh capaz de realizar movimento multidimensional simultaneamente nas tres dimensoes (movimento dinamico)");
                     }
                     if (deltaZ < 0) {
                         ((RoboAereoRelator)mover).descer(-deltaZ);
@@ -156,7 +156,11 @@ public class Ambiente {
                     ((RoboAereoDinamico)mover).moverDinamico(deltaX, deltaY, deltaZ);
 
                 } else if (mover instanceof RoboTerrestreAOleo) {
+                    if(deltaZ != 0){
+                        throw new EntradaException("RoboTerrestreAOleo nao se movimenta no eixo z!\nMovimento foi realizado em apenas x e y!");
+                    }
                     ((RoboTerrestreAOleo)mover).mover(deltaX, deltaY);
+
 
                 } else {
                     ((RoboTerrestreTopeira)mover).mover(deltaX, deltaY, deltaZ);
