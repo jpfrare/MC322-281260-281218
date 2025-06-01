@@ -219,7 +219,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             }
             else{ // robo ira descer menos do que desceria caso nao identificasse colisao, a perda de combustivel sera menor
                 //nesse caso a perda sera menor que 0.3f
-                maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+                maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax() -0.1f);
                 if(maximo > 0.f){
                     try{
                         this.setCoeficiente(this.getCoeficiente() - maximo);
@@ -235,7 +235,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             }
         }
         else{ // combustivel pode acabar
-            maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+            maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax() - 0.1f);
             this.setCoeficiente(this.getCoeficiente() - maximo);
             return maximo;
         }

@@ -240,6 +240,19 @@ public class Ambiente {
         return this.mapa[x][y][z];
     }
 
+    public Obstaculo getObscatulo(int h){
+        for(InterfaceEntidade entidade: this.elementos){
+            if(entidade.getTipo() == TipoEntidade.OBSTACULO){
+                Obstaculo obj = (Obstaculo)entidade;
+                if(obj.getForma().getAltura() == h){
+                    return obj;
+                }
+
+            }
+        }
+        return null;
+    }
+
     public Robo getRobo(String nome){
         for(InterfaceEntidade entidade: this.elementos){
             if(entidade.getTipo() == TipoEntidade.ROBO){
