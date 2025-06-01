@@ -45,11 +45,15 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         /*por amor a simplicidade e sabendo que não existe um obstáculo no subsolo,
         supõe-se que sempre existirá um caminho que passa pelo subsolo que garante que o robô chegará ao destino final,
         eliminando a necessidade de algoritmos baseados em backtrack/uso de sensores*/
-
-
+        if(this.getZ() == 0){
+            this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
+        }
         this.setPosicaoX(this.getX() + deltaX);
         this.setPosicaoY(this.getY() + deltaY);
         this.setPosicaoZ(this.getZ() + deltaZ);
+        if(this.getZ() == 0){
+            this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.ROBO;
+        }
         
     }
     

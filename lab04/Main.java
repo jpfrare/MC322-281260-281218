@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- sair \n ************* \n");
+                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- imprimir curva de nivel do ambiente \n9-mover obstaculo\n10 - sair\n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -194,8 +194,15 @@ public class Main {
                                 }
                         }
                 }
+                else if(chave == 8){
+                        System.out.println("Digite a altura para visualizar essa perspectiva do ambiente:");
+                        int altura = leitor.nextInt();
+                        leitor.nextLine();
+                        amb.imprimeMapa(altura);
+
+                }
                 
-                else if (chave == 8) {//Sáida
+                else if (chave == 10) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
                 }
