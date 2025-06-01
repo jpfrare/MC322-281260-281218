@@ -10,13 +10,17 @@ Versão do Java:  11.0.26 2025-01-21
   
 <p>Cria-se um ambiente e após isso, temos as opções de:  
   
-  1. Adicionar um robô ao ambiente
-  2. Adicionar um obstáculo ao ambiente
-  3. Mover um robô
-  4. Realizar um relatório de temperatura
-  5. Utilizar a habilidade especial de algum robô já inserido no ambiente
-  6. Exibir a posição de um robô
-  7. Sair de um programa 
+  1. Mover um robô
+  2. Adicionar sensor de temperatura a um robô
+  3. Utilizar a habilidade especial de algum robô já inserido no ambiente
+  4. Exibir a posição de um robô
+  5. Adicionar robô à central de comunicacao
+  6. Realizar comunicacao entre robôs
+  7. Furtar combustivel
+  8. Ativar sensor (de temperatura)
+  9. Imprimir mapa
+  10. Fugir
+  11. Sair
  
 ## 1. Adição de Robô:
 Contém os inputs de nome, posição inicial, raio do sensor de movimento e de temperatura e escolha de qual tipo de robô (terrestres toupeira e a óleo e aéreos relator e dinânico) e suas respectivas especificidades; após isso, há sua inserção no ambiente.
