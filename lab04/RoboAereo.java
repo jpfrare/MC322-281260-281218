@@ -82,7 +82,7 @@ public abstract class RoboAereo extends Robo {
     @Override public boolean procura(int x, int y, int raio) {
         //vê se tem algum robô no range do sensor, acima e abaixo
         try {
-            this.getAmbiente().identifica_colisao(x, y, this.getZ());
+            if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, this.getZ());
 
             int menorz;
             int maiorz;

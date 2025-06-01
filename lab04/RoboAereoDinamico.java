@@ -168,6 +168,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
     @Override public void acionarSensores() {
         super.acionarSensores();
+        System.out.println("Tentando ir para a menor temperatura...");
         this.preferenciaTermica();
     }
 
