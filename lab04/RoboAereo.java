@@ -101,7 +101,7 @@ public abstract class RoboAereo extends Robo {
             }
 
             for (int z = menorz; z <= maiorz; z++) {
-                if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {
+                if (this.getAmbiente().tipoPosicao(x, y, z) == TipoEntidade.ROBO) {
                     return true;
                 }
             }

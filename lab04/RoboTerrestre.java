@@ -57,7 +57,7 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
             if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, 0);
 
             for (int z = 1; z <= raio; z++) {
-                if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {
+                if (this.getAmbiente().tipoPosicao(x, y, z) == TipoEntidade.ROBO) {
                     return true;
                 }
             }
