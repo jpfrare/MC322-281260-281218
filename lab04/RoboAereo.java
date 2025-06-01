@@ -1,4 +1,4 @@
-public abstract class RoboAereo extends Robo implements InterfaceFujao {
+public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
@@ -82,7 +82,7 @@ public abstract class RoboAereo extends Robo implements InterfaceFujao {
     @Override public boolean procura(int x, int y, int raio) {
         //vê se tem algum robô no range do sensor, acima e abaixo
         try {
-            this.getAmbiente().identifica_colisao(x, y, this.getZ());
+            if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, this.getZ());
 
             int menorz;
             int maiorz;

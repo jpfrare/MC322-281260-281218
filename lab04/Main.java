@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class Main {
     
     public static void main(String[] args) throws RoboDesligadoException, EntradaException {
-        Scanner leitor = new Scanner(System.in);
         //Criacao do Ambiente:
         System.out.println("\nOlá, bem vindo!\nEm primeiro lugar, saiba que este ambiente de simulacao possui dimensoes: (20,20,20).\n");
         Ambiente amb = new Ambiente(20, 20, 20);
         CentralComunicacao central = new CentralComunicacao();
 
+        Scanner leitor = new Scanner(System.in);
         //insercao dos obstaculos no ambiente
         amb.adicionarEntidade(new Obstaculo(2, 4, 3, 6, TipoObstaculo.BLOCO, amb)); // obstaculo de altura 5
         amb.adicionarEntidade(new Obstaculo(14, 18, 10, 12, TipoObstaculo.MURO, amb)); // obstaculo de altura 10
@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- imprimir curva de nivel do ambiente \n9-mover obstaculo\n10 - sair\n ************* \n");
+                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n10- imprimir mapa \n11- fugir \n12- sair\n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -63,17 +63,24 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 2) { //relatório de temperatura
+                } else if (chave == 2) { //adicionar sensor de temperatura
                         System.out.println("Digite o nome do robô \n");
                         String vulgo = leitor.nextLine();
-                        //int pos = Main.buscar_robo(amb, vulgo);
                         Robo temp = amb.getRobo(vulgo);
 
                         if (temp == null) {
                                 System.out.println("Nome inválido!");
 
                         } else {
-                                temp.getSensorTemperatura().analise_temperatura();
+                                try {
+                                        temp.getSensorTemperatura();
+
+                                } catch (IndexOutOfBoundsException e) {
+                                        System.out.println("digite o raio do sensor de temperatura");
+                                        int raio = leitor.nextInt();
+                                        SensorTemperatura s = new SensorTemperatura(temp, raio);
+                                        temp.AdicionaSensores(s);
+                                }
                         }
 
                 } else if (chave == 3) { //habilidades especiais
@@ -81,8 +88,6 @@ public class Main {
                         String vulgo  = leitor.nextLine();
 
                         Robo p = amb.getRobo(vulgo);
-
-                        //int pos = Main.buscar_robo(amb, vulgo);
 
                         if (p == null) {
                                 System.out.println("Nome inválido! \n");
@@ -202,14 +207,39 @@ public class Main {
 
                 }
                 
-                else if (chave == 10) {//Sáida
+                else if (chave == 12) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
+
+
+                } else if (chave == 10) { //imprimir mapa
+                        System.out.println("digite a altura da impressao");
+                        int altura = leitor.nextInt();
+
+                        if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
+
+
+                } else if (chave == 9) { //ativar sensores
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+                        if (r != null) r.acionarSensores();
+
+                } else if (chave == 8) {//acionar sensor de temperatura
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+
+                        if (r != null) r.acionarSensores();
+
+                } else if (chave == 11) {//fugir
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+
+                        if (r != null) r.fugir();
                 }
-
         }
-
-        leitor.close();
+                leitor.close();
         }
-
 }

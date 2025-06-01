@@ -72,4 +72,13 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     public char getRepresentacao() {
         return 't';
     }
+
+    @Override public void fugir() {
+        if (this.getZ() < 0) {
+            System.out.println("O robô é toupeira e está abaixo do solo, ele está tranquilo!");
+            return;
+        }
+
+        super.fugir();
+    }
 }

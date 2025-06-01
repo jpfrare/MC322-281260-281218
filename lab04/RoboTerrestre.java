@@ -1,5 +1,5 @@
 
-public abstract class RoboTerrestre extends Robo implements InterfaceTermica, InterfaceFujao {
+public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
 
     public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a,  int r_sensor) {
@@ -47,13 +47,14 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica, In
 
     @Override public void acionarSensores() {
         super.acionarSensores();
+        System.out.println("Tentando ir para a maior temperatura...");
         this.preferenciaTermica();
     }
 
     @Override public boolean procura(int x, int y, int raio) {
         //vê se tem algum robô no range do sensor e acima
         try {
-            this.getAmbiente().identifica_colisao(x, y, 0);
+            if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, 0);
 
             for (int z = 1; z <= raio; z++) {
                 if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {

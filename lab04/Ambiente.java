@@ -128,8 +128,10 @@ public class Ambiente {
             this.identifica_colisao(novoX, novoY, novoZ);
 
         } catch (ForaDosLimitesException e) {
-            System.err.println("Erro: " + e.getMessage());
-            return;
+            if (!(mover instanceof RoboTerrestreTopeira)) {
+                System.err.println("Erro: " + e.getMessage());
+                return;
+            }
 
         } catch (ColisaoException f) {
             System.err.println("Erro: " + f.getMessage());
@@ -273,16 +275,16 @@ public class Ambiente {
         for (int j = this.Y; j >= 0; j--) {
             for (int i = 0; i <= this.X; i++) {
                 if (this.mapa[i][j][altura] == TipoEntidade.VAZIO) {
-                    System.out.printf("v");
+                    System.out.printf(" .");
 
                 } else if (this.mapa[i][j][altura] == TipoEntidade.OBSTACULO) {
-                    System.out.printf("o");
+                    System.out.printf(" x");
 
                 } else {
                     for (InterfaceEntidade e : this.elementos) {
                         //imprime a representação do robô
                         if (e.getX() == i && e.getY() == j && e.getZ() == altura) {
-                            System.out.printf("%c", e.getRepresentacao());
+                            System.out.printf(" %c", e.getRepresentacao());
                             break;
                         }
                     }
