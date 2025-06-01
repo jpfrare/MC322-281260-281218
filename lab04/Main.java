@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- relatório de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- sair \n ************* \n");
+                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n 10- imprimir mapa \n 11- sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -63,10 +63,9 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 2) { //relatório de temperatura
+                } else if (chave == 2) { //adicionar sensor de temperatura
                         System.out.println("Digite o nome do robô \n");
                         String vulgo = leitor.nextLine();
-                        //int pos = Main.buscar_robo(amb, vulgo);
                         Robo temp = amb.getRobo(vulgo);
 
                         if (temp == null) {
@@ -89,8 +88,6 @@ public class Main {
                         String vulgo  = leitor.nextLine();
 
                         Robo p = amb.getRobo(vulgo);
-
-                        //int pos = Main.buscar_robo(amb, vulgo);
 
                         if (p == null) {
                                 System.out.println("Nome inválido! \n");
@@ -203,16 +200,24 @@ public class Main {
                         }
                 }
                 
-                else if (chave == 8) {//Sáida
+                else if (chave == 11) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
 
+                        
                 } else if (chave == 10) { //imprimir mapa
                         System.out.println("digite a altura da impressao");
                         int altura = leitor.nextInt();
 
                         if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
-                } 
+
+
+                } else if (chave == 9) { //ativar sensores
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+                        if (r != null) r.acionarSensores();
+                }
         }
 
         leitor.close();
