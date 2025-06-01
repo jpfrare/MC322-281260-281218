@@ -9,12 +9,12 @@ public class Ambiente {
     private int[][][] temperatura;
 
     public Ambiente(int x, int y, int z) {
-        //inicializa o Ambiente atribuindo valores as dimensoes x e y e cria um array vazio de robos
+        //inicializa o Ambiente atribuindo valores as dimensoes x, y e z e cria um array vazio de robos
         this.X = x;
         this.Y = y;
         this.Z = z;
         this.elementos = new ArrayList<>();
-        this.mapa = new TipoEntidade[x + 1][y + 1][z + 1]; //posicoes (0,0) e (x, y) serao validas
+        this.mapa = new TipoEntidade[x + 1][y + 1][z + 1]; //posicoes (0,0,0) e (X, Y, Z) serao validas
         //inicialização do mapa
         for (int i = 0; i < x + 1; i++) {
             for (int j = 0; j < y + 1; j++) {
@@ -37,7 +37,9 @@ public class Ambiente {
 
     }
 
-    public boolean espaco_vazio(Obstaculo objeto){
+    //funções auxiliares que serão chamadas em outras funçóes
+    private boolean espaco_vazio(Obstaculo objeto){
+        //verifica se há um espaço vazio no mapa
         int i, j;
         for(i = objeto.getX(); i <= objeto.getX2(); i++){
             for(j = objeto.getY(); j <= objeto.getY2(); j++){
@@ -53,7 +55,8 @@ public class Ambiente {
         return true;
     }
 
-    public void registra_obstaculo(Obstaculo objeto){
+    private void registra_obstaculo(Obstaculo objeto){
+        //adiciona um obstáculo ao ambiente por registrá-lo no mapa
         for(int i = objeto.getX(); i <= objeto.getX2(); i++){
             for(int j = objeto.getY(); j <= objeto.getY2(); j++){
                 for(int k = objeto.getZ(); k <= objeto.getZ2(); k++){
@@ -63,7 +66,8 @@ public class Ambiente {
         }        
     }
 
-    public void apaga_obstaculo(Obstaculo objeto){
+    private void apaga_obstaculo(Obstaculo objeto){
+        //deleta um obstáculo do ambiente, removendo-o do mapa
         for(int i = objeto.getX(); i <= objeto.getX2(); i++){
             for(int j = objeto.getY(); j <= objeto.getY2(); j++){
                 for(int k = objeto.getZ(); k <= objeto.getZ2(); k++){
@@ -73,20 +77,19 @@ public class Ambiente {
         }
     }
 
-    public boolean registra_robo(InterfaceEntidade robo){
+    private boolean registra_robo(InterfaceEntidade robo){
         try {
             this.identifica_colisao(robo.getX(), robo.getY(), robo.getZ());
+            this.mapa[robo.getX()][robo.getY()][robo.getZ()] = TipoEntidade.ROBO;
+            return true;
 
         } catch (ColisaoException e) {
             System.err.println("Erro ao registrar robô: " + e.getMessage());
             return false;
         }
-
-        this.mapa[robo.getX()][robo.getY()][robo.getZ()] = TipoEntidade.ROBO;
-        return true;
     }
 
-    public void apaga_robo(InterfaceEntidade robo){
+    private void apaga_robo(InterfaceEntidade robo){
         this.mapa[robo.getX()][robo.getY()][robo.getZ()] = TipoEntidade.VAZIO;
     }
 
@@ -226,7 +229,7 @@ public class Ambiente {
         return this.Y;
     }
 
-    public int getAltura() {
+    public int getAmbienteZ() {
         return this.Z;
     }
 
@@ -262,5 +265,30 @@ public class Ambiente {
 
     ArrayList<InterfaceEntidade> getElementos() {
         return this.elementos;
+    }
+
+    public void imprimeMapa(int altura) {
+        //imprime o mapa em 2d dada uma curva de nível em altura
+
+        for (int j = this.Y; j >= 0; j--) {
+            for (int i = 0; i <= this.X; i++) {
+                if (this.mapa[i][j][altura] == TipoEntidade.VAZIO) {
+                    System.out.printf("v");
+
+                } else if (this.mapa[i][j][altura] == TipoEntidade.OBSTACULO) {
+                    System.out.printf("o");
+
+                } else {
+                    for (InterfaceEntidade e : this.elementos) {
+                        //imprime a representação do robô
+                        if (e.getX() == i && e.getY() == j && e.getZ() == altura) {
+                            System.out.printf("%c", e.getRepresentacao());
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.printf("\n");
+        }
     }
 }

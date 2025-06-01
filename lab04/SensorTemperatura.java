@@ -74,7 +74,7 @@ public  class SensorTemperatura extends Sensor {
         if (menorz < 0) menorz = 0;
 
         int maiorz = dono.getZ() + this.getRaio();
-        if (maiorz > dono.getAmbiente().getAltura()) maiorz = dono.getAmbiente().getAltura();
+        if (maiorz > dono.getAmbiente().getAmbienteZ()) maiorz = dono.getAmbiente().getAmbienteZ();
 
 
             for (int i = menorx; i <= maiorx; i++) {
