@@ -25,10 +25,4 @@ public class CaixadeEntrada {
             this.nao_lidas--;
         }
     }
-
-    public void esvaziar_caixa(){
-        while(this.nao_lidas > 0){
-            this.ler_mensagem();
-        }
-    }
 }
