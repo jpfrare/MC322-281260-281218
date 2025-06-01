@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- relatório de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- adicionar robo na central \n 8- comunicacao entre robos \n 9- sair \n ************* \n");
+                System.out.printf("1- adicionar um robô \n 2- adicionar um obstáculo \n 3-mover um robô \n 4- adicionar sensor de temperatura \n 5- habilidade especiais \n 6- exibir posição \n 7- adicionar robo na central \n 8- comunicacao entre robos \n 9- usar sensor de temperatura \n 10- imprimir mapa \n 11 - sair \n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -63,7 +63,7 @@ public class Main {
                         
                         }
                         
-                } else if (chave == 4) { //relatório de temperatura
+                } else if (chave == 4) { //adicionar sensor de temperatura
                         System.out.println("Digite o nome do robô \n");
                         String vulgo = leitor.nextLine();
                         //int pos = Main.buscar_robo(amb, vulgo);
@@ -73,7 +73,15 @@ public class Main {
                                 System.out.println("Nome inválido!");
 
                         } else {
-                                temp.getSensorTemperatura().analise_temperatura();
+                                try {
+                                        temp.getSensorTemperatura();
+
+                                } catch (IndexOutOfBoundsException e) {
+                                        System.out.println("digite o raio do sensor de temperatura");
+                                        int raio = leitor.nextInt();
+                                        SensorTemperatura s = new SensorTemperatura(temp, raio);
+                                        temp.AdicionaSensores(s);
+                                }
                         }
 
                 } else if (chave == 5) { //habilidades especiais
@@ -166,11 +174,27 @@ public class Main {
 
                 }
                 
-                else if (chave == 9) {//Sáida
+                else if (chave == 9) {//acionar sensor de temperatura, no caso de ser um robô terrestre ou aéreo dinâmico, usa a interface de fujao
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+
+                        if (r == null) {
+                                System.out.println("nome invalido");
+
+                        } else r.acionarSensores();
+                        
+
+                } else if (chave == 11) {
                         System.out.println("Programa encerrado! Até Mais");
                         break;
-                }
 
+                } else if (chave == 10) { //imprimir mapa
+                        System.out.println("digite a altura da impressao");
+                        int altura = leitor.nextInt();
+
+                        if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
+                } 
         }
 
         leitor.close();
