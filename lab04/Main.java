@@ -17,16 +17,13 @@ public class Main {
         //Criacao dos robos e adicao ao ambiente:
         RoboTerrestreTopeira r_top = new RoboTerrestreTopeira(0, 5, "topeira", 8, amb, -10, 4);
         amb.adicionarEntidade(r_top);
-        r_top.AdicionaSensores(new SensorTemperatura(r_top, 2));
         RoboTerrestreAOleo r_oleo = new RoboTerrestreAOleo(5, 4, "roboleo", 9, amb, 5);
         amb.adicionarEntidade(r_oleo);
-        r_oleo.AdicionaSensores(new SensorTemperatura(r_oleo, 3));
         RoboAereoDinamico r_dinam = new RoboAereoDinamico(11, 10, 12, 16, "dinamico", amb, 6);
         amb.adicionarEntidade(r_dinam);
-        r_dinam.AdicionaSensores(new SensorTemperatura(r_dinam, 3));
         RoboAereoRelator r_relator = new RoboAereoRelator(16, 12, 14, 14, "relator", amb, 3);
         amb.adicionarEntidade(r_relator);
-        //r_relator.AdicionaSensores(new SensorTemperatura(r_relator, 4));
+        
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
