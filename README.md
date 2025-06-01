@@ -14,30 +14,46 @@ Versão do Java:  11.0.26 2025-01-21
   2. Adicionar sensor de temperatura a um robô
   3. Utilizar a habilidade especial de algum robô já inserido no ambiente
   4. Exibir a posição de um robô
-  5. Adicionar robô à central de comunicacao
-  6. Realizar comunicacao entre robôs
+  5. Adicionar robô à central de comunicação
+  6. Realizar comunicação entre robôs
   7. Furtar combustivel
   8. Ativar sensor (de temperatura)
   9. Imprimir mapa
   10. Fugir
   11. Sair
  
-## 1. Adição de Robô:
-Contém os inputs de nome, posição inicial, raio do sensor de movimento e de temperatura e escolha de qual tipo de robô (terrestres toupeira e a óleo e aéreos relator e dinânico) e suas respectivas especificidades; após isso, há sua inserção no ambiente.
-## 2. Adição de Obstáculo: 
-<p> Contém os inputs de posição, tamanho em largura, e o tipo de obstáculo (Muro, Bloco ou Placa), o tipo que define sua altura, e caso o obstaculo impeca um robo de ocupar uma posição; após isso, há sua inserção no ambiente.  
+## 1. Mover um robô:
+<p> Nesta opção, há os inputs de destino final em cada coordenada (xy para o terrestre a óleo e xyz para os aéreos e terrestre toupeira) e a chamada da respectiva função de mover (condicionada a classe do robô escolhido), esta que é um algorítmo baseado em backtracking, que utiliza o sensor de movimento para perfazer um caminho livre de obstáculos (salvo o robô topeira, que se aproveita do fato de que não há obstáculos no subsolo para evitar o uso de chamadas recursivas/sensores).
   
-## 3. Mover um Robô: 
-<p> Nesta opção, há os inputs de variação de comprimento em cada coordenada (xy para o terrestre a óleo e xyz para os aéreos e terrestre toupeira) e a chamada da respectiva função de mover (condicionada a classe do robô escolhido), esta que é um algorítmo baseado em backtracking, que utiliza o sensor de movimento para perfazer um caminho livre de obstáculos (salvo o robô topeira, que se aproveita do fato de que não há obstáculos no subsolo para evitar o uso de chamadas recursivas/sensores).  
+## 2. Adicionar sensor de temperatura a um robô: 
+<p> Busca o robô desejado pelo seu nome, verifica se este já não possui sensor de temperatura (mediante lançamento de exceção), caso contrário, adiciona para ele um sensor de temperatura com o raio escolhido.
   
-## 4. Relatório de Temperatura: 
-</p> Sensor de temperatura de cada robô utiliza a matriz de temperatura contida no ambiente (existe uma temperatura relacionada a cada ponto xyz no ambiente (salvo no subsolo), que é baseada em uma função arbitrária e aleatória definida no construtor de ambiente) e a posição em que o robô se encontra no ambiente da seguinte forma: o sensor procura, na região compreendida por um cubo de lado de duas vezes o raio deste sensor e de centro na posição atual do robô a maior e menor temperatura e as imprime na tela (juntamente com suas respectivas localizações), bem como a temperatura associada a posição atual do robô.  
+## 3. Utilizar a habilidade especial de algum robô já inserido no ambiente: 
+<p> Invoca a função única associada â classe robô escolhido, a saber: alteração de lubrificação do robô terrestre a óleo, recarga de bateria do robô aéreo dinâmico e geração de relatório do robô aéreo relator.
+  
+## 4. Exibir a posição de um robô: 
+<p> Exibe a posição do robô escolhido, com adicional de exibir a lubrificação no caso do robô terrestre a óleo.
 
-## 5. Habilidades Especiais:
-<p> Invoca a função única assocdiada â classe robô escolhido, a saber: alteração de lubrificação do robô terrestre a óleo, recarga de bateria do robô aéreo dinâmico e geração de relatório do robô aéreo relator.  
+## 5. Adicionar robô à central de comunicação:
+<p> Adiciona o robô escolhido à central de comunicação, tornando-o capaz de enviar e receber mensagens.  
   
-## 6. Exibir Posição:
-<p> Exibe a posição do robô escolhido, com adicional de exibir a lubrificação no caso do robô terrestre a óleo.  
+## 6. Realizar comunicação entre robôs:
+<p> Apenas robôs comunicaveis (implementam a InterfaceComunicavel) desfrutam desta funcionalidade, da qual, por meio da central de comunicação, podem tanto enviar mensagens para outros robôs comunicaveis quanto receber mensagens previamente enviadas.
+
+## 7. Furtar combustivel:
+<p> Funcionalidade da qual apenas robôs que implementam a InterfaceFurtoCombustivel utilizam, a saber, robôs aéreos dinâmicos e robôs terrestres à óleo. Nessa opção, robôs terrestres à óleo podem furtar a autonomia dos robôs aéreos dinâmicos e vice-versa; a conversão de roubo se dá na proporção de 1:1;
+
+## 8. Ativar sensor de temperatura:
+<p> Por meio da InterfaceSensoravel, todos os robôs que possuem sensor de temperatura farão um relatório da temperatura numa região delimitada pelo raio desse (a temperatura num ponto, por sua vez, é dada por uma função (x,y,z) de distribuição completamente aleatória tirada da minha cabeça) exibindo tanto a temperatura mais alta da região, como a mais baixa e a sentida pelo robô na posição atual. Adicionalmente ao relatório, alguns robôs (que implementam a InterfaceTermica), além de realizar o relatório padrão, fazem a chamada de uma função de preferência térmica; a saber: robôs terrestres tentarão se mover uma única vez ao ponto de maior temperatura no eixo xy e o aéreo dinâmico tentará se mover, também unicamente, para o ponto de menor temperatura em xyz (o robô relator não implementa essa interface pois seu movimento não é dinâmico, não o permitindo mover simultaneamente em xy e em z).
+
+## 9. Imprimir mapa.
+<p> Imprime na tela, segundo o eixo cartesiano padrão, o mapa em uma altura dada, exibindo obstáculos como "x", espaços vazios como "." e os demais com sua respectiva representação em caracteres.
+
+## 10. Fugir.
+<p> Essa funcionalidade está relacionada a outra interface (InterfaceFujao). Nessa, admite-se a premissa de que robôs tem a preferência por evitar outros robôs na mesma coordenada xy, mas em diferente altura z, assim, todo robô que identificar outro nessa condição tentará fugir deste numa região que compreende um quadrado de lado igual ao raio do sensor, na mesma altura z em que se encontra, caso não seja possível (há sempre um robô aplicando essa condição ou há objetos atrapalhando a movimentação), o robô desligará.
+
+## 11. Sair do programa.
+<p> Encerra o programa, fechando o leitor de entrada.
   
 ***A título de observação, a busca por algum robô é sempre dada pelo seu nome, dando utilidade à variável.***
     
