@@ -27,7 +27,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n9- imprimir mapa \n10- fugir \n11- sair\n ************* \n");
+                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n9- imprimir mapa \n10- fugir \n11- mover obstaculo\n12- sair\n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -166,7 +166,7 @@ public class Main {
                         }
 
                 }
-                else if(chave == 7){
+                else if(chave == 7){ //furto de combustivel
                         InterfaceFurtoCombustivel furtar;
                         InterfaceFurtoCombustivel furtado;
                         System.out.println("Digite o nome do robo que vai furtar combustivel: \n");
@@ -196,33 +196,30 @@ public class Main {
                                 }
                         }
                 }
-                else if (chave == 11) {//Sáida
-                        System.out.println("Programa encerrado! Até Mais");
-                        break;
-
-
-                } else if (chave == 9) { //imprimir mapa
-                        System.out.println("digite a altura da impressao");
-                        int altura = leitor.nextInt();
-                        leitor.nextLine();
-                        if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
-
-
-                } else if (chave == 8) {//acionar sensor de temperatura
+                else if (chave == 8) {//acionar sensor de temperatura
                         System.out.println("digite o nome do robô");
                         String vulgo = leitor.nextLine();
                         Robo r = amb.getRobo(vulgo);
 
                         if (r != null) r.acionarSensores();
 
-                } else if (chave == 10) {//fugir
+                } 
+                else if (chave == 9) { //imprimir mapa
+                        System.out.println("digite a altura da impressao");
+                        int altura = leitor.nextInt();
+                        leitor.nextLine();
+                        if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
+
+
+                } 
+                else if (chave == 10) {//fugir
                         System.out.println("digite o nome do robô");
                         String vulgo = leitor.nextLine();
                         Robo r = amb.getRobo(vulgo);
 
                         if (r != null) r.fugir();
                 }
-                else if(chave == 12) { //mover obstaculo
+                else if(chave == 11) { //mover obstaculo
                         System.err.println("Digite a altura do obstaculo que deseja mover:");
                         int h = leitor.nextInt();
                         leitor.nextLine();
@@ -236,6 +233,12 @@ public class Main {
                                 int movz = leitor.nextInt();
                                 amb.moverEntidade(mover, movx, movy, movz);
                         }
+                }
+                else if (chave == 12) {//Sáida
+                        System.out.println("Programa encerrado! Até Mais");
+                        break;
+
+
                 }
         }
                 leitor.close();
