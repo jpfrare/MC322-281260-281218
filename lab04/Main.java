@@ -199,6 +199,13 @@ public class Main {
                                 }
                         }
                 }
+                else if(chave == 8){
+                        System.out.println("Digite a altura para visualizar essa perspectiva do ambiente:");
+                        int altura = leitor.nextInt();
+                        leitor.nextLine();
+                        amb.imprimeMapa(altura);
+
+                }
                 
                 else if (chave == 12) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
