@@ -1,4 +1,4 @@
-public abstract class RoboAereo extends Robo implements InterfaceFujao {
+public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){

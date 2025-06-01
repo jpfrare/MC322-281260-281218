@@ -30,7 +30,7 @@ public class Main {
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n 10- imprimir mapa \n 11- sair \n ************* \n");
+                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n10- imprimir mapa \n11- fugir \n12- sair\n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -200,7 +200,7 @@ public class Main {
                         }
                 }
                 
-                else if (chave == 11) {//Sáida
+                else if (chave == 12) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
 
@@ -217,6 +217,20 @@ public class Main {
                         String vulgo = leitor.nextLine();
                         Robo r = amb.getRobo(vulgo);
                         if (r != null) r.acionarSensores();
+
+                } else if (chave == 8) {//acionar sensor de temperatura
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+
+                        if (r != null) r.acionarSensores();
+
+                } else if (chave == 11) {//fugir
+                        System.out.println("digite o nome do robô");
+                        String vulgo = leitor.nextLine();
+                        Robo r = amb.getRobo(vulgo);
+
+                        if (r != null) r.fugir();
                 }
         }
                 leitor.close();

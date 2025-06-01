@@ -1,5 +1,5 @@
 
-public abstract class RoboTerrestre extends Robo implements InterfaceTermica, InterfaceFujao {
+public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
 
     public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a,  int r_sensor) {
