@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class Main {
     
     public static void main(String[] args) throws RoboDesligadoException, EntradaException {
-        Scanner leitor = new Scanner(System.in);
         //Criacao do Ambiente:
         System.out.println("\nOlá, bem vindo!\nEm primeiro lugar, saiba que este ambiente de simulacao possui dimensoes: (20,20,20).\n");
         Ambiente amb = new Ambiente(20, 20, 20);
         CentralComunicacao central = new CentralComunicacao();
 
+        Scanner leitor = new Scanner(System.in);
         //insercao dos obstaculos no ambiente
         amb.adicionarEntidade(new Obstaculo(2, 4, 3, 6, TipoObstaculo.BLOCO, amb)); // obstaculo de altura 5
         amb.adicionarEntidade(new Obstaculo(14, 18, 10, 12, TipoObstaculo.MURO, amb)); // obstaculo de altura 10
@@ -204,7 +204,7 @@ public class Main {
                         System.out.println("Programa encerrado! Até Mais");
                         break;
 
-                        
+
                 } else if (chave == 10) { //imprimir mapa
                         System.out.println("digite a altura da impressao");
                         int altura = leitor.nextInt();
@@ -219,8 +219,6 @@ public class Main {
                         if (r != null) r.acionarSensores();
                 }
         }
-
-        leitor.close();
+                leitor.close();
         }
-
 }
