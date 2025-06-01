@@ -26,11 +26,11 @@ public class Main {
         r_dinam.AdicionaSensores(new SensorTemperatura(r_dinam, 3));
         RoboAereoRelator r_relator = new RoboAereoRelator(16, 12, 14, 14, "relator", amb, 3);
         amb.adicionarEntidade(r_relator);
-        r_relator.AdicionaSensores(new SensorTemperatura(r_relator, 4));
+        //r_relator.AdicionaSensores(new SensorTemperatura(r_relator, 4));
 
         while(true) {
                 System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n10- imprimir mapa \n11- fugir \n12- sair\n ************* \n");
+                System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n9- imprimir mapa \n10- fugir \n11- sair\n ************* \n");
                 int chave = leitor.nextInt();
                 leitor.nextLine();
 
@@ -199,31 +199,17 @@ public class Main {
                                 }
                         }
                 }
-                else if(chave == 8){
-                        System.out.println("Digite a altura para visualizar essa perspectiva do ambiente:");
-                        int altura = leitor.nextInt();
-                        leitor.nextLine();
-                        amb.imprimeMapa(altura);
-
-                }
-                
-                else if (chave == 12) {//Sáida
+                else if (chave == 11) {//Sáida
                         System.out.println("Programa encerrado! Até Mais");
                         break;
 
 
-                } else if (chave == 10) { //imprimir mapa
+                } else if (chave == 9) { //imprimir mapa
                         System.out.println("digite a altura da impressao");
                         int altura = leitor.nextInt();
 
                         if (altura <= amb.getAmbienteZ()) amb.imprimeMapa(altura);
 
-
-                } else if (chave == 9) { //ativar sensores
-                        System.out.println("digite o nome do robô");
-                        String vulgo = leitor.nextLine();
-                        Robo r = amb.getRobo(vulgo);
-                        if (r != null) r.acionarSensores();
 
                 } else if (chave == 8) {//acionar sensor de temperatura
                         System.out.println("digite o nome do robô");
@@ -232,7 +218,7 @@ public class Main {
 
                         if (r != null) r.acionarSensores();
 
-                } else if (chave == 11) {//fugir
+                } else if (chave == 10) {//fugir
                         System.out.println("digite o nome do robô");
                         String vulgo = leitor.nextLine();
                         Robo r = amb.getRobo(vulgo);
