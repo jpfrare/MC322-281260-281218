@@ -9,8 +9,8 @@ Versão do Java:  11.0.26 2025-01-21
 <p>A classe main é uma interface interativa relativamente simples, porém seu tamanho é devido as várias etapas de tratamento de erro de input (talvez seja conveniente a criação de uma função que capta as entradas e já realiza este tratamento, porém optou-se, em função das variações de mensagem no casos de erro, por não fazê-la).
 
 ## Detalhes importantes:
-  I- Existência das exceções RoboDesligadoException (quando qualquer robô tenta realizar alguma das ações citadas abaixo e está desligado), EntradaException (quando há problema na entrada de dados), ForaDosLimitesException (quando um ponto está fora dos limites do ambiente) e ColisaoException (quando há um objeto ou um outro robô na posição da qual se deseja ocupar). Como observação utiliza-se também a exceção built-in IndexOutOfBoundsException quando tenta-se acessar o sensor de temperatura em um robô que não o possui (dado que o sensor se ecnontraria numa posição inválida do array de sensores).
-  II- Existência das interfaces personalizadas (além das exigidas no enunciado) térmica, fujão e furtocombustível; que serão explicadas juntamente com as ações na main.
+  <p>I- Existência das exceções RoboDesligadoException (quando qualquer robô tenta realizar alguma das ações citadas abaixo e está desligado), EntradaException (quando há problema na entrada de dados), ForaDosLimitesException (quando um ponto está fora dos limites do ambiente) e ColisaoException (quando há um objeto ou um outro robô na posição da qual se deseja ocupar). Como observação utiliza-se também a exceção built-in IndexOutOfBoundsException quando tenta-se acessar o sensor de temperatura em um robô que não o possui (dado que o sensor se ecnontraria numa posição inválida do array de sensores).
+  <p>II- Existência das interfaces personalizadas (além das exigidas no enunciado) térmica, fujão e furtocombustível; que serão explicadas juntamente com as ações na main.
   
   ## Main:
 <p>Cria-se um ambiente e após isso, temos as opções de:  
