@@ -6,8 +6,13 @@ Versão do Java:  11.0.26 2025-01-21
 
 <p>Considerações relevantes sobre o projeto, com foco no arquivo main: (Explicações minusciosas sobre as classes existentes e seus métodos estão contidas tanto nos cometários do código quanto no diagrama UML).  
 
-<p>A classe main é uma interface interativa relativamente simples, porém seu tamanho é devido as várias etapas de tratamento de erro de input (talvez seja conveniente a criação de uma função que capta as entradas e já realiza este tratamento, porém optou-se, em função das variações de mensagem no casos de erro, por não fazê-la).  
+<p>A classe main é uma interface interativa relativamente simples, porém seu tamanho é devido as várias etapas de tratamento de erro de input (talvez seja conveniente a criação de uma função que capta as entradas e já realiza este tratamento, porém optou-se, em função das variações de mensagem no casos de erro, por não fazê-la).
+
+## Detalhes importantes:
+  I- Existência das exceções RoboDesligadoException (quando qualquer robô tenta realizar alguma das ações citadas abaixo e está desligado), EntradaException (quando há problema na entrada de dados), ForaDosLimitesException (quando um ponto está fora dos limites do ambiente) e ColisaoException (quando há um objeto ou um outro robô na posição da qual se deseja ocupar). Como observação utiliza-se também a exceção built-in IndexOutOfBoundsException quando tenta-se acessar o sensor de temperatura em um robô que não o possui (dado que o sensor se ecnontraria numa posição inválida do array de sensores).
+  II- Existência das interfaces personalizadas (além das exigidas no enunciado) térmica, fujão e furtocombustível; que serão explicadas juntamente com as ações na main.
   
+  ## Main:
 <p>Cria-se um ambiente e após isso, temos as opções de:  
   
   1. Mover um robô
@@ -29,7 +34,7 @@ Versão do Java:  11.0.26 2025-01-21
 <p> Busca o robô desejado pelo seu nome, verifica se este já não possui sensor de temperatura (mediante lançamento de exceção), caso contrário, adiciona para ele um sensor de temperatura com o raio escolhido.
   
 ## 3. Utilizar a habilidade especial de algum robô já inserido no ambiente: 
-<p> Invoca a função única associada â classe robô escolhido, a saber: alteração de lubrificação do robô terrestre a óleo, recarga de bateria do robô aéreo dinâmico e geração de relatório do robô aéreo relator.
+<p> Invoca a função única associada à classe do robô escolhido, a saber: alteração de lubrificação do robô terrestre a óleo, recarga de bateria do robô aéreo dinâmico e geração de relatório do robô aéreo relator.
   
 ## 4. Exibir a posição de um robô: 
 <p> Exibe a posição do robô escolhido, com adicional de exibir a lubrificação no caso do robô terrestre a óleo.
@@ -41,7 +46,7 @@ Versão do Java:  11.0.26 2025-01-21
 <p> Apenas robôs comunicaveis (implementam a InterfaceComunicavel) desfrutam desta funcionalidade, da qual, por meio da central de comunicação, podem tanto enviar mensagens para outros robôs comunicaveis quanto receber mensagens previamente enviadas.
 
 ## 7. Furtar combustivel:
-<p> Funcionalidade da qual apenas robôs que implementam a InterfaceFurtoCombustivel utilizam, a saber, robôs aéreos dinâmicos e robôs terrestres à óleo. Nessa opção, robôs terrestres à óleo podem furtar a autonomia dos robôs aéreos dinâmicos e vice-versa; a conversão de roubo se dá na proporção de 1:1;
+<p> Funcionalidade da qual apenas robôs que implementam a InterfaceFurtoCombustivel utilizam, a saber, robôs aéreos dinâmicos e robôs terrestres à óleo. Nessa opção, robôs terrestres à óleo podem furtar a autonomia dos robôs aéreos dinâmicos e vice-versa; a conversão de roubo se dá na proporção de 1:1.
 
 ## 8. Ativar sensor de temperatura:
 <p> Por meio da InterfaceSensoravel, todos os robôs que possuem sensor de temperatura farão um relatório da temperatura numa região delimitada pelo raio desse (a temperatura num ponto, por sua vez, é dada por uma função (x,y,z) de distribuição completamente aleatória tirada da minha cabeça) exibindo tanto a temperatura mais alta da região, como a mais baixa e a sentida pelo robô na posição atual. Adicionalmente ao relatório, alguns robôs (que implementam a InterfaceTermica), além de realizar o relatório padrão, fazem a chamada de uma função de preferência térmica; a saber: robôs terrestres tentarão se mover uma única vez ao ponto de maior temperatura no eixo xy e o aéreo dinâmico tentará se mover, também unicamente, para o ponto de menor temperatura em xyz (o robô relator não implementa essa interface pois seu movimento não é dinâmico, não o permitindo mover simultaneamente em xy e em z).
