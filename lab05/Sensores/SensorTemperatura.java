@@ -1,3 +1,6 @@
+package  Sensores;
+
+
 public  class SensorTemperatura extends Sensor {
     private final Robo dono;
     private int[] maior_temperatura; //ponto de maior temperatura

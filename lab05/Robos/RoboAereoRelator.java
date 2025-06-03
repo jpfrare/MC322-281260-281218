@@ -1,3 +1,5 @@
+package Robos;
+
 public class RoboAereoRelator extends RoboAereo {
     //robo aereo capaz de identificar todos os robos que estao a uma altura abaixo dele e emitir um relatorio de sua posicao
     int n_relatorios;

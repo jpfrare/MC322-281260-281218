@@ -1,3 +1,5 @@
+package Sensores;
+
 public abstract class Sensor {
     private final int raio;
 

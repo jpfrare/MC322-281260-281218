@@ -1,3 +1,5 @@
+package Robos;
+
 public enum EstadoRobo {
     LIGADO(true),
     DESLIGADO(false);

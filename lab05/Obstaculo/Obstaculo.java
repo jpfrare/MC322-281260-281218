@@ -1,3 +1,5 @@
+package Obstaculo;
+
 public class Obstaculo implements InterfaceEntidadeObstaculo{
     private int x1;
     private int x2;

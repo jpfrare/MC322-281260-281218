@@ -1,3 +1,5 @@
+package Ambiente;
+
 public interface InterfaceEntidade {
     int getX();
     int getY();

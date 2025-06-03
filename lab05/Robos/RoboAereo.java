@@ -1,3 +1,5 @@
+package Robos;
+
 public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
 

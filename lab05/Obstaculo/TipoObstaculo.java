@@ -1,3 +1,5 @@
+package Obstaculo;
+
 public enum TipoObstaculo {
     MURO(10, true), 
     BLOCO(5, true),

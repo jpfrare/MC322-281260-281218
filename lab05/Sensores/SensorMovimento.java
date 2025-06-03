@@ -1,3 +1,6 @@
+package Sensores;
+
+
 public class SensorMovimento extends Sensor{
     public SensorMovimento(int r){
         super(r);

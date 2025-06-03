@@ -1,3 +1,5 @@
+package Robos;
+
 import java.util.ArrayList;
 
 public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel, InterfaceFujao{
