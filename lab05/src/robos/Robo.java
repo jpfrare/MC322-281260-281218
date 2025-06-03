@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 import java.util.ArrayList;
 
@@ -134,7 +134,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         this.posicaoZ = z;
     }
 
-    final Ambiente getAmbiente() {
+    public final  Ambiente getAmbiente() {
         //retorna o ambiente do qual o robô pertence
         return this.habitat;
     }

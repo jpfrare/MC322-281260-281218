@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 
 public abstract class RoboTerrestre extends Robo implements InterfaceTermica {

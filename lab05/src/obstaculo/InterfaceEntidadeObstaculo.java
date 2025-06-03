@@ -1,4 +1,4 @@
-package Obstaculo;
+package obstaculo;
 
 public interface InterfaceEntidadeObstaculo extends  InterfaceEntidade{
     int getX2();

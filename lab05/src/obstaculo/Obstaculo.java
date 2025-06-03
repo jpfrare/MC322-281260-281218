@@ -1,4 +1,4 @@
-package Obstaculo;
+package obstaculo;
 
 public class Obstaculo implements InterfaceEntidadeObstaculo{
     private int x1;

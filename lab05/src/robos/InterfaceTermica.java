@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 public interface InterfaceTermica {
     //comportamento varia se a classe prefere baixas ou altas temperaturas

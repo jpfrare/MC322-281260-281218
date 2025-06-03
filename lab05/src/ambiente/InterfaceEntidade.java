@@ -1,4 +1,4 @@
-package Ambiente;
+package ambiente;
 
 public interface InterfaceEntidade {
     int getX();

@@ -1,4 +1,4 @@
-package Comunicacao;
+package comunicacao;
 
 public class Mensagem {
     private final Robo autor;

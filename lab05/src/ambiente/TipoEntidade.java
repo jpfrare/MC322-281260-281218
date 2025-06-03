@@ -1,4 +1,4 @@
-package Ambiente;
+package ambiente;
 
 public enum TipoEntidade {
     ROBO,

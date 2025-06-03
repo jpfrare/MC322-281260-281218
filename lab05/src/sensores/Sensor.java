@@ -1,4 +1,4 @@
-package Sensores;
+package sensores;
 
 public abstract class Sensor {
     private final int raio;

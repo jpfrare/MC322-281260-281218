@@ -1,4 +1,4 @@
-package Obstaculo;
+package obstaculo;
 
 public enum TipoObstaculo {
     MURO(10, true), 

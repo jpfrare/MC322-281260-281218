@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoCombustivel{
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação

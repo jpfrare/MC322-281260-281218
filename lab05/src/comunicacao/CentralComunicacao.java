@@ -1,4 +1,4 @@
-package Comunicacao;
+package comunicacao;
 
 import java.util.ArrayList;
 

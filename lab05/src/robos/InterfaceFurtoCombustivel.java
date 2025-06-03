@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 public interface InterfaceFurtoCombustivel {
     // interface que permite que robos furtem combustivel (energia/lubrificante) uns dos outros

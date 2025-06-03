@@ -1,4 +1,4 @@
-package Robos;
+package robos;
 
 public class RoboTerrestreTopeira extends RoboTerrestre {
     private final int profundidadeMax; //valor < 0

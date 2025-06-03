@@ -1,4 +1,4 @@
-package Sensores;
+package sensores;
 
 
 public class SensorMovimento extends Sensor{
