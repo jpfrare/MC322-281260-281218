@@ -1,6 +1,9 @@
 package robos;
 
+import ambiente.*;
+import comunicacao.*;
 import java.util.ArrayList;
+import sensores.*;
 
 public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel, InterfaceFujao{
     private final String nome;
@@ -30,7 +33,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         this.tipo = TipoEntidade.ROBO;
     }
 
-    void ligarRobo() {
+    public void ligarRobo() {
         System.out.println("O Robô " + this.getNome() + " está ligado!");
         this.estado = EstadoRobo.LIGADO;
     }
@@ -46,19 +49,19 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         }
     }
 
-    String getNome() {
+    public String getNome() {
         return this.nome;
     }
 
-    CentralComunicacao getCentral(){
+    public CentralComunicacao getCentral(){
         return this.central;
     }
 
-    CaixadeEntrada getCaixadeEntrada(){
+    public CaixadeEntrada getCaixadeEntrada(){
         return this.caixa;
     }
 
-    void adicionarComunicacao(CentralComunicacao central){
+    public void adicionarComunicacao(CentralComunicacao central){
         this.central = central;
         central.adicionarRobo(this);
         this.caixa = new CaixadeEntrada();
@@ -139,7 +142,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return this.habitat;
     }
 
-    void AdicionaSensores(Sensor s){
+    public void AdicionaSensores(Sensor s){
         this.sensores.add(s);
     }
 
@@ -263,7 +266,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return false;
     }
 
-    boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
 
         try {
             this.Robofunciona();
@@ -310,7 +313,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
     }
 
 
-    void exibirPosicao() {
+    public void exibirPosicao() {
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 

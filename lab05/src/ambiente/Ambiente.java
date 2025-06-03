@@ -2,6 +2,9 @@ package ambiente;
 
 import java.util.ArrayList;
 
+import robos.*;
+import obstaculo.*;
+
 public class Ambiente {
     private final int X;
     private final int Y;
@@ -272,7 +275,7 @@ public class Ambiente {
         return this.mapa;
     }
 
-    void identifica_colisao(int x, int y, int z) throws ColisaoException{
+    public void identifica_colisao(int x, int y, int z) throws ColisaoException{
         if (this.mapa[x][y][z] != TipoEntidade.VAZIO) throw new ColisaoException("Colisão identificada! " + "Entidade em (" + x + ", " + y + ", " + z + ")");
     }
 
@@ -280,7 +283,7 @@ public class Ambiente {
         return this.temperatura;
     }
 
-    ArrayList<InterfaceEntidade> getElementos() {
+    public ArrayList<InterfaceEntidade> getElementos() {
         return this.elementos;
     }
 

@@ -1,5 +1,7 @@
 package robos;
 
+import ambiente.*;
+import sensores.*;
 
 public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
@@ -16,7 +18,7 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     }
   
     @Override
-    boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
         /*move o robo terrestre considerando o limite de velocidade (supoe que o salto de coordenadas individuais 
         tem que ser menor que a velocidade maxima)*/
         if (Math.abs(deltaX) > this.velocidademax || Math.abs(deltaY) > this.velocidademax) {

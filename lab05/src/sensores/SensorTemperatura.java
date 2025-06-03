@@ -1,8 +1,7 @@
 package  sensores;
-import ambiente.*;
+
 import robos.*;
-import obstaculo.*;
-import comunicacao.*;
+
 
 public  class SensorTemperatura extends Sensor {
     private final Robo dono;

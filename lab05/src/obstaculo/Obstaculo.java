@@ -1,5 +1,7 @@
 package obstaculo;
 
+import ambiente.*;
+
 public class Obstaculo implements InterfaceEntidadeObstaculo{
     private int x1;
     private int x2;
@@ -35,7 +37,7 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
         //this.ambiente.adicionaObstaculo(this);
     }
 
-    TipoObstaculo getForma() {
+    public TipoObstaculo getForma() {
         return this.forma;
     }
 
@@ -98,7 +100,7 @@ public class Obstaculo implements InterfaceEntidadeObstaculo{
         return z2;
     }
 
-    Ambiente getAmbiente() {
+    public Ambiente getAmbiente() {
         return this.ambiente;
     }
     

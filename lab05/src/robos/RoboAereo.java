@@ -1,5 +1,7 @@
 package robos;
 
+import ambiente.*;
+
 public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
 
@@ -9,7 +11,7 @@ public abstract class RoboAereo extends Robo {
         this.altitudeMax = alt_max;
     }
 
-    void subir(int delta_h){
+    public void subir(int delta_h){
 
         try {
             this.Robofunciona();
@@ -51,7 +53,7 @@ public abstract class RoboAereo extends Robo {
         return this.altitudeMax;
     }
 
-    void descer(int delta_h) throws RoboDesligadoException{
+    public void descer(int delta_h) throws RoboDesligadoException{
         //apenas desce até uma posicao valida (altura > 0)
         try {
             this.Robofunciona();

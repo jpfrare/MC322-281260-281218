@@ -1,5 +1,7 @@
 package comunicacao;
 
+import robos.*;
+
 public class Mensagem {
     private final Robo autor;
     private final String mensagem;

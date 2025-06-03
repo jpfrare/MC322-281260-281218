@@ -1,5 +1,7 @@
 package robos;
 
+import ambiente.*;
+
 public class RoboAereoRelator extends RoboAereo {
     //robo aereo capaz de identificar todos os robos que estao a uma altura abaixo dele e emitir um relatorio de sua posicao
     int n_relatorios;
@@ -9,7 +11,7 @@ public class RoboAereoRelator extends RoboAereo {
         n_relatorios = 0; //numero de relatorios emitidos pelo robo
     }
 
-    void gerar_relatorio(){
+    public void gerar_relatorio(){
         //gera um relatorio do conjunto de robos (aereos ou terrestres) que estao a uma altura abaixo do RoboAereoRelator
         int altura_corte = this.getZ(); 
         this.n_relatorios++; 

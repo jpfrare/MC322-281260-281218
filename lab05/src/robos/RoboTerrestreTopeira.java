@@ -1,5 +1,7 @@
 package robos;
 
+import ambiente.*;
+
 public class RoboTerrestreTopeira extends RoboTerrestre {
     private final int profundidadeMax; //valor < 0
 
@@ -12,11 +14,11 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
         this.profundidadeMax = profundidadeMax;
     }
 
-    int getProfundidadeMax() {
+    public int getProfundidadeMax() {
         return this.profundidadeMax;
     }
 
-    void mover(int deltaX, int deltaY, int deltaZ) {
+    public void mover(int deltaX, int deltaY, int deltaZ) {
         //verificando se a posição final está dentro dos limites
         try {
             this.getAmbiente().dentroDosLimites(this.getX() + deltaX, this.getY() + deltaY, 0);
@@ -60,7 +62,7 @@ public class RoboTerrestreTopeira extends RoboTerrestre {
     }
     
     @Override
-    void exibirPosicao() {
+    public void exibirPosicao() {
         //leva em cosideração a nova direção
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }

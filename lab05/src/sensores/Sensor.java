@@ -1,5 +1,6 @@
 package sensores;
 
+
 public abstract class Sensor {
     private final int raio;
 
@@ -7,7 +8,7 @@ public abstract class Sensor {
         this.raio = r;
     }
 
-    int getRaio(){
+    public int getRaio(){
         return this.raio;
     }
 

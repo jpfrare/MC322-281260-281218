@@ -13,11 +13,11 @@ public enum TipoObstaculo {
         this.bloqueia = bloqueia;
     }
 
-    int getAltura() {
+    public int getAltura() {
         return this.altura;
     }
 
-    boolean getBloqueia(){
+    public boolean getBloqueia(){
         return this.bloqueia;
     }
 

@@ -1,6 +1,6 @@
 package comunicacao;
-
 import java.util.ArrayList;
+import robos.*;
 
 public class CentralComunicacao {
     private final ArrayList<Robo> comunicaveis;

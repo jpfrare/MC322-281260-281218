@@ -1,7 +1,9 @@
 package obstaculo;
 
+import ambiente.InterfaceEntidade;
+
 public interface InterfaceEntidadeObstaculo extends  InterfaceEntidade{
-    int getX2();
-    int getY2();
-    int getZ2();
+    public int getX2();
+    public int getY2();
+    public int getZ2();
 }

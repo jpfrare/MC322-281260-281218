@@ -1,5 +1,8 @@
 package robos;
 
+import ambiente.*;
+import main.EntradaException;
+
 public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoCombustivel{
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação
     float VelMaxInstantanea; //parametro que lida com o fato da velocidade máxima ser do tipo final
@@ -69,7 +72,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
     }
 
     @Override
-    boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
         //move-se, priorizando se o movimento atende as condições de lubrificação atuais do robô
         if (Math.abs(deltaX) > this.VelMaxInstantanea || Math.abs(deltaY) > this.VelMaxInstantanea) {
             System.err.printf("Movimento Inválido! Baixa Lubrificação\n");
@@ -97,7 +100,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
     }
 
     @Override
-    void exibirPosicao() {
+    public void exibirPosicao() {
         super.exibirPosicao();
         exibirLubrificacao();
     }

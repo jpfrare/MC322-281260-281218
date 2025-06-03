@@ -1,5 +1,9 @@
 package robos;
 
+import ambiente.*;
+import main.EntradaException;
+import sensores.*;
+
 public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, InterfaceFurtoCombustivel{
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
@@ -28,13 +32,14 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         }
     }
 
-    void recarregar(){
+    public void recarregar(){
         //recarrega o nivel de energia e reestabelece a altura maxima padrao
         this.coeficiente_energetico = 1;
         this.altitudemax_atual = this.getAltitudeMax();
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
-    void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+
+    public void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
         int pos_xo = this.getX();
         int pos_yo = this.getY();
         int pos_zo = this.getZ();
