@@ -1,0 +1,5 @@
+para compilar:
+javac -d bin src/**/*.java
+
+para executar:
+java -cp bin cliente.Main  
