@@ -1,7 +1,7 @@
 package robos;
-import interfaces.*;
 import ambiente.*;
 import exceptions.*;
+import interfaces.*;
 
 public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoCombustivel{
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação
@@ -39,7 +39,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
 
     @Override public float perder_combustivel(float quantidade){
         float maximo;
-        float perda = 0;
+        float perda;
         // limitar o furto de combustivel a 50% ou o necessario para completar o combustivel de quem ira furtar
         if(quantidade > 0.5f){
             maximo = 0.5f;

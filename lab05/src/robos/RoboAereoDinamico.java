@@ -18,7 +18,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima
     }
 
-    public void reduzir_autonomia(){
+    void reduzir_autonomia(){
         //reduz a autonomia e altura maxima padrao
         if(this.coeficiente_energetico > 0){
             //caso o robo nao tenha sido totalmente descarregado: reducao de 10% de seu nivel energetico
@@ -40,7 +40,8 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         this.altitudemax_atual = this.getAltitudeMax();
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
-    public void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+
+    public void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         int pos_xo = this.getX();
         int pos_yo = this.getY();
         int pos_zo = this.getZ();
@@ -52,7 +53,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             return;
         }
 
-        if(this.getZ() + delta_z <= (this.altitudemax_atual * (this.coeficiente_energetico))){
+        if(this.getZ() + delta_z <= (this.getAltitudeMax() * (this.coeficiente_energetico))){
             //verificar se a posicao final ja nao esta ocupada e/ou a posicao final esta no ambiente e/ou a posicao final atende aos requisitos do robo
             if(this.mover_3d(delta_x, delta_y, delta_z)){
                 this.getAmbiente().getMapa()[pos_xo][pos_yo][pos_zo] = TipoEntidade.VAZIO;
@@ -68,7 +69,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
     }
 
-    private boolean mover_3d(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+    private boolean mover_3d(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         try {
             this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z);
 
@@ -128,17 +129,17 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         return false;
     }
 
-    public int z_minimo_descida(){
+    int z_minimo_descida(){
         int z = this.getZ();
         int desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ(), this.getAmbiente()); 
         do { 
             z -= desce;
-            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), this.getZ(), -this.getZ() + desce, this.getAmbiente()); 
+            desce = this.getSensorMovimento().consegueAvancar(3, this.getX(), this.getY(), z, -z , this.getAmbiente()); 
         } while (desce > 0);
         return z; //retorna o menor z que o robo consegue de descer (o robo desce ate chegar ao chao ou identificar uma colisao)
     }
 
-    private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException{
+    private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         boolean moveu = this.mover(delta_x, delta_y);
         this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
         return moveu;
@@ -152,7 +153,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         return 'd';
     }
 
-    @Override public void preferenciaTermica() {
+    @Override public void preferenciaTermica() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         //robôs aéreos têm preferência por baixas temperaturas, ele tentará se mover para o lugar de menor temperatura possível
         try {
             SensorTemperatura t = this.getSensorTemperatura();
@@ -172,13 +173,14 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         }
     }
 
-    @Override public void acionarSensores() {
+    @Override public void acionarSensores() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         super.acionarSensores();
+        System.out.println("Tentando ir para a menor temperatura...");
         this.preferenciaTermica();
     }
 
     @Override public void setCoeficiente(float c) throws EntradaException{
-        if(c > 0 && c < 0){
+        if(c > 0 && c <= 1){
             this.coeficiente_energetico = c;
             this.altitudemax_atual = (int)(this.getAltitudeMax() * c);
         }
@@ -224,7 +226,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             }
             else{ // robo ira descer menos do que desceria caso nao identificasse colisao, a perda de combustivel sera menor
                 //nesse caso a perda sera menor que 0.3f
-                maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+                maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax() -0.1f);
                 if(maximo > 0.f){
                     try{
                         this.setCoeficiente(this.getCoeficiente() - maximo);
@@ -240,7 +242,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
             }
         }
         else{ // combustivel pode acabar
-            maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax());
+            maximo = this.getCoeficiente() - (float)(((float)this.z_minimo_descida())/this.getAltitudeMax() - 0.1f);
             this.setCoeficiente(this.getCoeficiente() - maximo);
             return maximo;
         }
@@ -252,6 +254,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
+            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;

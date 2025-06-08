@@ -1,7 +1,7 @@
 package robos;
-import interfaces.*;
-import enums.*;
 import ambiente.*;
+import enums.*;
+import interfaces.*;
 
 public class RoboAereoRelator extends RoboAereo {
     //robo aereo capaz de identificar todos os robos que estao a uma altura abaixo dele e emitir um relatorio de sua posicao
@@ -27,7 +27,7 @@ public class RoboAereoRelator extends RoboAereo {
         System.out.println("Fim do relaório!\n");
     }
 
-    public int getNrelatorios(){ //retorna a quantidade de relatorios feitos pelo robo
+    int getNrelatorios(){ //retorna a quantidade de relatorios feitos pelo robo
         return this.n_relatorios;
     }
 

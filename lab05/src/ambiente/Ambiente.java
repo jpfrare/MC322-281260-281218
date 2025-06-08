@@ -1,11 +1,11 @@
 package ambiente;
-import interfaces.*;
-import enums.*;
-import robos.*;
+import enums.TipoEntidade;
 import exceptions.*;
-import obstaculo.*;
-
+import interfaces.InterfaceEntidade;
+import interfaces.InterfaceEntidadeObstaculo;
 import java.util.ArrayList;
+import obstaculo.*;
+import robos.*;
 
 public class Ambiente {
     private final int X;
@@ -256,6 +256,19 @@ public class Ambiente {
 
     public TipoEntidade [][][] getMapa(){
         return this.mapa;
+    }
+
+    public Obstaculo getObscatulo(int h){
+        for(InterfaceEntidade entidade: this.elementos){
+            if(entidade.getTipo() == TipoEntidade.OBSTACULO){
+                Obstaculo obj = (Obstaculo)entidade;
+                if(obj.getForma().getAltura() == h){
+                    return obj;
+                }
+
+            }
+        }
+        return null;
     }
 
     public void identifica_colisao(int x, int y, int z) throws ColisaoException{

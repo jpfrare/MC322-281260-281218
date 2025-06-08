@@ -160,10 +160,14 @@ public abstract class RoboAereo extends Robo implements InterfaceFujao {
                 for (int y = menory; y <= maiory; y++) {
                     if ((x != this.getX() || y != this.getY()) && !this.procura(x, y, raio)) {
                         System.out.printf("Tentando mover para (%d, %d, %d)...\n", x, y, this.getZ());
-
-                        if(this.mover(x - this.getX(), y - this.getY())) {
-                            System.out.println("Agora o robô " + this.getNome() + " está seguro!");
-                            return;
+                        try{
+                            if(this.mover(x - this.getX(), y - this.getY())) {
+                                System.out.println("Agora o robô " + this.getNome() + " está seguro!");
+                                return;
+                            }
+                        }
+                        catch(Exception e){
+                            System.out.println("erro");
                         }
 
                         System.out.println("falhou! tentando de novo...");

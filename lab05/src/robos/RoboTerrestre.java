@@ -6,7 +6,7 @@ import ambiente.*;
 import exceptions.*;
 
 
-public abstract class RoboTerrestre extends Robo implements InterfaceTermica, InterfaceFujao {
+public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
 
     public RoboTerrestre(int posicaoXo, int posicaoYo, String nome, float velocidademax, Ambiente a,  int r_sensor) {
@@ -28,8 +28,14 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica, In
             System.out.printf("Movimento inválido! \n");
             return false;
         }
+        try{
+            return super.mover(deltaX, deltaY);
+        }
+        catch(Exception e){
+            System.out.println("erro ao tentar se mover");
+            return false;
+        }
 
-        return super.mover(deltaX, deltaY);
     }
 
     @Override public void preferenciaTermica() {
@@ -53,8 +59,13 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica, In
     }
 
     @Override public void acionarSensores() {
-        super.acionarSensores();
-        this.preferenciaTermica();
+        try{
+            super.acionarSensores();
+            this.preferenciaTermica();
+        }
+        catch(Exception e){
+            System.out.println("erro ao acionar sensores");
+        }
     }
 
     @Override public boolean procura(int x, int y, int raio) {

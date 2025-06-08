@@ -1,14 +1,13 @@
 package robos;
-import sensores.*;
+import ambiente.Ambiente;
 import comunicacao.*;
-import interfaces.*;
 import enums.*;
-import ambiente.*;
 import exceptions.*;
-
+import interfaces.*;
 import java.util.ArrayList;
+import sensores.*;
 
-public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel{
+public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel, InterfaceFujao{
     private final String nome;
     private int posicaoX;
     private int posicaoY;
@@ -269,24 +268,17 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return false;
     }
 
-    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException {
 
         try {
             this.Robofunciona();
             this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0);
             this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ);
 
-        } catch (ForaDosLimitesException e) {
+        } catch (ForaDosLimitesException | ColisaoException | RoboDesligadoException e) {
             System.err.println("Erro: " + e.getMessage());
             return false;
 
-        } catch (ColisaoException f) {
-            System.err.println("Erro: " + f.getMessage());
-            return false;
-
-        } catch(RoboDesligadoException g) {
-            System.err.println("Erro: " + g.getMessage());
-            return false;
         }
 
         int xo = this.posicaoX;
@@ -320,7 +312,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 
-    @Override public void acionarSensores() {
+    @Override public void acionarSensores() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         try {
             this.Robofunciona();
             SensorTemperatura t = this.getSensorTemperatura();
