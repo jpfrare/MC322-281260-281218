@@ -18,6 +18,7 @@ public class Main {
                 CentralComunicacao central = new CentralComunicacao();
 
                 Scanner leitor = new Scanner(System.in);
+        
                 //insercao dos obstaculos no ambiente
                 amb.adicionarEntidade(new Obstaculo(2, 4, 3, 6, TipoObstaculo.BLOCO, amb)); // obstaculo de altura 5
                 amb.adicionarEntidade(new Obstaculo(14, 18, 10, 12, TipoObstaculo.MURO, amb)); // obstaculo de altura 10
@@ -249,11 +250,11 @@ public class Main {
                         }
                         else if (chave == 12) {//Sáida
                                 System.out.println("Programa encerrado! Até Mais");
+                                leitor.close();
                                 break;
 
 
                         }
-                }
-                leitor.close();
+                }               
         }
 }
