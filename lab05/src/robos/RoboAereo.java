@@ -1,11 +1,10 @@
 package robos;
-import interfaces.*;
-import enums.*;
 import ambiente.*;
+import enums.*;
 import exceptions.*;
 
 
-public abstract class RoboAereo extends Robo implements InterfaceFujao {
+public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
 
     public RoboAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
@@ -177,7 +176,6 @@ public abstract class RoboAereo extends Robo implements InterfaceFujao {
 
             System.out.println("Não deu certo! há um robô no mesmo xy deste em toda a região ou obstáculo que o impeça de fugir! Desligando...");
             this.desligarRobo();
-            return;
             
 
         } catch (RoboDesligadoException e) {
