@@ -1,6 +1,8 @@
 package robos;
-
 import ambiente.*;
+import enums.*;
+import exceptions.*;
+
 
 public abstract class RoboAereo extends Robo {
     private final int altitudeMax;
@@ -49,7 +51,7 @@ public abstract class RoboAereo extends Robo {
 
     }
 
-    int getAltitudeMax(){
+    public int getAltitudeMax(){
         return this.altitudeMax;
     }
 
@@ -86,7 +88,7 @@ public abstract class RoboAereo extends Robo {
     @Override public boolean procura(int x, int y, int raio) {
         //vê se tem algum robô no range do sensor, acima e abaixo
         try {
-            if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, this.getZ());
+            this.getAmbiente().identifica_colisao(x, y, this.getZ());
 
             int menorz;
             int maiorz;
@@ -105,7 +107,7 @@ public abstract class RoboAereo extends Robo {
             }
 
             for (int z = menorz; z <= maiorz; z++) {
-                if (this.getAmbiente().tipoPosicao(x, y, z) == TipoEntidade.ROBO) {
+                if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {
                     return true;
                 }
             }
@@ -157,10 +159,14 @@ public abstract class RoboAereo extends Robo {
                 for (int y = menory; y <= maiory; y++) {
                     if ((x != this.getX() || y != this.getY()) && !this.procura(x, y, raio)) {
                         System.out.printf("Tentando mover para (%d, %d, %d)...\n", x, y, this.getZ());
-
-                        if(this.mover(x - this.getX(), y - this.getY())) {
-                            System.out.println("Agora o robô " + this.getNome() + " está seguro!");
-                            return;
+                        try{
+                            if(this.mover(x - this.getX(), y - this.getY())) {
+                                System.out.println("Agora o robô " + this.getNome() + " está seguro!");
+                                return;
+                            }
+                        }
+                        catch(Exception e){
+                            System.out.println("erro");
                         }
 
                         System.out.println("falhou! tentando de novo...");
@@ -170,7 +176,6 @@ public abstract class RoboAereo extends Robo {
 
             System.out.println("Não deu certo! há um robô no mesmo xy deste em toda a região ou obstáculo que o impeça de fugir! Desligando...");
             this.desligarRobo();
-            return;
             
 
         } catch (RoboDesligadoException e) {

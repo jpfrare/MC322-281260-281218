@@ -1,19 +1,23 @@
 package robos;
-
 import ambiente.*;
-import main.EntradaException;
+import enums.*;
+import exceptions.*;
+import interfaces.*;
 import sensores.*;
+
 
 public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, InterfaceFurtoCombustivel{
     //No robo aereo, os movimentos possiveis eram somente na vertical ou na horizontal(mesmo metodo herdado da classe robo)
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
     private int altitudemax_atual;
     private float coeficiente_energetico;
+    private float furtado;
 
     public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
         super(posXo, posYo, alt_o, alt_max, nome, a, r_sensor);
         this.coeficiente_energetico = 1; //inicializa o robo com capacidade energetica maxima (100% de coeficiente energetico)
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima
+        this.furtado = 0;
     }
 
     void reduzir_autonomia(){
@@ -39,7 +43,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         System.out.printf("Robo %s recarregado, altura máxima: %d\n", this.getNome(), this.altitudemax_atual);
     }
 
-    public void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+    public void moverDinamico(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         int pos_xo = this.getX();
         int pos_yo = this.getY();
         int pos_zo = this.getZ();
@@ -67,7 +71,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
 
     }
 
-    private boolean mover_3d(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException{
+    private boolean mover_3d(int delta_x, int delta_y, int delta_z) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         try {
             this.getAmbiente().identifica_colisao(this.getX() + delta_x, this.getY() + delta_y, this.getZ() + delta_z);
 
@@ -137,7 +141,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         return z; //retorna o menor z que o robo consegue de descer (o robo desce ate chegar ao chao ou identificar uma colisao)
     }
 
-    private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException{
+    private boolean mover_horizontal(int delta_x, int delta_y) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException{
         boolean moveu = this.mover(delta_x, delta_y);
         this.getAmbiente().getMapa()[this.getX()][this.getY()][this.getZ()] = TipoEntidade.VAZIO;
         return moveu;
@@ -151,7 +155,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         return 'd';
     }
 
-    @Override public void preferenciaTermica() {
+    @Override public void preferenciaTermica() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         //robôs aéreos têm preferência por baixas temperaturas, ele tentará se mover para o lugar de menor temperatura possível
         try {
             SensorTemperatura t = this.getSensorTemperatura();
@@ -171,7 +175,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
         }
     }
 
-    @Override public void acionarSensores() {
+    @Override public void acionarSensores() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         super.acionarSensores();
         System.out.println("Tentando ir para a menor temperatura...");
         this.preferenciaTermica();

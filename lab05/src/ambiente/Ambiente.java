@@ -1,9 +1,11 @@
 package ambiente;
-
+import enums.TipoEntidade;
+import exceptions.*;
+import interfaces.InterfaceEntidade;
+import interfaces.InterfaceEntidadeObstaculo;
 import java.util.ArrayList;
-
-import robos.*;
 import obstaculo.*;
+import robos.*;
 
 public class Ambiente {
     private final int X;
@@ -133,10 +135,8 @@ public class Ambiente {
             this.identifica_colisao(novoX, novoY, novoZ);
 
         } catch (ForaDosLimitesException e) {
-            if (!(mover instanceof RoboTerrestreTopeira)) {
-                System.err.println("Erro: " + e.getMessage());
-                return;
-            }
+            System.err.println("Erro: " + e.getMessage());
+            return;
 
         } catch (ColisaoException f) {
             System.err.println("Erro: " + f.getMessage());
@@ -150,7 +150,7 @@ public class Ambiente {
                 int deltaZ = novoZ - mover.getZ();
                 if (mover instanceof RoboAereoRelator) {
                     if((deltaZ != 0 && (deltaX != 0 || deltaY != 0))){
-                        throw new EntradaException("RoboAereoRelator nao eh capaz de realizar movimento multidimensional simultaneamente nas tres dimensoes (movimento dinamico)");
+                        throw new MovimentoRelatorException();
                     }
                     if (deltaZ < 0) {
                         ((RoboAereoRelator)mover).descer(-deltaZ);
@@ -166,11 +166,7 @@ public class Ambiente {
                     ((RoboAereoDinamico)mover).moverDinamico(deltaX, deltaY, deltaZ);
 
                 } else if (mover instanceof RoboTerrestreAOleo) {
-                    if(deltaZ != 0){
-                        throw new EntradaException("Alerta! RoboTerrestreAOleo nao se movimenta no eixo z!\n O z final deve ser 0!");
-                    }
                     ((RoboTerrestreAOleo)mover).mover(deltaX, deltaY);
-
 
                 } else {
                     ((RoboTerrestreTopeira)mover).mover(deltaX, deltaY, deltaZ);
@@ -245,19 +241,6 @@ public class Ambiente {
         return this.mapa[x][y][z];
     }
 
-    public Obstaculo getObscatulo(int h){
-        for(InterfaceEntidade entidade: this.elementos){
-            if(entidade.getTipo() == TipoEntidade.OBSTACULO){
-                Obstaculo obj = (Obstaculo)entidade;
-                if(obj.getForma().getAltura() == h){
-                    return obj;
-                }
-
-            }
-        }
-        return null;
-    }
-
     public Robo getRobo(String nome){
         for(InterfaceEntidade entidade: this.elementos){
             if(entidade.getTipo() == TipoEntidade.ROBO){
@@ -273,6 +256,19 @@ public class Ambiente {
 
     public TipoEntidade [][][] getMapa(){
         return this.mapa;
+    }
+
+    public Obstaculo getObscatulo(int h){
+        for(InterfaceEntidade entidade: this.elementos){
+            if(entidade.getTipo() == TipoEntidade.OBSTACULO){
+                Obstaculo obj = (Obstaculo)entidade;
+                if(obj.getForma().getAltura() == h){
+                    return obj;
+                }
+
+            }
+        }
+        return null;
     }
 
     public void identifica_colisao(int x, int y, int z) throws ColisaoException{
@@ -293,16 +289,16 @@ public class Ambiente {
         for (int j = this.Y; j >= 0; j--) {
             for (int i = 0; i <= this.X; i++) {
                 if (this.mapa[i][j][altura] == TipoEntidade.VAZIO) {
-                    System.out.printf(" .");
+                    System.out.printf("v");
 
                 } else if (this.mapa[i][j][altura] == TipoEntidade.OBSTACULO) {
-                    System.out.printf(" x");
+                    System.out.printf("o");
 
                 } else {
                     for (InterfaceEntidade e : this.elementos) {
                         //imprime a representação do robô
                         if (e.getX() == i && e.getY() == j && e.getZ() == altura) {
-                            System.out.printf(" %c", e.getRepresentacao());
+                            System.out.printf("%c", e.getRepresentacao());
                             break;
                         }
                     }

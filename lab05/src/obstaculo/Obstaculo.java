@@ -1,6 +1,7 @@
 package obstaculo;
-
-import ambiente.*;
+import ambiente.Ambiente;
+import enums.*;
+import interfaces.InterfaceEntidadeObstaculo;
 
 public class Obstaculo implements InterfaceEntidadeObstaculo{
     private int x1;

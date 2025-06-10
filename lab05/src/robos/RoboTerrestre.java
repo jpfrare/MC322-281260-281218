@@ -1,7 +1,10 @@
 package robos;
-
-import ambiente.*;
 import sensores.*;
+import interfaces.*;
+import enums.*;
+import ambiente.*;
+import exceptions.*;
+
 
 public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     private final float velocidademax;
@@ -25,8 +28,14 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
             System.out.printf("Movimento inválido! \n");
             return false;
         }
+        try{
+            return super.mover(deltaX, deltaY);
+        }
+        catch(Exception e){
+            System.out.println("erro ao tentar se mover");
+            return false;
+        }
 
-        return super.mover(deltaX, deltaY);
     }
 
     @Override public void preferenciaTermica() {
@@ -50,18 +59,22 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
     }
 
     @Override public void acionarSensores() {
-        super.acionarSensores();
-        System.out.println("Tentando ir para a maior temperatura...");
-        this.preferenciaTermica();
+        try{
+            super.acionarSensores();
+            this.preferenciaTermica();
+        }
+        catch(Exception e){
+            System.out.println("erro ao acionar sensores");
+        }
     }
 
     @Override public boolean procura(int x, int y, int raio) {
         //vê se tem algum robô no range do sensor e acima
         try {
-            if (x != this.getX() || y != this.getY()) this.getAmbiente().identifica_colisao(x, y, 0);
+            this.getAmbiente().identifica_colisao(x, y, 0);
 
             for (int z = 1; z <= raio; z++) {
-                if (this.getAmbiente().tipoPosicao(x, y, z) == TipoEntidade.ROBO) {
+                if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {
                     return true;
                 }
             }

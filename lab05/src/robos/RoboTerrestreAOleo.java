@@ -1,7 +1,7 @@
 package robos;
-
 import ambiente.*;
-import main.EntradaException;
+import exceptions.*;
+import interfaces.*;
 
 public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoCombustivel{
     float coeficienteDeLubrificacao; //coeficiente que limita a velocidade máxima (velmax = coef*velmax), toda ação custa lubrificação
@@ -64,7 +64,6 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
         try {    
             float furto = furtado.perder_combustivel(1 - this.getCoeficiente());
             this.setCoeficiente(this.getCoeficiente() + furto);
-            System.out.printf("Porcentagem furtada: %.2f\n", furto);
         }
         catch(EntradaException e){
             return;

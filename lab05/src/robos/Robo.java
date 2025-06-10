@@ -1,7 +1,9 @@
 package robos;
-
-import ambiente.*;
+import ambiente.Ambiente;
 import comunicacao.*;
+import enums.*;
+import exceptions.*;
+import interfaces.*;
 import java.util.ArrayList;
 import sensores.*;
 
@@ -38,12 +40,12 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         this.estado = EstadoRobo.LIGADO;
     }
 
-    void desligarRobo() {
+    public void desligarRobo() {
         System.out.println("O Robô " + this.getNome() + " está desligado!");
         this.estado = EstadoRobo.LIGADO;
     }
 
-    void Robofunciona() throws RoboDesligadoException{
+    public void Robofunciona() throws RoboDesligadoException{
         if (!this.estado.esta_ligado()) {
             throw new RoboDesligadoException("Não realizado, Robô " + this.nome + " desligado!");
         }
@@ -108,12 +110,12 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return tipo;
     }
 
-    void setPosicaoX(int posicaoX) {
+    public void setPosicaoX(int posicaoX) {
         //mudar a posição em X
         this.posicaoX = posicaoX;
     }
 
-    void setPosicaoY(int posicaoY) {
+    public void setPosicaoY(int posicaoY) {
         //mudar a posição em Y
         this.posicaoY = posicaoY;
     }
@@ -133,11 +135,11 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return this.posicaoZ;
     }
 
-    final void setPosicaoZ(int z){
+    public final void setPosicaoZ(int z){
         this.posicaoZ = z;
     }
 
-    public final  Ambiente getAmbiente() {
+    public final Ambiente getAmbiente() {
         //retorna o ambiente do qual o robô pertence
         return this.habitat;
     }
@@ -146,11 +148,11 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         this.sensores.add(s);
     }
 
-    SensorMovimento getSensorMovimento(){
+    public SensorMovimento getSensorMovimento(){
         return (SensorMovimento)this.sensores.get(0);
     }
 
-    SensorTemperatura getSensorTemperatura() throws IndexOutOfBoundsException{
+    public SensorTemperatura getSensorTemperatura() throws IndexOutOfBoundsException{
         if (this.sensores.size() < 2) {
             throw new IndexOutOfBoundsException();
 
@@ -266,24 +268,17 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         return false;
     }
 
-    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException {
+    public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException {
 
         try {
             this.Robofunciona();
             this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0);
             this.getAmbiente().identifica_colisao(this.posicaoX + deltaX, this.posicaoY + deltaY, this.posicaoZ);
 
-        } catch (ForaDosLimitesException e) {
+        } catch (ForaDosLimitesException | ColisaoException | RoboDesligadoException e) {
             System.err.println("Erro: " + e.getMessage());
             return false;
 
-        } catch (ColisaoException f) {
-            System.err.println("Erro: " + f.getMessage());
-            return false;
-
-        } catch(RoboDesligadoException g) {
-            System.err.println("Erro: " + g.getMessage());
-            return false;
         }
 
         int xo = this.posicaoX;
@@ -317,7 +312,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
         System.out.printf("Robo %s: \n r(x,y,z) = (%d, %d, %d)\n", this.getNome(), this.getX(), this.getY(), this.getZ());
     }
 
-    @Override public void acionarSensores() {
+    @Override public void acionarSensores() throws ForaDosLimitesException, ColisaoException, RoboDesligadoException{
         try {
             this.Robofunciona();
             SensorTemperatura t = this.getSensorTemperatura();

@@ -1,5 +1,4 @@
 package comunicacao;
-
 import robos.*;
 
 public class Mensagem {

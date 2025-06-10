@@ -1,5 +1,7 @@
 package sensores;
 import ambiente.*;
+import exceptions.*;
+
 
 public class SensorMovimento extends Sensor{
     public SensorMovimento(int r){
