@@ -14,7 +14,7 @@ public class RoboTerrestreAOleo extends RoboTerrestre implements InterfaceFurtoC
         this.VelMaxInstantanea = this.getVelocidademax();
     }
 
-    void exibirLubrificacao() {
+    public void exibirLubrificacao() {
         //exibe a lubrificação e qual a velocidade máxima atual do robô
         System.out.printf("O coeficiente de lubrificação é de %.2f, e portanto, a velocidade máxima instantanea é de %.2f\n", this.coeficienteDeLubrificacao, this.VelMaxInstantanea);
     }
