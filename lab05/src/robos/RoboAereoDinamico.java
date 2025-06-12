@@ -11,13 +11,11 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
     //No entanto, o custo disso eh que a capacidade de autonomia sera perceptivel em nossa simulacao devido ao esforco para realizar essas duas tarefas simultaneas
     private int altitudemax_atual;
     private float coeficiente_energetico;
-    private float furtado;
 
     public RoboAereoDinamico(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
         super(posXo, posYo, alt_o, alt_max, nome, a, r_sensor);
         this.coeficiente_energetico = 1; //inicializa o robo com capacidade energetica maxima (100% de coeficiente energetico)
         this.altitudemax_atual = alt_max; //como ele inicializa com a capacidade maxima, sua altura maxima inicial sera igual a altura maxima em que o robo pode alcancar com a carga maxima
-        this.furtado = 0;
     }
 
     void reduzir_autonomia(){
@@ -148,7 +146,7 @@ public class RoboAereoDinamico extends RoboAereo implements InterfaceTermica, In
     }
 
     @Override public String getDescricao() {
-        return "Robô Aéreo que possui autonomia, ou seja, seus movimentos custam capacidade energética, caso esta esgote, não consegue se mover";
+        return "Robo Aereo que possui autonomia, ou seja, seus movimentos custam capacidade energética, caso esta esgote, não consegue se mover";
     }
 
     @Override public char getRepresentacao() {

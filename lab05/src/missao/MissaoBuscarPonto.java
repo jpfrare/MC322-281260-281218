@@ -1,14 +1,15 @@
 package missao;
 
+import interfaces.InterfaceMissao;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
-import interfaces.InterfaceMissao;
 import robos.*;
 
 public class MissaoBuscarPonto implements InterfaceMissao{
+
+    public MissaoBuscarPonto(){}
 
     @Override public void executar(Robo r, String caminhoArquivo) {
         try {

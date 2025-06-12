@@ -5,6 +5,9 @@ import enums.*;
 import exceptions.*;
 import interfaces.*;
 import java.util.Scanner;
+import missao.MissaoBuscarPonto;
+import missao.MissaoFugir;
+import missao.MissaoMonitorar;
 import obstaculo.*;
 import robos.*;
 import sensores.*;
@@ -25,19 +28,22 @@ public class Main {
                 amb.adicionarEntidade(new Obstaculo(7, 3, 17, 19, TipoObstaculo.PLACA, amb)); // "obstaculo" de altura 2. Robos passam pelo obstaculo independentemente
 
                 //Criacao dos robos e adicao ao ambiente:
-                RoboTerrestreTopeira r_top = new RoboTerrestreTopeira(0, 5, "topeira", 8, amb, -10, 4);
-                amb.adicionarEntidade(r_top);
-                RoboTerrestreAOleo r_oleo = new RoboTerrestreAOleo(5, 4, "roboleo", 9, amb, 5);
-                amb.adicionarEntidade(r_oleo);
-                RoboAereoDinamico r_dinam = new RoboAereoDinamico(11, 10, 12, 16, "dinamico", amb, 6);
-                amb.adicionarEntidade(r_dinam);
-                RoboAereoRelator r_relator = new RoboAereoRelator(16, 12, 14, 14, "relator", amb, 3);
-                amb.adicionarEntidade(r_relator);
-                
+                RoboTerrestreTopeira rTop = new RoboTerrestreTopeira(0, 5, "topeira", 8, amb, -10, 4);
+                amb.adicionarEntidade(rTop);
+                RoboTerrestreAOleo rOleo = new RoboTerrestreAOleo(5, 4, "roboleo", 9, amb, 5);
+                amb.adicionarEntidade(rOleo);
+                RoboAereoDinamico rDinam = new RoboAereoDinamico(11, 10, 12, 16, "dinamico", amb, 6);
+                amb.adicionarEntidade(rDinam);
+                RoboAereoRelator rRelat = new RoboAereoRelator(16, 12, 14, 14, "relator", amb, 3);
+                amb.adicionarEntidade(rRelat);
+                AgenteInteligenteAereo agAereo = new AgenteInteligenteAereo(10, 18, 8, 16, "agenteAereo", amb, 5);
+                amb.adicionarEntidade(agAereo);
+                AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 7, amb, 4);
+                amb.adicionarEntidade(agTerrestre);
 
                 while(true) {
                         System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
-                        System.out.printf("1-mover um robô \n2- adicionar sensor de temperatura \n3- habilidade especiais \n4- exibir posição de um robo especifico \n5- adicionar robo na central de comunicacao\n6- realizar comunicacao entre robos \n7- furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8- ativar sensor de temperatura \n9- imprimir mapa \n10- fugir \n11- mover obstaculo\n12- sair\n ************* \n");
+                        System.out.printf("1-  mover um robô \n2-  adicionar sensor de temperatura \n3-  habilidade especiais \n4-  exibir posição de um robo especifico \n5-  adicionar robo na central de comunicacao\n6-  realizar comunicacao entre robos \n7-  furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8-  ativar sensor de temperatura \n9-  imprimir mapa \n10- fugir \n11- mover obstaculo\n12- especializar um robo agente (definir ou alterar o tipo de missao que ele executa)\n13- delegar missao a um robo agente\n14- sair\n ************* \n");
                         int chave = leitor.nextInt();
                         leitor.nextLine();
 
@@ -246,9 +252,40 @@ public class Main {
                                         System.out.println("Digite a posicao z do destino: (Sera considerado apenas para Robos Aereos e TerrestreTopeira).\nCaso deseja mover um RoboTerrestreAOleo, digite 0.");
                                         int movz = leitor.nextInt();
                                         amb.moverEntidade(mover, movx, movy, movz);
+                                        leitor.nextLine();
                                 }
                         }
-                        else if (chave == 12) {//Sáida
+                        else if(chave == 12){
+                                System.out.println("Digite o nome do robo \n");
+                                String vulgo  = leitor.nextLine();
+                                Robo p = amb.getRobo(vulgo);
+                                if(p != null){
+                                        if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
+                                                InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
+                                                System.out.println("Digite a opcao desejada para especializacao do Robo:\n1- Buscar Ponto\n2- Fugir\n3 - Monitorar");
+                                                int selecao = leitor.nextInt();
+                                                if(selecao == 1)
+                                                        missionario.definirMissao(new MissaoBuscarPonto());
+                                                else if(selecao == 2)
+                                                        missionario.definirMissao(new MissaoFugir());
+                                                else if(selecao == 3)
+                                                        missionario.definirMissao(new MissaoMonitorar());
+                                                else{
+                                                        System.out.println("Opcao/selecao invalida! missao especializada nao foi definida.\n");
+                                                        break;
+                                                }
+                                                System.out.println("Missao definida.\n");
+
+                                        }
+                                        else{
+                                                System.out.println("Robo selecionado nao executa missao.\n");
+                                        }
+                                }
+                                else{
+                                        System.out.println("Nenhum robo foi encontrado.\n");
+                                }
+                        }
+                        else if (chave == 14) {//Sáida
                                 System.out.println("Programa encerrado! Até Mais");
                                 leitor.close();
                                 break;

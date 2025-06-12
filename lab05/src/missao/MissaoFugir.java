@@ -1,16 +1,16 @@
 package missao;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
-
 import enums.TipoEntidade;
 import exceptions.ColisaoException;
 import exceptions.RoboDesligadoException;
 import interfaces.InterfaceMissao;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import robos.*;
 
 public class MissaoFugir implements InterfaceMissao{
+    
+    public MissaoFugir(){}
     @ Override public void executar(Robo r, String caminhoArquivo) {
         try {
             PrintStream console = System.out;
