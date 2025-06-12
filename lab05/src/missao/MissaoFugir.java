@@ -18,6 +18,7 @@ public class MissaoFugir implements InterfaceMissao{
             System.setOut(arquivo);
             System.out.println("Iniciando missão de fuga do robô " + r.getNome());
             this.fugir(r);
+            System.out.close();
             System.setOut(console);
             System.out.println("Relatório da missão no log!");
 
