@@ -24,6 +24,7 @@ public class MissaoBuscarPonto implements InterfaceMissao{
             PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo));
 
             System.setOut(arquivo);
+            System.out.println("Iniciando missão debusca de ponto do robô " + r.getNome());
             r.getAmbiente().moverEntidade(r, novo_x, novo_y, novo_z);
             System.setOut(console);
 
