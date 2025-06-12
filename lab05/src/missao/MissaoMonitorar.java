@@ -1,14 +1,14 @@
 package missao;
 
+import enums.TipoEntidade;
+import interfaces.InterfaceMissao;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-
-import enums.TipoEntidade;
-import interfaces.InterfaceMissao;
 import robos.*;
 
 public class MissaoMonitorar implements InterfaceMissao{
+    public MissaoMonitorar(){}
     @ Override public void executar(Robo r, String caminhoArquivo) {
         try {
             PrintStream console = System.out;
