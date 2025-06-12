@@ -9,11 +9,14 @@ import robos.*;
 
 public class MissaoBuscarPonto implements InterfaceMissao{
 
-    public MissaoBuscarPonto(){}
+    private Scanner leitor;
+
+    public MissaoBuscarPonto(Scanner s){
+        this.leitor = s;
+    }
 
     @Override public void executar(Robo r, String caminhoArquivo) {
         try {
-            Scanner leitor = new Scanner(System.in);
             PrintStream console = System.out;
             int novo_x, novo_y, novo_z;
 

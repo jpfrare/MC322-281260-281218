@@ -271,7 +271,7 @@ public class Main {
                                                 System.out.println("Digite a opcao desejada para especializacao do Robo:\n1- Buscar Ponto\n2- Fugir\n3 - Monitorar");
                                                 int selecao = leitor.nextInt();
                                                 if(selecao == 1)
-                                                        missionario.definirMissao(new MissaoBuscarPonto());
+                                                        missionario.definirMissao(new MissaoBuscarPonto(leitor));
                                                 else if(selecao == 2)
                                                         missionario.definirMissao(new MissaoFugir());
                                                 else if(selecao == 3)
