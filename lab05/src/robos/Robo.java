@@ -7,7 +7,7 @@ import interfaces.*;
 import java.util.ArrayList;
 import sensores.*;
 
-public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel, InterfaceFujao{
+public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, InterfaceSensoravel {
     private final String nome;
     private int posicaoX;
     private int posicaoY;

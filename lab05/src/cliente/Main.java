@@ -228,10 +228,10 @@ public class Main {
                         } 
                         else if (chave == 10) {//fugir
                                 System.out.println("digite o nome do robô");
-                                String vulgo = leitor.nextLine();
-                                Robo r = amb.getRobo(vulgo);
+                                //String vulgo = leitor.nextLine();
+                                //Robo r = amb.getRobo(vulgo);
 
-                                if (r != null) r.fugir();
+                
                         }
                         else if(chave == 11) { //mover obstaculo
                                 System.err.println("Digite a altura do obstaculo que deseja mover:");

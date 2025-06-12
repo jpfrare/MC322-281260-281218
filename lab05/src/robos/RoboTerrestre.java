@@ -1,7 +1,6 @@
 package robos;
 import sensores.*;
 import interfaces.*;
-import enums.*;
 import ambiente.*;
 import exceptions.*;
 
@@ -68,83 +67,5 @@ public abstract class RoboTerrestre extends Robo implements InterfaceTermica {
         }
     }
 
-    @Override public boolean procura(int x, int y, int raio) {
-        //vê se tem algum robô no range do sensor e acima
-        try {
-            this.getAmbiente().identifica_colisao(x, y, 0);
-
-            for (int z = 1; z <= raio; z++) {
-                if (this.getAmbiente().tipoPosicao(this.getX(), this.getY(), z) == TipoEntidade.ROBO) {
-                    return true;
-                }
-            }
-            return false;
-        
-        } catch (ColisaoException e) {
-            return false;
-        }
-    }
-
-    @Override public void fugir() {
-        //Robôs terrestres fogem de robôs aéreos, faz a tentativa de fuga apenas num quadrado ao redor do seu raio
-        try {
-            this.Robofunciona();
-            int raio = this.getSensorMovimento().getRaio();
-            if (!procura(this.getX(), this.getY(), raio)) {
-                System.out.println("não há robô acima, dentro do raio do sensor, está tudo bem!");
-                return;
-            }
-
-            int menorx, maiorx, menory, maiory;
-
-            //pegando os limites das variáveis
-            if (this.getX() - raio < 0) {
-                menorx = 0;
-            } else {
-                menorx = this.getX() - raio;
-            }
-
-            if(this.getX() + raio > this.getAmbiente().getAmbienteX()) {
-                maiorx = this.getAmbiente().getAmbienteX();
-            } else {
-                maiorx = this.getX() + raio;
-            }
-
-            if(this.getY() - raio < 0) {
-                menory = 0;
-            } else {
-                menory = this.getY() - raio;
-            }
-
-            if(this.getY() + raio > this.getAmbiente().getAmbienteY()){
-                maiory = this.getAmbiente().getAmbienteY();
-            } else {
-                maiory = this.getY() + raio;
-            }
-
-            for (int x = menorx; x <= maiorx; x++) {
-                for (int y = menory; y <= maiory; y++) {
-                    if ((x != this.getX() || y != this.getY()) && !this.procura(x, y, raio)) {
-                        System.out.printf("Tentando mover para (%d, %d, %d)...\n", x, y, this.getZ());
-
-                        if(this.mover(x - this.getX(), y - getY())) {
-                            System.out.println("Agora o robô " + this.getNome() + " está seguro!");
-                            return;
-                        }
-
-                        System.out.println("falhou! tentando de novo...");
-                    }
-                }
-            }
-
-            System.out.println("Não deu certo! há um robô acima deste em toda a região ou obstáculo que o impeça de fugir! Desligando...");
-            this.desligarRobo();
-            return;
-            
-
-        } catch (RoboDesligadoException e) {
-            System.err.println(e.getMessage());
-        }
-    }
     
 }
