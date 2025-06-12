@@ -28,6 +28,7 @@ public class MissaoBuscarPonto implements InterfaceMissao{
             System.setOut(arquivo);
             System.out.println("Iniciando missão debusca de ponto do robô " + r.getNome());
             r.getAmbiente().moverEntidade(r, novo_x, novo_y, novo_z);
+            System.out.close();
             System.setOut(console);
 
             System.out.println("Relatório da missão no log!");
