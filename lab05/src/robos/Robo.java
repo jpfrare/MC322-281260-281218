@@ -17,7 +17,7 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
     private CaixadeEntrada caixa;
     private final Ambiente habitat;
     private EstadoRobo estado;
-    private TipoEntidade tipo;
+    private final TipoEntidade tipo;
 
     public Robo (int posicaoXo, int posicaoYo, String nome, Ambiente habitat, int r_sensor) {
         //construtor padrão

@@ -3,7 +3,7 @@ package robos;
 import ambiente.Ambiente;
 import interfaces.*;
 
-public class AgenteInteligenteAereo extends RoboAereo implements InterfaceMissao{
+public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboMissionario{
     protected InterfaceMissao missao;
     
     public AgenteInteligenteAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
@@ -15,9 +15,13 @@ public class AgenteInteligenteAereo extends RoboAereo implements InterfaceMissao
         this.missao = m;
     }
 
-    public abstract void executarMissao(Ambiente a);
+    @Override public void executarMissao(String caminhoArquivo) {
+        if(this.missao != null){
+            this.missao.executar(this, caminhoArquivo);
+        }
+    }
 
-    public void definirMissao(InterfaceMissao m){
+    @Override public void definirMissao(InterfaceMissao m){
         this.missao = m;
     }
 
@@ -25,5 +29,12 @@ public class AgenteInteligenteAereo extends RoboAereo implements InterfaceMissao
         return this.missao != null;
     }
 
+    @Override public String getDescricao(){
+        return "Agente inteligente aereo, possui capacidade de especializar missoes e altera-las.";
+    }
+
+    @Override public char getRepresentacao(){
+        return 'A';
+    }
 
 }
