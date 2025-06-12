@@ -55,7 +55,7 @@ public class MissaoMonitorar implements InterfaceMissao{
                 }
             }
 
-                System.out.close();
+                arquivo.close();
                 System.setOut(console);
                 System.out.println("Relatório da missão no log!");
 

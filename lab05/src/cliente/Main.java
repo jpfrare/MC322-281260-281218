@@ -51,7 +51,8 @@ public class Main {
                         System.out.printf("1-  mover um robô \n2-  adicionar sensor de temperatura \n3-  habilidade especiais \n4-  exibir posição de um robo especifico \n5-  adicionar robo na central de comunicacao\n6-  realizar comunicacao entre robos \n7-  furtar combustivel (valido para RoboAereoDinamico e RoboTerrestreAOleo) \n8-  ativar sensor de temperatura \n9-  imprimir mapa \n10- fugir \n11- mover obstaculo\n12- especializar um robo agente (definir ou alterar o tipo de missao que ele executa)\n13- delegar missao a um robo agente\n14- sair\n ************* \n");
                         int chave = leitor.nextInt();
                         leitor.nextLine();
-
+                        
+                       
                         if (chave == 1) {//mover um robô
                                 String robo;
                                 int mov_x;
