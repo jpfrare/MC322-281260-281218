@@ -21,6 +21,7 @@ public class MissaoBuscarPonto implements InterfaceMissao{
             novo_x = leitor.nextInt();
             novo_y = leitor.nextInt();
             novo_z = leitor.nextInt();
+            leitor.nextLine();
 
             PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo));
 

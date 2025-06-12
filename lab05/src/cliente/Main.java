@@ -1,9 +1,11 @@
 package cliente;
+
 import ambiente.*;
 import comunicacao.*;
 import enums.*;
 import exceptions.*;
 import interfaces.*;
+import java.io.File;
 import java.util.Scanner;
 import missao.MissaoBuscarPonto;
 import missao.MissaoFugir;
@@ -40,6 +42,9 @@ public class Main {
                 amb.adicionarEntidade(agAereo);
                 AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 7, amb, 4);
                 amb.adicionarEntidade(agTerrestre);
+                
+                File missoes = new File("missoes.txt");
+
 
                 while(true) {
                         System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
@@ -284,6 +289,20 @@ public class Main {
                                 else{
                                         System.out.println("Nenhum robo foi encontrado.\n");
                                 }
+                        }
+                        else if(chave == 13){
+                                System.out.println("Digite o nome do robo \n");
+                                String vulgo  = leitor.nextLine();
+                                Robo p = amb.getRobo(vulgo);
+                                if(p != null){
+                                        if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
+                                               InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
+                                               missionario.executarMissao(missoes.getAbsolutePath()); 
+                                        }
+                                        else
+                                                System.out.println("Robo selecionado nao executa missao.");
+                                }
+                                
                         }
                         else if (chave == 14) {//Sáida
                                 System.out.println("Programa encerrado! Até Mais");
