@@ -1,0 +1,5 @@
+Iniciando missão de busca de ponto do robo agenteTerrestre
+Posicao inicial: (17,9,0)
+Existe caminho!
+Posicao final: (1,1,0)
+
