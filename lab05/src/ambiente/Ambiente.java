@@ -172,7 +172,7 @@ public class Ambiente {
                     ((AgenteInteligenteTerrestre)mover).mover(deltaX, deltaY);
                 }
 
-            } catch (Exception e) {
+            } catch (ColisaoException | ForaDosLimitesException | MovimentoRelatorException | RoboDesligadoException e) {
                 System.err.println("Erro: " + e.getMessage());
             }
         }

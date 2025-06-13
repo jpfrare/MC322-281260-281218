@@ -9,7 +9,7 @@ import robos.*;
 
 public class MissaoBuscarPonto implements InterfaceMissao{
 
-    private Scanner leitor;
+    private final Scanner leitor;
 
     public MissaoBuscarPonto(Scanner s){
         this.leitor = s;
