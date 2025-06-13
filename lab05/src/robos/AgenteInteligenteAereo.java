@@ -21,7 +21,7 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
         this.missao = m;
     }
 
-    public boolean temMissao(){
+    @Override public boolean temMissao(){
         return this.missao != null;
     }
 
