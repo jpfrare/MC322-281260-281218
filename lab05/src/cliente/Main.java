@@ -304,7 +304,7 @@ public class Main {
                                 if(p != null){
                                         if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
                                                InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
-                                               missionario.executarMissao("../../logMissao.txt"); 
+                                               missionario.executarMissao("../logMissao.txt"); 
                                         }
                                         else
                                                 System.out.println("Robo selecionado nao executa missao.");

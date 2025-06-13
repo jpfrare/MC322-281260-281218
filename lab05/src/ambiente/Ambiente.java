@@ -169,7 +169,7 @@ public class Ambiente {
                     ((AgenteInteligenteAereo)mover).buscarPonto(deltaX, deltaY, deltaZ);
                 }
                 else if (mover instanceof AgenteInteligenteTerrestre){
-                    ((AgenteInteligenteAereo)mover).mover(deltaX, deltaY);
+                    ((AgenteInteligenteTerrestre)mover).mover(deltaX, deltaY);
                 }
 
             } catch (Exception e) {
