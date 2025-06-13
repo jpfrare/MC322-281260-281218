@@ -25,13 +25,15 @@ public class MissaoBuscarPonto implements InterfaceMissao{
             novo_y = leitor.nextInt();
             novo_z = leitor.nextInt();
             leitor.nextLine();
-
-            PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo));
+            
+            PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo, true), true, "UTF-8");
 
             System.setOut(arquivo);
-            System.out.println("Iniciando missão debusca de ponto do robô " + r.getNome());
+            System.out.println("Iniciando missão de busca de ponto do robo " + r.getNome());
+            System.out.printf("Posicao inicial: (%d,%d,%d)\n", r.getX(), r.getY(), r.getZ());
             r.getAmbiente().moverEntidade(r, novo_x, novo_y, novo_z);
-        
+            System.out.printf("Posicao final: (%d,%d,%d)\n", r.getX(), r.getY(), r.getZ());
+            System.out.println();
             System.setOut(console);
             arquivo.close();
 
@@ -40,6 +42,9 @@ public class MissaoBuscarPonto implements InterfaceMissao{
 
         } catch (FileNotFoundException e) {
             System.err.println("Erro na escrita do arquivo!");
+        }
+        catch (java.io.UnsupportedEncodingException e){
+            return;
         }
 
     }

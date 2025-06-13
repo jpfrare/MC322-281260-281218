@@ -152,24 +152,24 @@ public class Ambiente {
                     if((deltaZ != 0 && (deltaX != 0 || deltaY != 0))){
                         throw new MovimentoRelatorException();
                     }
-                    if (deltaZ < 0) {
+                    if (deltaZ < 0)
                         ((RoboAereoRelator)mover).descer(-deltaZ);
-
-                    } else if(deltaZ > 0){
+                    else if(deltaZ > 0)
                         ((RoboAereoRelator)mover).subir(deltaZ);
-                    }
-                    else{
-                        ((RoboAereoRelator)mover).mover(deltaX, deltaY);
-                    }
-                    
-                } else if (mover instanceof RoboAereoDinamico) {
+                    else
+                        ((RoboAereoRelator)mover).mover(deltaX, deltaY);    
+                } 
+                else if (mover instanceof RoboAereoDinamico) 
                     ((RoboAereoDinamico)mover).moverDinamico(deltaX, deltaY, deltaZ);
-
-                } else if (mover instanceof RoboTerrestreAOleo) {
+                else if (mover instanceof RoboTerrestreAOleo)
                     ((RoboTerrestreAOleo)mover).mover(deltaX, deltaY);
-
-                } else {
+                else if (mover instanceof RoboTerrestreTopeira)
                     ((RoboTerrestreTopeira)mover).mover(deltaX, deltaY, deltaZ);
+                else if (mover instanceof AgenteInteligenteAereo){
+                    ((AgenteInteligenteAereo)mover).buscarPonto(deltaX, deltaY, deltaZ);
+                }
+                else if (mover instanceof AgenteInteligenteTerrestre){
+
                 }
 
             } catch (Exception e) {
@@ -289,16 +289,16 @@ public class Ambiente {
         for (int j = this.Y; j >= 0; j--) {
             for (int i = 0; i <= this.X; i++) {
                 if (this.mapa[i][j][altura] == TipoEntidade.VAZIO) {
-                    System.out.printf("v");
+                    System.out.printf(" .");
 
                 } else if (this.mapa[i][j][altura] == TipoEntidade.OBSTACULO) {
-                    System.out.printf("o");
+                    System.out.printf(" x");
 
                 } else {
                     for (InterfaceEntidade e : this.elementos) {
                         //imprime a representação do robô
                         if (e.getX() == i && e.getY() == j && e.getZ() == altura) {
-                            System.out.printf("%c", e.getRepresentacao());
+                            System.out.printf(" %c", e.getRepresentacao());
                             break;
                         }
                     }

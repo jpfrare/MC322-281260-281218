@@ -1,1 +1,20 @@
-Iniciando missão debusca de ponto do robô agenteTerrestre
+
+
+Iniciando missão de busca de ponto do robo agenteAereo
+Posicao inicial: (10,18,8)
+Existe caminho!
+Posicao final: (13,12,8)
+
+Iniciando missão de busca de ponto do robo agenteAereo
+Posicao inicial: (13,12,8)
+Existe caminho!
+Posicao final: (17,9,10)
+
+Iniciando missão de busca de ponto do robo agenteAereo
+Posicao inicial: (17,9,10)
+Posicao final: (17,9,10)
+
+Iniciando missão de busca de ponto do robo agenteAereo
+Posicao inicial: (17,9,10)
+Posicao final: (17,9,10)
+
