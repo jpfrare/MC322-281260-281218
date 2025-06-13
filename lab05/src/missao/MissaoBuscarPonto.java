@@ -40,12 +40,10 @@ public class MissaoBuscarPonto implements InterfaceMissao{
             System.out.println("Relatório da missão no log!");
 
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Erro na escrita do arquivo!");
+        } catch (FileNotFoundException | java.io.UnsupportedEncodingException e) {
+            System.err.println("Erro na escrita do arquivo");
         }
-        catch (java.io.UnsupportedEncodingException e){
-            return;
-        }
+        
 
     }
 }

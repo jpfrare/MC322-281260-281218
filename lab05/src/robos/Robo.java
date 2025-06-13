@@ -269,7 +269,9 @@ public abstract class Robo implements InterfaceEntidade, InterfaceComunicavel, I
     }
 
     public boolean mover(int deltaX, int deltaY) throws RoboDesligadoException, ForaDosLimitesException, ColisaoException {
-
+        if(deltaX == 0 && deltaY == 0){
+            return true;
+        }
         try {
             this.Robofunciona();
             this.habitat.dentroDosLimites(this.posicaoX + deltaX, this.posicaoY + deltaY, 0);

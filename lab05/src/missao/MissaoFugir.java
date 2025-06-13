@@ -14,15 +14,16 @@ public class MissaoFugir implements InterfaceMissao{
     @ Override public void executar(Robo r, String caminhoArquivo) {
         try {
             PrintStream console = System.out;
-            PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo));
+            PrintStream arquivo = new PrintStream(new FileOutputStream(caminhoArquivo, true), true, "UTF-8");
             System.setOut(arquivo);
             System.out.println("Iniciando missão de fuga do robô " + r.getNome());
             this.fugir(r);
+            System.out.println();
             arquivo.close();
             System.setOut(console);
             System.out.println("Relatório da missão no log!");
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | java.io.UnsupportedEncodingException e) {
             System.err.println("Erro na escrita de arquivo");
         }
        

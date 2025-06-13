@@ -5,6 +5,8 @@ import comunicacao.*;
 import enums.*;
 import exceptions.*;
 import interfaces.*;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import missao.MissaoBuscarPonto;
 import missao.MissaoFugir;
@@ -41,8 +43,14 @@ public class Main {
                 amb.adicionarEntidade(agAereo);
                 AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 7, amb, 4);
                 amb.adicionarEntidade(agTerrestre);
-        
-
+                //limpar o arquivo antes de iniciar o sistema de simulacao de robos
+                try {
+                        FileWriter escritor = new FileWriter("../../logMissao.txt");
+                        escritor.write("");
+                        escritor.close();
+                } catch (IOException e) {
+                        System.err.println("Erro ao limpar o arquivo: " + e.getMessage());
+                }
 
                 while(true) {
                         System.out.printf("\n ************* \n sistema de gerenciamento de ambiente! \n");
