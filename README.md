@@ -56,19 +56,16 @@ Versão do Java:  11.0.26 2025-01-21
 ## 9. Imprimir mapa.
 <p> Imprime na tela, segundo o eixo cartesiano padrão, o mapa em uma altura dada, exibindo obstáculos como "x", espaços vazios como "." e os demais com sua respectiva representação em caracteres.
 
-## 10. Fugir.
-<p> Essa funcionalidade está relacionada a outra interface (InterfaceFujao). Nessa, admite-se a premissa de que robôs tem a preferência por evitar outros robôs na mesma coordenada xy, mas em diferente altura z, assim, todo robô que identificar outro nessa condição tentará fugir deste numa região que compreende um quadrado de lado igual ao raio do sensor, na mesma altura z em que se encontra, caso não seja possível (há sempre um robô aplicando essa condição ou há objetos atrapalhando a movimentação), o robô desligará.
-
-## 11. Mover um obstaculo
+## 10. Mover um obstaculo
 <p> Apaga o obstaculo do ambiente e logo após tansfere para a nova posicao caso nao exista robos ou mesmo obstaculos que colidam.
   
-## 12. Especializar Robo Agente
+## 11. Especializar Robo Agente
 <p> Insere/Altera o tipo de missao (Buscar ponto, Fugir ou Monitorar) que o robo se especializará.
 
-## 13. Delegar que um Robo agene execute sua missao especializada
+## 12. Delegar que um Robo agene execute sua missao especializada
 <p> Robos Agentes (AgenteInteligenteAereo ou AgenteInteligenteTerrestre) executam a missao que eles sao especializados (essa missao é um atributo que corresponde a InterfaceMissao). Sempre que forem inicializados este atributo será vazio. Para executar uma missao, primeiro será necessário especializar o Robo Agente (opcao 12 do menu interativo), e por fim executar a missao de acordo com a seleção feita.
   
-## 14. Sair do programa.
+## 13. Sair do programa.
 <p> Encerra o programa, fechando o leitor de entrada.
   
 ***A título de observação, a busca por algum robô é sempre dada pelo seu nome, dando utilidade à variável.***
