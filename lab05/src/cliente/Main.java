@@ -5,7 +5,6 @@ import comunicacao.*;
 import enums.*;
 import exceptions.*;
 import interfaces.*;
-import java.io.File;
 import java.util.Scanner;
 import missao.MissaoBuscarPonto;
 import missao.MissaoFugir;
@@ -42,8 +41,7 @@ public class Main {
                 amb.adicionarEntidade(agAereo);
                 AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 7, amb, 4);
                 amb.adicionarEntidade(agTerrestre);
-                
-                File missoes = new File("missoes.txt");
+        
 
 
                 while(true) {
@@ -298,7 +296,7 @@ public class Main {
                                 if(p != null){
                                         if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
                                                InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
-                                               missionario.executarMissao(missoes.getAbsolutePath()); 
+                                               missionario.executarMissao("../../logMissao.txt"); 
                                         }
                                         else
                                                 System.out.println("Robo selecionado nao executa missao.");
