@@ -267,7 +267,7 @@ public class Main {
                                 if(p != null){
                                         if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
                                                 InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
-                                                System.out.println("Digite a opcao desejada para especializacao do Robo:\n1- Buscar Ponto\n2- Fugir\n3 - Monitorar");
+                                                System.out.println("Digite a opcao desejada para especializacao do Robo:\n1- Buscar Ponto\n2- Fugir\n3- Monitorar");
                                                 int selecao = leitor.nextInt();
                                                 if(selecao == 1)
                                                         missionario.definirMissao(new MissaoBuscarPonto(leitor));
