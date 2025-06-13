@@ -5,7 +5,7 @@ import enums.TipoEntidade;
 import interfaces.*;
 
 public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboMissionario{
-    protected InterfaceMissao missao;
+    protected InterfaceMissao missao; //tipo de missao que o robo se especializara
     
     public AgenteInteligenteAereo(int posXo, int posYo, int alt_o, int alt_max, String nome, Ambiente a, int r_sensor){
         super(posXo, posYo, alt_o, alt_max, nome, a, r_sensor);
@@ -15,6 +15,9 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
     @Override public void executarMissao(String caminhoArquivo) {
         if(this.missao != null){
             this.missao.executar(this, caminhoArquivo);
+        }
+        else{
+            System.out.println("Robo ainda nao se especializou. No menu interativo, primeiro especialize este Robo por meio da opcao 12.");
         }
     }
 
@@ -38,7 +41,11 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
         int y0 = this.getY();
         int z0 = this.getZ();
         try{
-            if(this.mover(deltaX, deltaY)){
+            if(this.mover(deltaX, deltaY)){ 
+                //Note que diferente do AereoDinamico, ele nao executa o melhor movimento
+                //Primeiro ele se move horizontalmente, e por fim se move verticalmente
+                //Esse movimento só e melhor em casos que ele ira descer, visto que uma altura inicial maior permite desviar de obstaculos
+                //agora, caso ele suba, como o movimento horizontal ocorrera em uma altura menos, a probabilidade de nao conseguir desviar de um obstaculo e maior
                 if(deltaZ > 0){
                     this.subir(deltaZ);
                 }
