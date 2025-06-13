@@ -147,3 +147,8 @@ Iniciando missão de busca de ponto do robo agenteTerrestre
 Posicao inicial: (11,10,0)
 Posicao final: (11,10,0)
 
+Iniciando missão de busca de ponto do robo agenteTerrestre
+Posicao inicial: (17,9,0)
+Movimento inválido! 
+Posicao final: (17,9,0)
+
