@@ -25,7 +25,9 @@ Versão do Java:  11.0.26 2025-01-21
   8. Ativar sensor (de temperatura)
   9. Imprimir mapa
   10. Fugir
-  11. Sair
+  11. Mover Obstaculo
+  12. Especializar um Robo Agente (AgenteInteligenteAereo ou AgenteInteligenteTerrestre)
+  13. Delegar que um Robo Agente execute sua missao especializada
  
 ## 1. Mover um robô:
 <p> Nesta opção, há os inputs de destino final em cada coordenada (xy para o terrestre a óleo e xyz para os aéreos e terrestre toupeira) e a chamada da respectiva função de mover (condicionada a classe do robô escolhido), esta que é um algorítmo baseado em backtracking, que utiliza o sensor de movimento para perfazer um caminho livre de obstáculos (salvo o robô topeira, que se aproveita do fato de que não há obstáculos no subsolo para evitar o uso de chamadas recursivas/sensores).
@@ -57,7 +59,16 @@ Versão do Java:  11.0.26 2025-01-21
 ## 10. Fugir.
 <p> Essa funcionalidade está relacionada a outra interface (InterfaceFujao). Nessa, admite-se a premissa de que robôs tem a preferência por evitar outros robôs na mesma coordenada xy, mas em diferente altura z, assim, todo robô que identificar outro nessa condição tentará fugir deste numa região que compreende um quadrado de lado igual ao raio do sensor, na mesma altura z em que se encontra, caso não seja possível (há sempre um robô aplicando essa condição ou há objetos atrapalhando a movimentação), o robô desligará.
 
-## 11. Sair do programa.
+## 11. Mover um obstaculo
+<p> Apaga o obstaculo do ambiente e logo após tansfere para a nova posicao caso nao exista robos ou mesmo obstaculos que colidam.
+  
+## 12. Especializar Robo Agente
+<p> Insere/Altera o tipo de missao (Buscar ponto, Fugir ou Monitorar) que o robo se especializará.
+
+## 13. Delegar que um Robo agene execute sua missao especializada
+<p> Robos Agentes (AgenteInteligenteAereo ou AgenteInteligenteTerrestre) executam a missao que eles sao especializados (essa missao é um atributo que corresponde a InterfaceMissao). Sempre que forem inicializados este atributo será vazio. Para executar uma missao, primeiro será necessário especializar o Robo Agente (opcao 12 do menu interativo), e por fim executar a missao de acordo com a seleção feita.
+  
+## 14. Sair do programa.
 <p> Encerra o programa, fechando o leitor de entrada.
   
 ***A título de observação, a busca por algum robô é sempre dada pelo seu nome, dando utilidade à variável.***
