@@ -12,10 +12,6 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
         this.missao = null;
     }
 
-    public void setMissao(InterfaceMissao m){
-        this.missao = m;
-    }
-
     @Override public void executarMissao(String caminhoArquivo) {
         if(this.missao != null){
             this.missao.executar(this, caminhoArquivo);
@@ -26,7 +22,7 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
         this.missao = m;
     }
 
-    public boolean temMissao(){
+    @Override public boolean temMissao(){
         return this.missao != null;
     }
 

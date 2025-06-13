@@ -12,10 +12,6 @@ public class AgenteInteligenteTerrestre extends RoboTerrestre implements Interfa
         this.missao = null;
     }
 
-    public void setMissao(InterfaceMissao m){
-        this.missao = m;
-    }
-
     @Override public void executarMissao(String caminhoArquivo) {
         if(this.missao != null){
             this.missao.executar(this, caminhoArquivo);
