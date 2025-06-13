@@ -41,11 +41,11 @@ public class Main {
                 amb.adicionarEntidade(rRelat);
                 AgenteInteligenteAereo agAereo = new AgenteInteligenteAereo(10, 18, 8, 16, "agenteAereo", amb, 5);
                 amb.adicionarEntidade(agAereo);
-                AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 7, amb, 4);
+                AgenteInteligenteTerrestre agTerrestre = new AgenteInteligenteTerrestre(17, 9, "agenteTerrestre", 100, amb, 4);
                 amb.adicionarEntidade(agTerrestre);
                 //limpar o arquivo antes de iniciar o sistema de simulacao de robos
                 try {
-                        FileWriter escritor = new FileWriter("../logMissao.txt");
+                        FileWriter escritor = new FileWriter("logMissao.txt");
                         escritor.write("");
                         escritor.close();
                 } catch (IOException e) {
@@ -297,7 +297,7 @@ public class Main {
                                 if(p != null){
                                         if(p instanceof AgenteInteligenteAereo || p instanceof AgenteInteligenteTerrestre){
                                                InterfaceRoboMissionario missionario = (InterfaceRoboMissionario)p;
-                                               missionario.executarMissao("../logMissao.txt"); 
+                                               missionario.executarMissao("logMissao.txt"); 
                                         }
                                         else
                                                 System.out.println("Robo selecionado nao executa missao.");
