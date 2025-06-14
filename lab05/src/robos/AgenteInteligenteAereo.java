@@ -17,7 +17,7 @@ public class AgenteInteligenteAereo extends RoboAereo  implements InterfaceRoboM
             this.missao.executar(this, caminhoArquivo);
         }
         else{
-            System.out.println("Robo ainda nao se especializou. No menu interativo, primeiro especialize este Robo por meio da opcao 12.");
+            System.out.println("Robo ainda nao se especializou. No menu interativo, primeiro especialize este Robo por meio da opcao 11.");
         }
     }
 
