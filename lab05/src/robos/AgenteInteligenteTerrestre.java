@@ -25,7 +25,7 @@ public class AgenteInteligenteTerrestre extends RoboTerrestre implements Interfa
         this.missao = m;
     }
 
-    public boolean temMissao(){
+    @Override public boolean temMissao(){
         return this.missao != null;
     }
 
