@@ -24,10 +24,9 @@ Versão do Java:  11.0.26 2025-01-21
   7. Furtar combustivel
   8. Ativar sensor (de temperatura)
   9. Imprimir mapa
-  10. Fugir
-  11. Mover Obstaculo
-  12. Especializar um Robo Agente (AgenteInteligenteAereo ou AgenteInteligenteTerrestre)
-  13. Delegar que um Robo Agente execute sua missao especializada
+  10. Mover Obstaculo
+  11. Especializar um Robo Agente (AgenteInteligenteAereo ou AgenteInteligenteTerrestre)
+  12. Delegar que um Robo Agente execute sua missao especializada
  
 ## 1. Mover um robô:
 <p> Nesta opção, há os inputs de destino final em cada coordenada (xy para o terrestre a óleo e xyz para os aéreos e terrestre toupeira) e a chamada da respectiva função de mover (condicionada a classe do robô escolhido), esta que é um algorítmo baseado em backtracking, que utiliza o sensor de movimento para perfazer um caminho livre de obstáculos (salvo o robô topeira, que se aproveita do fato de que não há obstáculos no subsolo para evitar o uso de chamadas recursivas/sensores).
