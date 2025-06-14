@@ -62,7 +62,7 @@ Versão do Java:  11.0.26 2025-01-21
 <p> Insere/Altera o tipo de missao (Buscar ponto, Fugir ou Monitorar) que o robo se especializará.
 
 ## 12. Delegar que um Robo agene execute sua missao especializada
-<p> Robos Agentes (AgenteInteligenteAereo ou AgenteInteligenteTerrestre) executam a missao que eles sao especializados (essa missao é um atributo que corresponde a InterfaceMissao). Sempre que forem inicializados este atributo será vazio. Para executar uma missao, primeiro será necessário especializar o Robo Agente (opcao 12 do menu interativo), e por fim executar a missao de acordo com a seleção feita.
+<p> Robos Agentes (AgenteInteligenteAereo ou AgenteInteligenteTerrestre) executam a missao que eles sao especializados (essa missao é um atributo que corresponde a InterfaceMissao). Sempre que forem inicializados este atributo será vazio. Para executar uma missao, primeiro será necessário especializar o Robo Agente (opcao 11 do menu interativo), e por fim executar a missao de acordo com a seleção feita.
   
 ## 13. Sair do programa.
 <p> Encerra o programa, fechando o leitor de entrada.
